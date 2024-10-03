@@ -1,2 +1,2 @@
-# eng1-group-10
-Engineering 1 Group 10 repository
+# eng1-cohort3-group10
+Engineering 1 Cohort 3 Group 10 repository
