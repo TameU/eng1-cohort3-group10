@@ -1,17 +1,37 @@
 package com.backlogged.univercity;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 
-/** First screen of the application. Displayed after the application is created. */
+/**
+ * First screen of the application. Displayed after the application is created.
+ */
 public class FirstScreen implements Screen {
+
+    private TiledMap map;
+    private float unitScale;
+    private OrthogonalTiledMapRenderer renderer;
+    private OrthographicCamera camera;
+
     @Override
     public void show() {
-        // Prepare your screen here.
+        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+        map = new TmxMapLoader().load("desert.tmx");
+        unitScale = 1 / 32f;
+        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 30, 20);
+
     }
 
     @Override
     public void render(float delta) {
-        // Draw your screen here. "delta" is the time since last render in seconds.
+        renderer.setView(camera);
+        renderer.render();
+
     }
 
     @Override
@@ -36,6 +56,6 @@ public class FirstScreen implements Screen {
 
     @Override
     public void dispose() {
-        // Destroy screen's assets here.
+        map.dispose();
     }
 }
