@@ -74,8 +74,11 @@ public class MapScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        camera.viewportHeight = 20f;
-        camera.viewportWidth = 30f;
+        System.out.println("Width: " + width + " Height: " + height);
+        camera.viewportWidth = MathUtils.floor(width / 32f);
+        camera.viewportHeight = camera.viewportWidth * height / width;
+        System.out.println("cam width: " + camera.viewportWidth + " cam height: " + camera.viewportHeight);
+
         camera.update();
 
     }
