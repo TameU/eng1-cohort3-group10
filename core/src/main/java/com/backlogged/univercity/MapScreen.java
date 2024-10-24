@@ -9,6 +9,11 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 /**
  * First screen of the application. Displayed after the application is created.
@@ -19,10 +24,19 @@ public class MapScreen implements Screen {
     private float unitScale;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
+    private Skin skin;
+    private Stage stage;
 
     @Override
     public void show() {
-        System.out.println("Working Directory = " + System.getProperty("user.dir"));
+        stage = new Stage(new ScreenViewport());
+        skin = new Skin(Gdx.files.local("testskin.json"));
+        Label label1 = new Label("5:00", skin);
+        label1.setAlignment(Align.center);
+        label1.setPosition(stage.getWidth() / 2, stage.getHeight(), Align.top);
+        stage.addActor(label1);
+
+        String tst = "Working Directory = " + System.getProperty("user.dir");
         map = new TmxMapLoader().load("desert.tmx");
         unitScale = 1 / 32f;
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
@@ -38,7 +52,8 @@ public class MapScreen implements Screen {
         renderer.setView(camera);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
-
+        stage.act();
+        stage.draw();
     }
 
     private void handleInput() {
