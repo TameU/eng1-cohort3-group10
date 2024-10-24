@@ -1,7 +1,7 @@
 package com.backlogged.univercity;
 import com.badlogic.gdx.Gdx;
 public class FiveMinTimer {
-    private float currentTimeRemaining = 60 * 5;
+    private float currentTimeRemaining = 60.f * 5.f;
     boolean hasStopped = true;
     public FiveMinTimer() {
         
@@ -11,6 +11,10 @@ public class FiveMinTimer {
     }  
     public void stopTime() { 
         hasStopped = true;
+    } 
+    public void resetTime() { 
+        hasStopped = true;
+        currentTimeRemaining = 60.f * 5.f; 
     }
     public void update() { 
         if (hasStopped) return; 
