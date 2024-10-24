@@ -13,7 +13,7 @@ public class FiveMinTimer {
         hasStopped = true;
     } 
     public void resetTime() { 
-        hasStopped = true;
+        stopTime();
         currentTimeRemaining = 60.f * 5.f; 
     }
     public void update() { 
