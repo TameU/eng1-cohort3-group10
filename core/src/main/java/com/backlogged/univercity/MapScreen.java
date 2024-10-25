@@ -54,7 +54,8 @@ public class MapScreen implements Screen {
             public void clicked(InputEvent e, float x, float y) {
                 if (timer.isStopped())
                     timer.startTime();
-                else timer.stopTime();
+                else
+                    timer.stopTime();
             }
         });
 
@@ -76,7 +77,9 @@ public class MapScreen implements Screen {
         unitScale = 1 / 32f;
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 30, 20);
+        float width = Gdx.graphics.getWidth();
+        float height = Gdx.graphics.getHeight();
+        camera.setToOrtho(false, width * unitScale, (width * unitScale) * (height / width));
     }
 
     @Override
@@ -110,7 +113,7 @@ public class MapScreen implements Screen {
             camera.zoom -= 0.02;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            camera.translate(-3, 0, 0);
+            camera.translate(-1, 0, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             camera.translate(1, 0, 0);
@@ -122,20 +125,15 @@ public class MapScreen implements Screen {
             camera.translate(0, 1, 0);
         }
 
+        /* TODO: get better clamping */
         camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, 100 / camera.viewportWidth);
-        float effectiveViewportWidth = camera.viewportWidth * camera.zoom;
-        float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
 
-        camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f,
-                100 - effectiveViewportWidth / 2f);
-        camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f,
-                100 - effectiveViewportHeight / 2f);
     }
 
     @Override
     public void resize(int width, int height) {
-        camera.viewportHeight = 20f;
-        camera.viewportWidth = 30f;
+        camera.viewportWidth = MathUtils.floor(width / 32f);
+        camera.viewportHeight = camera.viewportWidth * height / width;
         camera.update();
         stage.getViewport().update(width, height, true);
     }
