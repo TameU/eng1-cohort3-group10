@@ -1,10 +1,10 @@
 package com.backlogged.univercity;
-import com.badlogic.gdx.Gdx;
-public class FiveMinTimer {
-    private float currentTimeRemaining = 60.f * 5.f;
+public class InGameTimer {
+    private float currentTimeRemaining;
     boolean hasStopped = true;
-    public FiveMinTimer() {
-        
+    public InGameTimer(int timeInMinutes) {
+        /**TODO: Support time beyond 60mins maybe?*/
+        currentTimeRemaining = timeInMinutes * 60;
     } 
     public void startTime() { 
         hasStopped = false;
@@ -16,10 +16,9 @@ public class FiveMinTimer {
         stopTime();
         currentTimeRemaining = 60.f * 5.f; 
     }
-    public void update() { 
-        if (hasStopped) return; 
-        float deltaTime = Gdx.graphics.getDeltaTime();
-        currentTimeRemaining = currentTimeRemaining - deltaTime < 0.f ? 0.f : currentTimeRemaining - deltaTime;
+    public void update(float delta) { 
+        if (hasStopped) return;
+        currentTimeRemaining = currentTimeRemaining - delta < 0.f ? 0.f : currentTimeRemaining - delta;
     } 
     public int getCurrentTime() { 
         return (int) currentTimeRemaining;
