@@ -27,7 +27,9 @@ public class MapScreen implements Screen {
         unitScale = 1 / 32f;
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 30, 20);
+        float w = Gdx.graphics.getWidth();
+        float h = Gdx.graphics.getHeight();
+        camera.setToOrtho(false, w * unitScale, (w * unitScale) * (h / w));
 
     }
 
@@ -45,12 +47,11 @@ public class MapScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             camera.zoom += 0.02;
         }
-
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             camera.zoom -= 0.02;
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            camera.translate(-3, 0, 0);
+            camera.translate(-1, 0, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
             camera.translate(1, 0, 0);
@@ -63,21 +64,13 @@ public class MapScreen implements Screen {
         }
 
         camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, 100 / camera.viewportWidth);
-        float effectiveViewportWidth = camera.viewportWidth * camera.zoom;
-        float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
 
-        camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewportWidth / 2f,
-                100 - effectiveViewportWidth / 2f);
-        camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewportHeight / 2f,
-                100 - effectiveViewportHeight / 2f);
     }
 
     @Override
     public void resize(int width, int height) {
-        System.out.println("Width: " + width + " Height: " + height);
         camera.viewportWidth = MathUtils.floor(width / 32f);
         camera.viewportHeight = camera.viewportWidth * height / width;
-        System.out.println("cam width: " + camera.viewportWidth + " cam height: " + camera.viewportHeight);
 
         camera.update();
 
@@ -101,5 +94,7 @@ public class MapScreen implements Screen {
     @Override
     public void dispose() {
         map.dispose();
+        renderer.dispose();
+
     }
 }
