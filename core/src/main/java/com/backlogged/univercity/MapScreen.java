@@ -1,5 +1,6 @@
 package com.backlogged.univercity;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -9,9 +10,13 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
@@ -20,29 +25,65 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  */
 public class MapScreen implements Screen {
 
+    private Game game;
     private TiledMap map;
     private float unitScale;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
     private Skin skin;
     private Stage stage;
+    private Table table;
+    private Label timerLabel;
+    private Button pauseButton;
+    private InGameTimer timer;
+    private boolean pauseClicked;
 
-    @Override
-    public void show() {
+    public MapScreen(Game game) {
+        this.game = game;
+
+        timer = new InGameTimer(5);
+
         stage = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.local("testskin.json"));
-        Label label1 = new Label("5:00", skin);
-        label1.setAlignment(Align.center);
-        label1.setPosition(stage.getWidth() / 2, stage.getHeight(), Align.top);
-        stage.addActor(label1);
 
-        String tst = "Working Directory = " + System.getProperty("user.dir");
+        timerLabel = new Label("5:00", skin);
+        timerLabel.setAlignment(Align.center);
+
+        pauseButton = new Button(skin, "pause");
+        pauseButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                if (timer.isStopped())
+                    timer.startTime();
+                else timer.stopTime();
+            }
+        });
+
+        timerLabel.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                game.setScreen(new GameOverScreen(game));
+            }
+        });
+
+        table = new Table(skin);
+        table.setFillParent(true);
+        table.setDebug(true);
+        table.add(timerLabel).expand().top();
+        table.add(pauseButton).top().right();
+
+        stage.addActor(table);
+
         map = new TmxMapLoader().load("desert.tmx");
         unitScale = 1 / 32f;
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 30, 20);
+    }
 
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
+        timer.resetTime();
+        timer.startTime();
     }
 
     @Override
@@ -52,6 +93,10 @@ public class MapScreen implements Screen {
         renderer.setView(camera);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
+        float timeLeft = timer.update(delta);
+        if (timeLeft < 1)
+            game.setScreen(new GameOverScreen(game));
+        timerLabel.setText(timer.toString());
         stage.act();
         stage.draw();
     }
@@ -92,7 +137,7 @@ public class MapScreen implements Screen {
         camera.viewportHeight = 20f;
         camera.viewportWidth = 30f;
         camera.update();
-
+        stage.getViewport().update(width, height, true);
     }
 
     @Override

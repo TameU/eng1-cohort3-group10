@@ -18,3 +18,10 @@ timer
   orig: 500, 100
   offset: 0, 0
   index: -1
+pause_icon
+  rotate: false
+  xy: 1, 189
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

@@ -14,6 +14,12 @@ com.badlogic.gdx.graphics.Color: {
 		b: 0
 		a: 1
 	}
+	Red: {
+		r: 1
+		g: 0
+		b: 0
+		a: 1
+	}
 	White: {
 		r: 1
 		g: 1
@@ -21,11 +27,34 @@ com.badlogic.gdx.graphics.Color: {
 		a: 1
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	pause: {
+		up: pause_icon
+		pressedOffsetX: 2
+		pressedOffsetY: 2
+		checkedOffsetX: 2
+		checkedOffsetY: 2
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: PressStart2P-Regular
 		fontColor: Black
 		background: timer
+	}
+	no-background: {
+		font: PressStart2P-Regular
+		fontColor: Black
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: PressStart2P-Regular
+		fontColor: Black
+		downFontColor: Red
+		overFontColor: Red
+		focusedFontColor: Red
+		up: timer
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
