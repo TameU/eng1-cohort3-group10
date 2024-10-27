@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+
 /**
  * First screen of the application. Displayed after the application is created.
  */
@@ -86,6 +87,9 @@ public class MapScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
         timer.resetTime();
+        timer.resetYear();
+        timer.resetElapse();
+        timer.resetSemester();
         timer.startTime();
     }
 
@@ -96,10 +100,20 @@ public class MapScreen implements Screen {
         renderer.setView(camera);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
-        float timeLeft = timer.update(delta);
+        float timeLeft = timer.updateTime(delta);
+        float elapsedTime = timer.timeElapsed(delta);
+        if(elapsedTime > 8.f){
+            timer.monthUpdate();
+            timer.yearUpdate();
+            timer.semesterValue();
+            timer.resetElapse();
+        
+        }
+        
+            
         if (timeLeft < 1)
             game.setScreen(new GameOverScreen(game));
-        timerLabel.setText(timer.toString());
+        timerLabel.setText(timer.output());
         stage.act();
         stage.draw();
     }
