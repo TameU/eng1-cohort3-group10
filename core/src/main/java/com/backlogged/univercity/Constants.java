@@ -10,7 +10,10 @@ public final class Constants {
     private Constants(){
         // restricts instantiation of class 
     }
-    // The total in-game elapse is 3 years, so each month is 8.33 seconds. 
+    
+    /*The total in-game time elapse is 3 years and total real-time
+      elapse is 5 minutes so each month is 8.33 seconds of real time.
+     */  
     public static final  float THRESHOLD = 8.33f; 
 
 
