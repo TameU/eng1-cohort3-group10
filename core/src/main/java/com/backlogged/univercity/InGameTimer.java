@@ -8,8 +8,6 @@ public class InGameTimer  {
                                 ,"August","September","October","November","December"};
     
     private int monthIndex = 7;
-    private String currentMonth = months[monthIndex];
-    private int semesters[] = {1,2};
     private float currentTimeRemaining;
     private int year = 2024;
     private int timeInMinutes;
@@ -63,7 +61,6 @@ public class InGameTimer  {
         year = 2024;
     }
 
-
     public Integer yearUpdate(){
         if(hasStopped) return year;
 
@@ -90,7 +87,6 @@ public class InGameTimer  {
         return semester;
     }
 
-
     public void resetSemester(){
         semester = "Semester 1";
     }
@@ -107,9 +103,7 @@ public class InGameTimer  {
         else{
             monthIndex += 1;
         }
-        
         return monthIndex;
-        
         
     }
     

@@ -102,7 +102,7 @@ public class MapScreen implements Screen {
         renderer.render();
         float timeLeft = timer.updateTime(delta);
         float elapsedTime = timer.timeElapsed(delta);
-        if(elapsedTime > 8.f){
+        if(elapsedTime > 8.33f){
             timer.monthUpdate();
             timer.yearUpdate();
             timer.semesterValue();
