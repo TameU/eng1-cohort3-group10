@@ -118,7 +118,7 @@ public class InGameTimer  {
      * with a standard academic timetable. If the game is paused 
      * the current value is returned.
      */
-    public Integer yearUpdate(){
+    public Integer updateYear(){
         if(hasStopped) return year;
 
         if(monthIndex == 8){
@@ -135,7 +135,7 @@ public class InGameTimer  {
      * 
      * @return the current semester associated with the in-game time. 
      */
-    public String semesterValue(){
+    public String updateSemester(){
         
         if(hasStopped) return semester;
         
@@ -168,7 +168,7 @@ public class InGameTimer  {
      * 
      * @return the index of the current month. 
      * */ 
-    public Integer monthUpdate() {
+    public Integer updateMonth() {
         if(hasStopped) return monthIndex;
 
         if(monthIndex == 11){
@@ -189,9 +189,9 @@ public class InGameTimer  {
      */
     public void updateValues(){
         // one source for all updates when method is called
-        monthUpdate();
-        yearUpdate();
-        semesterValue();
+        updateMonth();
+        updateYear();
+        updateSemester();
         resetElapse();
     }
     
