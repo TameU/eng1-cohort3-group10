@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 
+
 /**
  * First screen of the application. Displayed after the application is created.
  */
@@ -102,15 +103,11 @@ public class MapScreen implements Screen {
         renderer.render();
         float timeLeft = timer.updateTime(delta);
         float elapsedTime = timer.timeElapsed(delta);
-        if(elapsedTime > 8.33f){
-            timer.monthUpdate();
-            timer.yearUpdate();
-            timer.semesterValue();
-            timer.resetElapse();
         
+        if(elapsedTime > Constants.THRESHOLD){
+            timer.updateValues();
         }
         
-            
         if (timeLeft < 1)
             game.setScreen(new GameOverScreen(game));
         timerLabel.setText(timer.output());

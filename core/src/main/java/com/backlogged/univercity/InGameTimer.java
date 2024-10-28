@@ -1,15 +1,13 @@
 package com.backlogged.univercity;
 
-
-
-
 public class InGameTimer  {
+    
+    
     private String[] months = {"January","February","March","April","May","June","July"
                                 ,"August","September","October","November","December"};
-    
     private int monthIndex = 7;
     private float currentTimeRemaining;
-    private int year = 2024;
+    private int year;
     private int timeInMinutes;
     private String semester; 
     private boolean hasStopped = true;
@@ -17,26 +15,26 @@ public class InGameTimer  {
     
     
     public InGameTimer(int timeInMinutes) {
-        /**TODO: Support time beyond 60mins maybe?*/
-
         currentTimeRemaining = (float)timeInMinutes * 60.f;
         this.timeInMinutes = timeInMinutes;
-        
     }
+    
     public void startTime() {
         hasStopped = false;
     }
+    
     public void stopTime() {
         hasStopped = true;
     }
+    
     public boolean isStopped() {
         return hasStopped;
     }
+   
     public void resetTime() {
         stopTime();
         currentTimeRemaining = (float)timeInMinutes * 60.f;
-        monthIndex = 8;
-        
+        monthIndex = 8; // Game begins from September
     }
 
     public float updateTime(float delta) {
@@ -47,7 +45,7 @@ public class InGameTimer  {
     }
 
     public void resetElapse(){
-        timeElapse = 0;
+        timeElapse = 0; 
     }
 
     public float timeElapsed(float delta){
@@ -58,32 +56,35 @@ public class InGameTimer  {
     }
 
     public void resetYear(){
-        year = 2024;
+        year = 1;
     }
 
     public Integer yearUpdate(){
         if(hasStopped) return year;
 
-        if(monthIndex == 0){
-            year += 1;
+        if(monthIndex == 8){
+            year += 1; // Academic year increase every September
         }
+        
         return year;
     }
 
     public String semesterValue(){
+        
         if(hasStopped) return semester;
-           
+        
         if(monthIndex == 8) {
-            semester = "Semester 1";
-            
+            semester = "Semester 1"; 
         }
+        
         else if(monthIndex > 4 & monthIndex < 8){
             semester = "Summer Holiday";
         }
+        
         else if(monthIndex == 0){
             semester = "Semester 2";
-            
         }
+        
         return semester;
     }
 
@@ -91,9 +92,7 @@ public class InGameTimer  {
         semester = "Semester 1";
     }
     
-
     public Integer monthUpdate() {
-        
         if(hasStopped) return monthIndex;
 
         if(monthIndex == 11){
@@ -101,18 +100,23 @@ public class InGameTimer  {
         }
             
         else{
-            monthIndex += 1;
+             monthIndex += 1;
         }
-        return monthIndex;
         
+        return monthIndex;
+    }
+
+    public void updateValues(){
+        // one source for all updates when method is called
+        monthUpdate();
+        yearUpdate();
+        semesterValue();
+        resetElapse();
     }
     
     
     public String output() {
-        int time = (int) currentTimeRemaining;
-        int seconds = time % 60;
-        int minutes = time / 60;
-        return String.format("%s:%s \n\n %d", semester, months[monthIndex], year);
+        return String.format("%s:%s \n\n Year %d", semester, months[monthIndex], year);
     }
     
 }
