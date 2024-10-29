@@ -87,11 +87,7 @@ public class MapScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        timer.resetTime();
-        timer.resetYear();
-        timer.resetElapse();
-        timer.resetSemester();
-        timer.startTime();
+        timer.initialiseValues();
     }
 
     @Override

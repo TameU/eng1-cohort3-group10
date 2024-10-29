@@ -194,6 +194,17 @@ public class InGameTimer  {
         updateSemester();
         resetElapse();
     }
+
+    /**
+     * Initialises all timer values at the start of the game. 
+     */
+    public void initialiseValues(){
+        resetTime();
+        resetElapse();
+        resetYear();
+        resetSemester();
+        startTime();
+    }
     
     /**
      * Formats the class attributes to be displayed on the timer. 
