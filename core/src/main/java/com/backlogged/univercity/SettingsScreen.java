@@ -3,6 +3,8 @@ package com.backlogged.univercity;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -11,19 +13,18 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class SettingsScreen implements Screen {
-    private Game game;
     private Skin skin;
     private Stage stage;
     private Table table;
     private Label gameOverLabel;
     private TextButton startAgainButton;
-    private Cell cell;
+    private Texture bgTexture;
 
     public SettingsScreen(Game game) {
-        this.game = game;
         skin = new Skin(Gdx.files.local("testskin.json"));
         stage = new Stage(new ScreenViewport());
         table = new Table(skin);
+
         gameOverLabel = new Label("Settings", skin, "no-background");
         startAgainButton = new TextButton("Try again!", skin);
         startAgainButton.addListener(new ClickListener() {
@@ -31,11 +32,15 @@ public class SettingsScreen implements Screen {
                 game.setScreen(new MapScreen(game));
             }
         });
+
         table.add(gameOverLabel).space(20);
         table.row();
         table.add(startAgainButton).size(Value.percentWidth(.3f, table), Value.percentHeight(.1f, table));
         table.setFillParent(true);
         stage.addActor(table);
+
+        bgTexture = new Texture("UniverCityBackground.png");
+
     }
 
     @Override
@@ -46,8 +51,36 @@ public class SettingsScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(255, 255, 255, 255);
-        stage.act();
+        stage.getBatch().begin();
+        float worldWidth = stage.getWidth();
+        float worldHeight = stage.getHeight();
+        float padding = 20;
+        Vector2 offsetVect2 = getMouseDirection();
+        float offsetX = -offsetVect2.x * padding / 2;
+        float offsetY = offsetVect2.y * padding / 2;
+
+        stage.getBatch().draw(bgTexture, offsetX - padding / 2, offsetY - padding / 2, worldWidth + padding,
+                worldHeight + padding);
+        stage.getBatch().end();
+        stage.act(delta);
         stage.draw();
+    }
+
+    private Vector2 getMouseDirection() {
+        float x = Gdx.input.getX();
+        float y = Gdx.input.getY();
+
+        int centerX = (int) stage.getWidth() / 2;
+        int centerY = (int) stage.getHeight() / 2;
+
+        float diffX = centerX - x;
+        float diffY = centerY - y;
+
+        float normX = diffX / centerX;
+        float normY = diffY / centerY;
+
+        return new Vector2(normX, normY);
+
     }
 
     @Override
@@ -72,6 +105,8 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void dispose() {
+        stage.dispose();
+        skin.dispose();
 
     }
 }
