@@ -35,6 +35,7 @@ public class MapScreen implements Screen {
     private Table table;
     private Label timerLabel;
     private Button pauseButton;
+    private Button settingsButton;
     private InGameTimer timer;
     private boolean pauseClicked;
 
@@ -59,6 +60,13 @@ public class MapScreen implements Screen {
             }
         });
 
+        settingsButton = new Button(skin, "settings");
+        settingsButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                game.setScreen(new SettingsScreen(game));
+            }
+        });
+
         timerLabel.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new GameOverScreen(game));
@@ -70,6 +78,7 @@ public class MapScreen implements Screen {
         table.setDebug(true);
         table.add(timerLabel).expand().top();
         table.add(pauseButton).top().right();
+        table.add(settingsButton).top();// .left();
 
         stage.addActor(table);
 
