@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -36,7 +37,11 @@ public class MapScreen implements Screen {
     private Label timerLabel;
     private Button pauseButton;
     private InGameTimer timer;
-    private boolean pauseClicked;
+
+    private boolean mouseDown;
+    private boolean dragging;
+    private float oldMouseX, oldMouseY;
+    private float sensitivity = 0.025f;
 
     public MapScreen(Game game) {
         this.game = game;
@@ -104,11 +109,38 @@ public class MapScreen implements Screen {
         stage.draw();
     }
 
-    private void handleInput() {
+    /**
+     * Handles the user's mouse input, allowing dragging of the map
+     */
+    private void handleMouseInput() {
+        mouseDown = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
+
+        if (!dragging && mouseDown) {
+            dragging = true;
+            oldMouseX = Gdx.input.getX();
+            oldMouseY = Gdx.input.getY();
+        } else if (!mouseDown) {
+            dragging = false;
+        }
+
+        if (dragging) {
+            float currentX = Gdx.input.getX();
+            float currentY = Gdx.input.getY();
+            Vector2 translate = new Vector2(-(currentX - oldMouseX), currentY - oldMouseY);
+            translate.scl(sensitivity * camera.zoom);
+            camera.translate(translate);
+            oldMouseX = currentX;
+            oldMouseY = currentY;
+        }
+    }
+
+    /**
+     * Handle user's keyboard inputs, allowing movement and zooming of the map
+     */
+    private void handledKeyboardInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             camera.zoom += 0.02;
         }
-
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             camera.zoom -= 0.02;
         }
@@ -124,6 +156,14 @@ public class MapScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             camera.translate(0, 1, 0);
         }
+    }
+
+    /**
+     * Collective method for processing user input
+     */
+    private void handleInput() {
+        handleMouseInput();
+        handledKeyboardInput();
 
         /* TODO: get better clamping */
         camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, 100 / camera.viewportWidth);
@@ -157,4 +197,13 @@ public class MapScreen implements Screen {
     public void dispose() {
         map.dispose();
     }
+
+    public float getSensitivity() {
+        return sensitivity;
+    }
+
+    public void setSensitivity(float newSensitivity) {
+        sensitivity = Math.min(Math.abs(newSensitivity), 1);
+    }
+
 }
