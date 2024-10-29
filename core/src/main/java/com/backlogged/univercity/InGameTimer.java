@@ -40,7 +40,7 @@ public class InGameTimer  {
     }
     
     /**
-     * Compliment of the stopTime() method. In this method the 
+     * Compliment of the startTime() method. In this method the 
      * flag indicating the pausing of the game is set to true. 
      */
     public void stopTime() {
