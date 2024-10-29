@@ -20,16 +20,16 @@ public class SettingsScreen implements Screen {
     private TextButton startAgainButton;
     private Texture bgTexture;
 
-    public SettingsScreen(Game game) {
+    public SettingsScreen(Game game, Screen previousScreen) {
         skin = new Skin(Gdx.files.local("testskin.json"));
         stage = new Stage(new ScreenViewport());
         table = new Table(skin);
 
         gameOverLabel = new Label("Settings", skin, "no-background");
-        startAgainButton = new TextButton("Try again!", skin);
+        startAgainButton = new TextButton("Back", skin);
         startAgainButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                game.setScreen(new MapScreen(game));
+                game.setScreen(previousScreen);
             }
         });
 
@@ -39,7 +39,7 @@ public class SettingsScreen implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        bgTexture = new Texture("UniverCityBackground.png");
+        bgTexture = new Texture("UniverCityBackgroundBlur.png");
 
     }
 
@@ -59,8 +59,8 @@ public class SettingsScreen implements Screen {
         float offsetX = -offsetVect2.x * padding / 2;
         float offsetY = offsetVect2.y * padding / 2;
 
-        stage.getBatch().draw(bgTexture, offsetX - padding / 2, offsetY - padding / 2, worldWidth + padding,
-                worldHeight + padding);
+        stage.getBatch().draw(bgTexture, offsetX - padding / 2, offsetY - padding / 2,
+                worldWidth + padding, worldHeight + padding);
         stage.getBatch().end();
         stage.act(delta);
         stage.draw();
@@ -107,6 +107,7 @@ public class SettingsScreen implements Screen {
     public void dispose() {
         stage.dispose();
         skin.dispose();
+        bgTexture.dispose();
 
     }
 }
