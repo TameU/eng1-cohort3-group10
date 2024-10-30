@@ -49,14 +49,14 @@ public class BuildingManager {
         }
         public static AbstractBuilding createBuilding(String building) {
             switch (building) {
-                case "lectureHall":
+                case "LectureHall":
                     return new LectureHall(buildingMap.get(building));
-                case "accomodation": 
-                    return null; 
-                case "sportsCenter": 
-                    return null; 
-                case "foodCourt": 
-                    return null;
+                case "Accomodation": 
+                    return new Accomodation(buildingMap.get(building)); 
+                case "SportsCenter": 
+                    return new SportsCenter(buildingMap.get(building)); 
+                case "FoodCourt": 
+                    return new FoodCourt(buildingMap.get(building));
                 default:
                     throw new IllegalArgumentException(String.format(
                             "Building %s is either unimplemented or does not exist", building));
@@ -127,12 +127,9 @@ public class BuildingManager {
 
         shapeRenderer.end();
     }
-
-    public void setView(OrthographicCamera camera) {
-        batch.setProjectionMatrix(camera.combined);
-    }
     //TODO: This is rushed. Will implement a better solution later but this works for now.
-    public void renderBuildings() {
+    public void renderBuildings(OrthographicCamera camera) {
+        batch.setProjectionMatrix(camera.combined); 
         batch.begin();
         for (var building : placedBuildings.values()) {
             Sprite bs = buildingAtlas.createSprite(building.getAtlasRegion());
