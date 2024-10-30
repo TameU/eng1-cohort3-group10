@@ -1,26 +1,134 @@
 
 testskin.png
-size: 512, 512
+size: 2048, 2048
 format: RGBA8888
 filter: Linear, Linear
 repeat: none
+PressStart2P-GameOver_0
+  rotate: false
+  xy: 1029, 1029
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+PressStart2P-GameOver_1
+  rotate: false
+  xy: 515, 1
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+PressStart2P-GameOver_2
+  rotate: false
+  xy: 1029, 515
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+PressStart2P-GameOver_3
+  rotate: false
+  xy: 1029, 1
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+PressStart2P-title_0
+  rotate: false
+  xy: 1, 1029
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+PressStart2P-title_1
+  rotate: false
+  xy: 1, 515
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+PressStart2P-title_2
+  rotate: false
+  xy: 515, 1029
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+PressStart2P-title_3
+  rotate: false
+  xy: 1, 1
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+PressStart2P-title_4
+  rotate: false
+  xy: 515, 515
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+
+testskin2.png
+size: 1024, 1024
+format: RGBA8888
+filter: Linear, Linear
+repeat: none
+PressStart2P-GameOver_4
+  rotate: false
+  xy: 1, 501
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 PressStart2P-Regular
   rotate: false
-  xy: 1, 357
+  xy: 1, 352
   size: 505, 147
   orig: 505, 147
   offset: 0, 0
   index: -1
 timer
   rotate: false
-  xy: 1, 255
+  xy: 515, 913
   size: 500, 100
   orig: 500, 100
   offset: 0, 0
   index: -1
+Button01
+  rotate: false
+  xy: 1, 188
+  size: 300, 80
+  split: 13, 13, 40, 39
+  orig: 300, 80
+  offset: 0, 0
+  index: -1
+Button08
+  rotate: false
+  xy: 1, 270
+  size: 300, 80
+  split: 13, 13, 40, 39
+  orig: 300, 80
+  offset: 0, 0
+  index: -1
+Button09
+  rotate: false
+  xy: 515, 831
+  size: 300, 80
+  split: 13, 13, 40, 39
+  orig: 300, 80
+  offset: 0, 0
+  index: -1
+Button15
+  rotate: false
+  xy: 515, 749
+  size: 300, 80
+  split: 13, 13, 40, 39
+  orig: 300, 80
+  offset: 0, 0
+  index: -1
 pause_icon
   rotate: false
-  xy: 1, 189
+  xy: 303, 286
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
