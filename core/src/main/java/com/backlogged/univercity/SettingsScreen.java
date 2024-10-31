@@ -52,18 +52,36 @@ public class SettingsScreen implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(255, 255, 255, 255);
         stage.getBatch().begin();
-        float worldWidth = stage.getWidth();
-        float worldHeight = stage.getHeight();
-        float padding = 20;
-        Vector2 offsetVect2 = getMouseDirection();
-        float offsetX = -offsetVect2.x * padding / 2;
-        float offsetY = offsetVect2.y * padding / 2;
-
-        stage.getBatch().draw(bgTexture, offsetX - padding / 2, offsetY - padding / 2,
-                worldWidth + padding, worldHeight + padding);
+        renderBackground();
         stage.getBatch().end();
         stage.act(delta);
         stage.draw();
+    }
+
+    private void renderBackground() {
+        float aspectRatio = 16f / 9f;
+        float worldWidth = stage.getWidth();
+        float worldHeight = stage.getHeight();
+        float padding = 20;
+
+        float height = worldHeight;
+        float width = height * aspectRatio;
+
+        if (width < worldWidth) {
+            width = worldWidth;
+            height = width / aspectRatio;
+        }
+
+        float correctionX = (worldWidth - width) / 2;
+        float correctionY = (worldHeight - height) / 2;
+
+        Vector2 offsetVect2 = getMouseDirection();
+        float offsetX = (-offsetVect2.x * padding / 2) + correctionX;
+        float offsetY = (offsetVect2.y * padding / 2) + correctionY;
+
+        stage.getBatch().draw(bgTexture, offsetX - padding / 2, offsetY - padding / 2,
+                width + padding, height + padding);
+
     }
 
     private Vector2 getMouseDirection() {
