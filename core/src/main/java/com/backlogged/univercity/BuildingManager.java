@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.JsonValue;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.utils.Disposable;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -20,10 +21,11 @@ import java.util.Set;
 import java.util.Map.Entry;
 
 
-public class BuildingManager {
+public class BuildingManager implements Disposable {
 
-    class BuildingFactory {
+    private static class BuildingFactory {
         private static HashMap<String, BuildingInfo> buildingMap = new HashMap<>();
+        private static TextureAtlas buildingAtlas;
         private static ArrayList<Coord> getBoundingPolygonVerticesFromJson(JsonValue vertices) {
             var boundingPolygonVertices = new ArrayList<Coord>();
             for (var vertex : vertices) {
@@ -32,27 +34,32 @@ public class BuildingManager {
             return boundingPolygonVertices;
         }
 
-        public static void getBuildingsFromJson(FileHandle buildingsJsonFile) {
-
+        public static void getBuildingsFromJson(FileHandle buildingsJsonFile, FileHandle textureAtlasFile, float unitScale) {
+            buildingAtlas = new TextureAtlas(textureAtlasFile);
             JsonValue buildings = new JsonReader().parse(buildingsJsonFile);
-            for (var building : buildings) {
+            for (var building : buildings) { 
+                Sprite sprite = buildingAtlas.createSprite(building.get("atlasRegion").asString());
+                sprite.setScale(unitScale); 
+                sprite.setOrigin(0, 0);
                 buildingMap.put(building.name,
                         new BuildingInfo(building.get("type").asStringArray(),
-                                building.get("atlasRegion").asString(),
                                 getBoundingPolygonVerticesFromJson(
                                         building.get("boundingPolygonVertices")),
-                                building.get("info").asString()));
+                                building.get("info").asString(), sprite));
             }
         } 
         public static Set<Entry<String, BuildingInfo>> getBuildings() { 
             return buildingMap.entrySet();
+        } 
+        public static TextureAtlas getBuildingAtlas() { 
+            return buildingAtlas;
         }
         public static AbstractBuilding createBuilding(String building) {
             switch (building) {
                 case "LectureHall":
                     return new LectureHall(buildingMap.get(building));
-                case "Accomodation": 
-                    return new Accomodation(buildingMap.get(building)); 
+                case "Accommodation": 
+                    return new Accommodation(buildingMap.get(building)); 
                 case "SportsCenter": 
                     return new SportsCenter(buildingMap.get(building)); 
                 case "FoodCourt": 
@@ -63,23 +70,26 @@ public class BuildingManager {
             }
         }
     }
-
+    private static BuildingManager instance;
     private TiledMapTileLayer terrainLayer;
-    private TextureAtlas buildingAtlas;
     private HashMap<Coord, AbstractBuilding> placedBuildings = new HashMap<>();
     private SpriteBatch batch = new SpriteBatch();
     private int count = 0;
-    private float unitScale;
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
 
-    public BuildingManager(TiledMap map, float unitScale, String buildingAtlasPath) {
+    private BuildingManager(TiledMap map, float unitScale, String buildingAtlasPath) {
         if (map == null) {
             throw new IllegalArgumentException("the TiledMap was null, has to be initialized");
         } 
-        BuildingFactory.getBuildingsFromJson(Gdx.files.internal("Buildings.json"));
-        this.buildingAtlas = new TextureAtlas(Gdx.files.internal(buildingAtlasPath));
+        BuildingFactory.getBuildingsFromJson(Gdx.files.internal("Buildings.json"), Gdx.files.internal(buildingAtlasPath), unitScale);
         terrainLayer = (TiledMapTileLayer) map.getLayers().get("Terrain"); 
-        this.unitScale = unitScale;
+    } 
+
+    public static BuildingManager getInstance(TiledMap map, float unitScale, String buildingAtlasPath) {
+        if (instance == null) {
+            instance = new BuildingManager(map, unitScale, buildingAtlasPath);
+        }
+        return instance;
     }
     //TODO: I need to implement this custom layer property in Tiled for Terrain
     public boolean canBePlacedAtLocation(int row, int column, AbstractBuilding building) {
@@ -127,17 +137,21 @@ public class BuildingManager {
 
         shapeRenderer.end();
     }
-    //TODO: This is rushed. Will implement a better solution later but this works for now.
+ 
     public void renderBuildings(OrthographicCamera camera) {
         batch.setProjectionMatrix(camera.combined); 
         batch.begin();
         for (var building : placedBuildings.values()) {
-            Sprite bs = buildingAtlas.createSprite(building.getAtlasRegion());
-            bs.setScale(unitScale);
-            bs.setOrigin(0, 0);
+            Sprite bs = building.getSprite();
             bs.setPosition(building.getMapPos().getRow(), building.getMapPos().getColumn());
             bs.draw(batch);
         }
         batch.end();
+    } 
+    public void dispose() { 
+        var atlas = BuildingFactory.getBuildingAtlas(); 
+        if (atlas != null) atlas.dispose();
+        batch.dispose(); 
+        shapeRenderer.dispose();
     }
 }

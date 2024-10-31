@@ -1,17 +1,16 @@
 package com.backlogged.univercity;
 
 import java.util.ArrayList;
-
+import com.badlogic.gdx.graphics.g2d.Sprite;;
 public class BuildingInfo {
     final String[] type; 
-    final String atlasRegion; 
     final ArrayList<Coord> boundingPolygonVertices; 
     final String info; 
-    
-    public BuildingInfo(String[] type, String atlasRegion, ArrayList<Coord> boundingPolygonVertices, String info) { 
+    final Sprite buildingSprite;
+    public BuildingInfo(String[] type, ArrayList<Coord> boundingPolygonVertices, String info, Sprite buildingSprite) { 
         this.type = type; 
-        this.atlasRegion = atlasRegion; 
         this.boundingPolygonVertices = boundingPolygonVertices; 
-        this.info = info;
+        this.info = info; 
+        this.buildingSprite = buildingSprite;
     }    
 }

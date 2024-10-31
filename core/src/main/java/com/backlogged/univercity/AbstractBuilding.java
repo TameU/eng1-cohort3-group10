@@ -1,18 +1,18 @@
 package com.backlogged.univercity;
 
 import java.util.ArrayList;
-
+import com.badlogic.gdx.graphics.g2d.Sprite;
 public abstract class AbstractBuilding {
     private BuildingInfo buildingInfo; 
-    private Coord mapPos;
+    private Coord mapPos; 
     public AbstractBuilding(BuildingInfo buildingInfo) { 
         this.buildingInfo = buildingInfo;
     } 
         public final String[] getType() {
         return buildingInfo.type;
     } 
-    public final String getAtlasRegion() { 
-        return buildingInfo.atlasRegion;
+    public final Sprite getSprite() { 
+        return buildingInfo.buildingSprite;
     } 
     public final ArrayList<Coord> getBoundingPolygonVertices() { 
         return buildingInfo.boundingPolygonVertices;
