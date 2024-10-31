@@ -6,10 +6,12 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -22,10 +24,7 @@ public class TitleScreen implements Screen {
     private Table table;
     private Skin skin;
 
-    private TiledMap map;
-    private float unitScale;
-    private OrthogonalTiledMapRenderer renderer;
-    private OrthographicCamera camera;
+    private Texture bgTexture;
 
     private Label titleLabel;
     private TextButton playButton;
@@ -35,13 +34,7 @@ public class TitleScreen implements Screen {
     public TitleScreen(Game game) {
         this.game = game;
 
-        map = new TmxMapLoader().load("desert.tmx");
-        unitScale = 1 / 32f;
-        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
-        camera = new OrthographicCamera();
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
-        camera.setToOrtho(false, width * unitScale, (width * unitScale) * (height / width));
+        bgTexture = new Texture("UniverCityBackgroundBlur.png");
 
         stage = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.local("testskin.json"));
@@ -87,19 +80,68 @@ public class TitleScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        camera.update();
-        renderer.setView(camera);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        renderer.render();
+        stage.getBatch().begin();
+        renderBackground();
+        stage.getBatch().end();
         stage.act();
         stage.draw();
     }
 
+    /**
+     * Handles rendering for the background image, including scaling correctly,
+     * and moving relative to the mouse position
+     */
+    private void renderBackground() {
+        float aspectRatio = 16f / 9f;
+        float worldWidth = stage.getWidth();
+        float worldHeight = stage.getHeight();
+        float padding = 20;
+
+        float height = worldHeight;
+        float width = height * aspectRatio;
+
+        if (width < worldWidth) {
+            width = worldWidth;
+            height = width / aspectRatio;
+        }
+
+        float correctionX = (worldWidth - width) / 2;
+        float correctionY = (worldHeight - height) / 2;
+
+        Vector2 offsetVect2 = getMouseDirection();
+        float offsetX = (-offsetVect2.x * padding / 2) + correctionX;
+        float offsetY = (offsetVect2.y * padding / 2) + correctionY;
+
+        stage.getBatch().draw(bgTexture, offsetX - padding / 2, offsetY - padding / 2,
+            width + padding, height + padding);
+
+    }
+
+    /**
+     * Returns a 2-dimensional <a href="https://en.wikipedia.org/wiki/Unit_vector">
+     * unit vector</a>
+     * from the centre of the screen, towards the mouse position
+     */
+    private Vector2 getMouseDirection() {
+        float x = Gdx.input.getX();
+        float y = Gdx.input.getY();
+
+        int centerX = (int) stage.getWidth() / 2;
+        int centerY = (int) stage.getHeight() / 2;
+
+        float diffX = centerX - x;
+        float diffY = centerY - y;
+
+        float normX = diffX / centerX;
+        float normY = diffY / centerY;
+
+        return new Vector2(normX, normY);
+
+    }
+
     @Override
     public void resize(int width, int height) {
-        camera.viewportWidth = MathUtils.floor(width / 32f);
-        camera.viewportHeight = camera.viewportWidth * height / width;
-        camera.update();
         titleLabel.setFontScale(width / 1300f);
         playButton.getStyle().font.getData().setScale(width / 3000f);
         stage.getViewport().update(width, height, true);
