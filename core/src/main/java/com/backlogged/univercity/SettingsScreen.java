@@ -58,6 +58,10 @@ public class SettingsScreen implements Screen {
         stage.draw();
     }
 
+    /**
+     * Handles rendering for the background image, including scaling correctly,
+     * and moving relative to the mouse position
+     */
     private void renderBackground() {
         float aspectRatio = 16f / 9f;
         float worldWidth = stage.getWidth();
@@ -84,6 +88,11 @@ public class SettingsScreen implements Screen {
 
     }
 
+    /**
+     * Returns a 2-dimensional <a href="https://en.wikipedia.org/wiki/Unit_vector">
+     * unit vector</a>
+     * from the centre of the screen, towards the mouse position
+     */
     private Vector2 getMouseDirection() {
         float x = Gdx.input.getX();
         float y = Gdx.input.getY();
