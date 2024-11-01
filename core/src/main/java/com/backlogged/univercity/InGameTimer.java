@@ -42,16 +42,24 @@ public class InGameTimer  {
 
     /**
      * Compliment of the userStartTime() method. In this method the
-     * flag indicating the pausing of the game is set to true.
+     * flag indicating the user invoked pausing of the game is set to true.
      */
     public void userStopTime() {
         userInvokedPause = true;
     }
 
+    /**
+     * systemStartTime changes value of the systemInvokedPause flag to false to indicate
+     * the end of the system invoked pause.
+     */
     public void systemStartTime() {
         systemInvokedPause = false;
     }
 
+    /**
+     * Compliment of the systemStartTime() method. In this method the
+     * flag indicating the system invoked pausing of the game is set to true.
+     */
     public void systemStopTime() {
         systemInvokedPause = true;
     }
@@ -59,7 +67,7 @@ public class InGameTimer  {
     /**
      * This method returns the current state of the game.
      *
-     * @return the boolean flag stating whether the game is paused or not.
+     * @return the boolean flag stating whether the game is user paused or not.
      */
     public boolean isUserStopped() {
         return userInvokedPause;
