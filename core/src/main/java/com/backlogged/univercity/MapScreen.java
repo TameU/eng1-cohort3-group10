@@ -54,10 +54,10 @@ public class MapScreen implements Screen {
         pauseButton = new Button(skin, "pause");
         pauseButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                if (timer.isStopped())
-                    timer.startTime();
+                if (timer.isUserStopped())
+                    timer.userStartTime();
                 else
-                    timer.stopTime();
+                    timer.userStopTime();
             }
         });
 
@@ -82,16 +82,17 @@ public class MapScreen implements Screen {
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
         camera.setToOrtho(false, width * unitScale, (width * unitScale) * (height / width));
+        timer.resetTime();
+        timer.resetYear();
+        timer.resetElapse();
+        timer.resetSemester();
+        timer.userStartTime();
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        timer.resetTime();
-        timer.resetYear();
-        timer.resetElapse();
-        timer.resetSemester();
-        timer.startTime();
+        timer.systemStartTime();
     }
 
     @Override
@@ -103,11 +104,11 @@ public class MapScreen implements Screen {
         renderer.render();
         float timeLeft = timer.updateTime(delta);
         float elapsedTime = timer.timeElapsed(delta);
-        
+
         if(elapsedTime > Constants.THRESHOLD){
             timer.updateValues();
         }
-        
+
         if (timeLeft < 1)
             game.setScreen(new GameOverScreen(game));
         timerLabel.setText(timer.output());
@@ -152,11 +153,13 @@ public class MapScreen implements Screen {
     @Override
     public void pause() {
         // Invoked when your application is paused.
+        timer.systemStopTime();
     }
 
     @Override
     public void resume() {
         // Invoked when your application is resumed after pause.
+        timer.systemStartTime();
     }
 
     @Override
