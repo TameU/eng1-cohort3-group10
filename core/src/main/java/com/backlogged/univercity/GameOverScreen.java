@@ -67,8 +67,8 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        gameOverLabel.setFontScale(width / 1000f);
-        startAgainButton.getStyle().font.getData().setScale(width / 3000f);
+        gameOverLabel.setFontScale(width / Constants.GAME_OVER_FONT_SCALING_FACTOR);
+        startAgainButton.getStyle().font.getData().setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
         stage.getViewport().update(width, height, true);
     }
 
