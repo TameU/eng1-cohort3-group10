@@ -20,4 +20,14 @@ public final class Constants {
      * Font scaling factor for TextButtons.
      */
     public static final float TEXT_BUTTON_FONT_SCALING_FACTOR = 3000f;
+
+    /**
+     * Path to the background picture.
+     */
+    public static final String BACKGROUND_PICTURE_PATH = "UniverCityBackgroundBlur.png";
+
+    /**
+     * Path to the UI skin/
+     */
+    public static final String UI_SKIN_PATH = "testskin.json";
 }

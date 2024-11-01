@@ -28,16 +28,18 @@ public class TitleScreen implements Screen {
     public TitleScreen(Game game) {
         this.game = game;
 
-        bgTexture = new Texture("UniverCityBackgroundBlur.png");
+        bgTexture = new Texture(Constants.BACKGROUND_PICTURE_PATH);
 
+        //Set up UI stage, skin and table
         stage = new Stage(new ScreenViewport());
-        skin = new Skin(Gdx.files.local("testskin.json"));
+        skin = new Skin(Gdx.files.local(Constants.UI_SKIN_PATH));
         table = new Table(skin);
         table.setFillParent(true);
         table.setDebug(true);
 
         stage.addActor(table);
 
+        //Set up the title label and buttons
         titleLabel = new Label("UniverCity", skin, "game-title");
         titleLabel.setFontScale(3f);
 
@@ -57,6 +59,7 @@ public class TitleScreen implements Screen {
             }
         });
 
+        //Add the title label and buttons to the UI table
         table.add(titleLabel).top().padTop(100);
         table.row();
         table.add(playButton).top().padTop(100).width(Value.percentWidth(0.3f, table)).height(Value.percentHeight(0.1f, table));
@@ -158,6 +161,8 @@ public class TitleScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
+        skin.dispose();
+        bgTexture.dispose();
     }
 }
