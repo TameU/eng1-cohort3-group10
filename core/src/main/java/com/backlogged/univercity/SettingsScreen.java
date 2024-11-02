@@ -16,7 +16,7 @@ public class SettingsScreen implements Screen {
     private Skin skin;
     private Stage stage;
     private Table table;
-    private Label gameOverLabel;
+    private Label settingsLabel;
     private TextButton startAgainButton;
     private Texture bgTexture;
 
@@ -25,7 +25,7 @@ public class SettingsScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         table = new Table(skin);
 
-        gameOverLabel = new Label("Settings", skin, "no-background");
+        settingsLabel = new Label("Settings", skin, "no-background");
         startAgainButton = new TextButton("Back", skin);
         startAgainButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
@@ -33,7 +33,7 @@ public class SettingsScreen implements Screen {
             }
         });
 
-        table.add(gameOverLabel).space(20);
+        table.add(settingsLabel).space(20);
         table.row();
         table.add(startAgainButton).size(Value.percentWidth(.3f, table), Value.percentHeight(.1f, table));
         table.setFillParent(true);
