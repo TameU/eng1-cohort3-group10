@@ -2,7 +2,7 @@ package com.backlogged.univercity;
 
 public final class Constants {
 
-    /** This Class acts as a soruce for all constants used in the game.
+    /** This Class acts as a source for all constants used in the game.
      *  The constructor has the 'private' access modifier to restrict 
      *  instantiation from other classes in the package. 
      * @author @Josh-White14
