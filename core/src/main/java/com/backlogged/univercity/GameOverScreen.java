@@ -11,7 +11,6 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class GameOverScreen implements Screen {
-    private Game game;
     private Skin skin;
     private Stage stage;
     private Table table;
@@ -20,8 +19,6 @@ public class GameOverScreen implements Screen {
     private TextButton quitButton;
 
     public GameOverScreen(Game game) {
-        this.game = game;
-
         skin = new Skin(Gdx.files.local("testskin.json"));
         stage = new Stage(new ScreenViewport());
         table = new Table(skin);
