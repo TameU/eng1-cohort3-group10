@@ -165,5 +165,6 @@ public class MapScreen implements Screen {
     @Override
     public void dispose() {
         map.dispose();
+        stage.dispose();
     }
 }
