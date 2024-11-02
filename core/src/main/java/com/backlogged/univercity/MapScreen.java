@@ -196,6 +196,9 @@ public class MapScreen implements Screen {
     @Override
     public void dispose() {
         map.dispose();
+        stage.dispose();
+        skin.dispose();
+        renderer.dispose();
     }
 
     public float getSensitivity() {
