@@ -1,6 +1,6 @@
 package com.backlogged.univercity;
 
-public class InGameTimer  {
+public class InGameTimer {
 
     /**
      * Represents the timer used for the game.
@@ -9,9 +9,8 @@ public class InGameTimer  {
      * @version %I%, %G%
      */
 
-
-    private String[] months = {"January","February","March","April","May","June","July"
-                                ,"August","September","October","November","December"};
+    private String[] months = { "January", "February", "March", "April", "May", "June", "July", "August", "September",
+            "October", "November", "December" };
     private int monthIndex = 7;
     private float currentTimeRemaining;
     private int year;
@@ -28,17 +27,17 @@ public class InGameTimer  {
      * @param timeInMinutes the length of the game specified in minutes.
      */
     public InGameTimer(int timeInMinutes) {
-        currentTimeRemaining = (float)timeInMinutes * 60.f;
+        currentTimeRemaining = (float) timeInMinutes * 60.f;
         this.timeInMinutes = timeInMinutes;
     }
 
     /**
-     * An alternative constructor for the class that defaults the 
-     * timeInMinutes value to 5 if no input is recieved .
+     * An alternative constructor for the class that defaults the
+     * timeInMinutes value to 5 if no input is received.
      */
     public InGameTimer() {
         this.timeInMinutes = 5;
-        currentTimeRemaining = (float)timeInMinutes * 60.f;
+        currentTimeRemaining = (float) timeInMinutes * 60.f;
     }
 
     /**
@@ -58,7 +57,8 @@ public class InGameTimer  {
     }
 
     /**
-     * systemStartTime changes value of the systemInvokedPause flag to false to indicate
+     * systemStartTime changes value of the systemInvokedPause flag to false to
+     * indicate
      * the end of the system invoked pause.
      */
     public void systemStartTime() {
@@ -89,7 +89,7 @@ public class InGameTimer  {
      */
     public void resetTime() {
         userStopTime();
-        currentTimeRemaining = (float)timeInMinutes * 60.f;
+        currentTimeRemaining = (float) timeInMinutes * 60.f;
         monthIndex = 8; // Game begins from September
     }
 
@@ -99,10 +99,11 @@ public class InGameTimer  {
      * is returned, otherwise it is updated by subtracting the delta value.
      *
      * @param delta the time elapsed since the last render.
-     * @return  the value in seconds of the time left in the game.
+     * @return the value in seconds of the time left in the game.
      */
     public float updateTime(float delta) {
-        if (userInvokedPause || systemInvokedPause) return currentTimeRemaining;
+        if (userInvokedPause || systemInvokedPause)
+            return currentTimeRemaining;
         currentTimeRemaining = currentTimeRemaining - delta <= 0.f ? 0.f : currentTimeRemaining - delta;
 
         return currentTimeRemaining;
@@ -111,7 +112,7 @@ public class InGameTimer  {
     /**
      * Resets the elapsed time to 0 each time the month is updated in-game.
      */
-    public void resetElapse(){
+    public void resetElapse() {
         timeElapse = 0;
     }
 
@@ -123,31 +124,31 @@ public class InGameTimer  {
      * @param delta the time in seconds since the last render.
      * @return the time since the last month update.
      */
-    public float timeElapsed(float delta){
-        if (userInvokedPause || systemInvokedPause) return timeElapse;
+    public float timeElapsed(float delta) {
+        if (userInvokedPause || systemInvokedPause)
+            return timeElapse;
 
         timeElapse = timeElapse + delta;
         return timeElapse;
     }
 
-
     /**
      * Resets the value of the year at the beginning of the game.
      */
-    public void resetYear(){
+    public void resetYear() {
         year = 1;
     }
-
 
     /**
      * Updates the year in-game each September in correspondence
      * with a standard academic timetable. If the game is paused
      * the current value is returned.
      */
-    public Integer updateYear(){
-        if(userInvokedPause || systemInvokedPause) return year;
+    public Integer updateYear() {
+        if (userInvokedPause || systemInvokedPause)
+            return year;
 
-        if(monthIndex == 8){
+        if (monthIndex == 8) {
             year += 1; // Academic year increase every September
         }
 
@@ -156,24 +157,25 @@ public class InGameTimer  {
 
     /**
      * Sets the semester values dependant on the month. September - December
-     * is Semester 1, January - May is Semester 2  and Summer Holidays June
+     * is Semester 1, January - May is Semester 2 and Summer Holidays June
      * - August. If the game is paused the current value is returned.
      *
      * @return the current semester associated with the in-game time.
      */
-    public String updateSemester(){
+    public String updateSemester() {
 
-        if(userInvokedPause || systemInvokedPause) return semester;
+        if (userInvokedPause || systemInvokedPause)
+            return semester;
 
-        if(monthIndex == 8) {
+        if (monthIndex == 8) {
             semester = "Semester 1";
         }
 
-        else if(monthIndex > 4 & monthIndex < 8){
+        else if (monthIndex > 4 & monthIndex < 8) {
             semester = "Summer Holiday";
         }
 
-        else if(monthIndex == 0){
+        else if (monthIndex == 0) {
             semester = "Semester 2";
         }
 
@@ -183,37 +185,36 @@ public class InGameTimer  {
     /**
      * Resets the value of the semester at the start of the game.
      */
-    public void resetSemester(){
+    public void resetSemester() {
         semester = "Semester 1";
     }
-
 
     /**
      * Updates the index value of the months array when called. If the
      * game is paused, the current month is returned.
      *
      * @return the index of the current month.
-     * */
+     */
     public Integer updateMonth() {
-        if(userInvokedPause || systemInvokedPause) return monthIndex;
+        if (userInvokedPause || systemInvokedPause)
+            return monthIndex;
 
-        if(monthIndex == 11){
+        if (monthIndex == 11) {
             monthIndex = 0;
         }
 
-        else{
-             monthIndex += 1;
+        else {
+            monthIndex += 1;
         }
 
         return monthIndex;
     }
 
-
     /**
      * Updates all values associated with the timer display used in the
      * MapScreen class.
      */
-    public void updateTimerValues(){
+    public void updateTimerValues() {
         // one source for all updates when method is called
         updateMonth();
         updateYear();
@@ -221,10 +222,10 @@ public class InGameTimer  {
         resetElapse();
     }
 
-     /**
-     * Initialises all timer values at the start of the game. 
+    /**
+     * Initialises all timer values at the start of the game.
      */
-    public void initialiseTimerValues(){
+    public void initialiseTimerValues() {
         resetTime();
         resetElapse();
         resetYear();
@@ -242,4 +243,3 @@ public class InGameTimer  {
     }
 
 }
-
