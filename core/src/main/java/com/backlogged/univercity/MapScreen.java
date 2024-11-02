@@ -20,8 +20,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-
-
 /**
  * First screen of the application. Displayed after the application is created.
  */
@@ -38,7 +36,6 @@ public class MapScreen implements Screen {
     private Label timerLabel;
     private Button pauseButton;
     private InGameTimer timer;
-    private boolean pauseClicked;
 
     public MapScreen(Game game) {
         this.game = game;
@@ -82,7 +79,7 @@ public class MapScreen implements Screen {
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
         camera.setToOrtho(false, width * unitScale, (width * unitScale) * (height / width));
-        
+
     }
 
     @Override
@@ -101,7 +98,7 @@ public class MapScreen implements Screen {
         float timeLeft = timer.updateTime(delta);
         float elapsedTime = timer.timeElapsed(delta);
 
-        if(elapsedTime > Constants.ONE_MONTH){
+        if (elapsedTime > Constants.ONE_MONTH) {
             timer.updateTimerValues();
         }
 
