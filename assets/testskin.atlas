@@ -1,27 +1,84 @@
 
 testskin.png
-size: 512, 512
+size: 2048, 2048
 format: RGBA8888
 filter: Linear, Linear
 repeat: none
 PressStart2P-Regular
   rotate: false
-  xy: 1, 357
+  xy: 1029, 1496
   size: 505, 147
   orig: 505, 147
   offset: 0, 0
   index: -1
+PressStart2P-title_0
+  rotate: false
+  xy: 1, 1131
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+PressStart2P-title_1
+  rotate: false
+  xy: 1, 617
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+PressStart2P-title_2
+  rotate: false
+  xy: 515, 1131
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+PressStart2P-title_3
+  rotate: false
+  xy: 1, 103
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
+PressStart2P-title_4
+  rotate: false
+  xy: 515, 617
+  size: 512, 512
+  orig: 512, 512
+  offset: 0, 0
+  index: -1
 timer
   rotate: false
-  xy: 1, 255
+  xy: 1, 1
   size: 500, 100
   orig: 500, 100
   offset: 0, 0
   index: -1
+Button08
+  rotate: false
+  xy: 515, 535
+  size: 300, 80
+  split: 13, 13, 40, 39
+  orig: 300, 80
+  offset: 0, 0
+  index: -1
+Button09
+  rotate: false
+  xy: 1029, 1414
+  size: 300, 80
+  split: 13, 13, 40, 39
+  orig: 300, 80
+  offset: 0, 0
+  index: -1
 pause_icon
   rotate: false
-  xy: 1, 189
+  xy: 1536, 1579
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
+setting-icon(2)
+  rotate: false
+  xy: 1536, 1512
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0

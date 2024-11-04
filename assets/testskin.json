@@ -1,65 +1,92 @@
 {
-com.badlogic.gdx.graphics.g2d.BitmapFont: {
-	PressStart2P-Regular: {
-		file: PressStart2P-Regular.fnt
-		scaledSize: -1
-		markupEnabled: false
+"com.badlogic.gdx.graphics.g2d.BitmapFont": {
+	"PressStart2P-Regular": {
+		file: "PressStart2P-Regular.fnt",
+		scaledSize: -1,
+		markupEnabled: false,
+		flip: false
+	},
+	"PressStart2P-title": {
+		file: "PressStart2P-title.fnt",
+		scaledSize: -1,
+		markupEnabled: false,
 		flip: false
 	}
-}
-com.badlogic.gdx.graphics.Color: {
+},
+"com.badlogic.gdx.graphics.Color": {
 	Black: {
-		r: 0
-		g: 0
-		b: 0
+		r: 0,
+		g: 0,
+		b: 0,
 		a: 1
-	}
+	},
+	Green: {
+		r: 0,
+		g: 1,
+		b: 0,
+		a: 1
+	},
 	Red: {
-		r: 1
-		g: 0
-		b: 0
+		r: 1,
+		g: 0,
+		b: 0,
 		a: 1
-	}
+	},
 	White: {
-		r: 1
-		g: 1
-		b: 1
+		r: 1,
+		g: 1,
+		b: 1,
 		a: 1
 	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
 	pause: {
-		up: pause_icon
-		pressedOffsetX: 2
-		pressedOffsetY: 2
-		checkedOffsetX: 2
+		up: "pause_icon",
+		pressedOffsetX: 2,
+		pressedOffsetY: 2,
+		checkedOffsetX: 2,
 		checkedOffsetY: 2
 	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
-	default: {
-		font: PressStart2P-Regular
-		fontColor: Black
-		background: timer
+	settings: {
+		up: setting-icon(2)
 	}
-	no-background: {
-		font: PressStart2P-Regular
-		fontColor: Black
-	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
 	default: {
-		font: PressStart2P-Regular
-		fontColor: Black
-		downFontColor: Red
-		overFontColor: Red
-		focusedFontColor: Red
-		up: timer
+		font: "PressStart2P-Regular",
+		fontColor: "Black",
+		background: "timer"
+	},
+	"no-background": {
+		font: "PressStart2P-Regular",
+		fontColor: "Black"
+	},
+	"game-title": {
+		parent: "no-background",
+		font: "PressStart2P-title",
+		fontColor: "White"
 	}
-}
-com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle: {
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
 	default: {
-		label: default
+		font: "PressStart2P-Regular",
+		fontColor: "Black",
+		downFontColor: "Red",
+		overFontColor: "Red",
+		focusedFontColor: "Red",
+		up: "timer"
+	},
+	"blue-text-button": {
+		font: "PressStart2P-title",
+		fontColor: "White",
+		downFontColor: "Green",
+		up: "Button08",
+		over: "Button09"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
+	default: {
+		label: "default"
 	}
 }
 }
