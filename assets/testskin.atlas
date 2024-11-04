@@ -82,3 +82,31 @@ setting-icon(2)
   size: 64, 64
   orig: 64, 64
   offset: 0, 0
+bed
+  rotate: false
+  xy: 2017, 1
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+book
+  rotate: false
+  xy: 2017, 33
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+food
+  rotate: false
+  xy: 2017, 65
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+football
+  rotate: false
+  xy: 2017, 97
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1

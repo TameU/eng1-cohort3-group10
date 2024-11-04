@@ -42,6 +42,11 @@ public class MapScreen implements Screen {
     private boolean dragging;
     private float oldMouseX, oldMouseY;
     private float sensitivity = 0.025f;
+    // Buildings
+    private Button bed;
+    private Button book;
+    private Button food;
+    private Button football;
 
     public MapScreen(Game game) {
         this.game = game;
@@ -72,6 +77,36 @@ public class MapScreen implements Screen {
             }
         });
 
+        //////////////// BUILDINGS
+
+        bed = new Button(skin, "bed");
+        bed.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // Deal with clicking later
+            }
+        });
+
+        book = new Button(skin, "book");
+        book.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // Deal with clicking later
+            }
+        });
+
+        food = new Button(skin, "food");
+        food.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // Deal with clicking later
+            }
+        });
+
+        football = new Button(skin, "football");
+        football.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // Deal with clicking later
+            }
+        });
+
         timerLabel.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new GameOverScreen(game));
@@ -84,6 +119,11 @@ public class MapScreen implements Screen {
         table.add(timerLabel).expand().top();
         table.add(pauseButton).top().right();
         table.add(settingsButton).top();// .left();
+        // Buildings
+        table.add(bed).center().left();
+        table.add(book).center().left();
+        table.add(food).center().left();
+        table.add(football).center().left();
 
         stage.addActor(table);
 
