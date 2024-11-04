@@ -135,6 +135,7 @@ check_square_grey_checkmark
   pad: 32, 31, 32, 31
   orig: 64, 64
   offset: 0, 0
+<<<<<<< HEAD
   index: -1
 slide_hangle
   rotate: false
@@ -195,3 +196,33 @@ settings-icon-green
   orig: 64, 64
   offset: 0, 0
   index: -1
+=======
+bed
+  rotate: false
+  xy: 2017, 1
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+book
+  rotate: false
+  xy: 2017, 33
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+food
+  rotate: false
+  xy: 2017, 65
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+football
+  rotate: false
+  xy: 2017, 97
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+>>>>>>> a51e9ec (Added icons to screen (bugged))
