@@ -20,6 +20,7 @@ public class GameOverScreen implements Screen {
 
     public GameOverScreen(Game game) {
         skin = new Skin(Gdx.files.local("testskin.json"));
+
         stage = new Stage(new ScreenViewport());
         table = new Table(skin);
         table.setFillParent(true);

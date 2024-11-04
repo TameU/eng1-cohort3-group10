@@ -29,7 +29,7 @@ public class TitleScreen implements Screen {
 
         // Set up UI stage, skin and table
         stage = new Stage(new ScreenViewport());
-        skin = new Skin(Gdx.files.local(Constants.UI_SKIN_PATH));
+        skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
         table = new Table(skin);
         table.setFillParent(true);
         table.setDebug(true);
