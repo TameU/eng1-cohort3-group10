@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -35,8 +36,12 @@ public class MapScreen implements Screen {
     private Table table;
     private Label timerLabel;
     private Button pauseButton;
+    private Button settingsButton;
     private InGameTimer timer;
-    private boolean pauseClicked;
+    private boolean mouseDown;
+    private boolean dragging;
+    private float oldMouseX, oldMouseY;
+    private float sensitivity = 0.025f;
 
     public MapScreen(Game game) {
         this.game = game;
@@ -52,10 +57,18 @@ public class MapScreen implements Screen {
         pauseButton = new Button(skin, "pause");
         pauseButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                if (timer.isStopped())
-                    timer.startTime();
+                if (timer.isUserStopped())
+                    timer.userStartTime();
                 else
-                    timer.stopTime();
+                    timer.userStopTime();
+            }
+        });
+
+        settingsButton = new Button(skin, "settings");
+        settingsButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                timer.systemStopTime(); // pause Time while in settings
+                game.setScreen(new SettingsScreen(game, game.getScreen()));
             }
         });
 
@@ -70,6 +83,7 @@ public class MapScreen implements Screen {
         table.setDebug(true);
         table.add(timerLabel).expand().top();
         table.add(pauseButton).top().right();
+        table.add(settingsButton).top();// .left();
 
         stage.addActor(table);
 
@@ -80,13 +94,14 @@ public class MapScreen implements Screen {
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
         camera.setToOrtho(false, width * unitScale, (width * unitScale) * (height / width));
+        timer.initialiseTimerValues();
+        timer.userStartTime();
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        timer.resetTime();
-        timer.startTime();
+        timer.systemStartTime();
     }
 
     @Override
@@ -96,19 +111,52 @@ public class MapScreen implements Screen {
         renderer.setView(camera);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
-        float timeLeft = timer.update(delta);
+        float timeLeft = timer.updateTime(delta);
+        float elapsedTime = timer.timeElapsed(delta);
+
+        if (elapsedTime > Constants.ONE_MONTH) {
+            timer.updateTimerValues();
+        }
+
         if (timeLeft < 1)
             game.setScreen(new GameOverScreen(game));
-        timerLabel.setText(timer.toString());
+        timerLabel.setText(timer.output());
         stage.act();
         stage.draw();
     }
 
-    private void handleInput() {
+    /**
+     * Handles the user's mouse input, allowing dragging of the map
+     */
+    private void handleMouseInput() {
+        mouseDown = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
+
+        if (!dragging && mouseDown) {
+            dragging = true;
+            oldMouseX = Gdx.input.getX();
+            oldMouseY = Gdx.input.getY();
+        } else if (!mouseDown) {
+            dragging = false;
+        }
+
+        if (dragging) {
+            float currentX = Gdx.input.getX();
+            float currentY = Gdx.input.getY();
+            Vector2 translate = new Vector2(-(currentX - oldMouseX), currentY - oldMouseY);
+            translate.scl(sensitivity * camera.zoom);
+            camera.translate(translate);
+            oldMouseX = currentX;
+            oldMouseY = currentY;
+        }
+    }
+
+    /**
+     * Handle user's keyboard inputs, allowing movement and zooming of the map
+     */
+    private void handledKeyboardInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
             camera.zoom += 0.02;
         }
-
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
             camera.zoom -= 0.02;
         }
@@ -124,6 +172,14 @@ public class MapScreen implements Screen {
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
             camera.translate(0, 1, 0);
         }
+    }
+
+    /**
+     * Collective method for processing user input
+     */
+    private void handleInput() {
+        handleMouseInput();
+        handledKeyboardInput();
 
         /* TODO: get better clamping */
         camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, 100 / camera.viewportWidth);
@@ -141,11 +197,13 @@ public class MapScreen implements Screen {
     @Override
     public void pause() {
         // Invoked when your application is paused.
+        timer.systemStopTime();
     }
 
     @Override
     public void resume() {
         // Invoked when your application is resumed after pause.
+        timer.systemStartTime();
     }
 
     @Override
@@ -156,5 +214,17 @@ public class MapScreen implements Screen {
     @Override
     public void dispose() {
         map.dispose();
+        stage.dispose();
+        skin.dispose();
+        renderer.dispose();
     }
+
+    public float getSensitivity() {
+        return sensitivity;
+    }
+
+    public void setSensitivity(float newSensitivity) {
+        sensitivity = Math.min(Math.abs(newSensitivity), 1);
+    }
+
 }
