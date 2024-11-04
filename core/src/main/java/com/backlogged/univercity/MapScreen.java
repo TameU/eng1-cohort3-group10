@@ -67,7 +67,7 @@ public class MapScreen implements Screen {
         settingsButton = new Button(skin, "settings");
         settingsButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                timer.userStopTime(); // pause Time while in settings
+                timer.systemStopTime(); // pause Time while in settings
                 game.setScreen(new SettingsScreen(game, game.getScreen()));
             }
         });
@@ -94,14 +94,14 @@ public class MapScreen implements Screen {
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
         camera.setToOrtho(false, width * unitScale, (width * unitScale) * (height / width));
-        timer.resetTime();
+        timer.initialiseTimerValues();
         timer.userStartTime();
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        timer.initialiseTimerValues();
+        timer.systemStartTime();
     }
 
     @Override
