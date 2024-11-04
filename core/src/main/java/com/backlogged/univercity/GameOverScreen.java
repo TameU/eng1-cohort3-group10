@@ -19,8 +19,7 @@ public class GameOverScreen implements Screen {
     private TextButton quitButton;
 
     public GameOverScreen(Game game) {
-        skin = new Skin(Gdx.files.local("testskin.json"));
-
+        skin = new Skin(Gdx.files.internal("testskin.json"));
         stage = new Stage(new ScreenViewport());
         table = new Table(skin);
         table.setFillParent(true);
@@ -46,9 +45,11 @@ public class GameOverScreen implements Screen {
 
         table.add(gameOverLabel).top().padTop(100);
         table.row();
-        table.add(startAgainButton).top().padTop(100).width(Value.percentWidth(0.3f, table)).height(Value.percentHeight(0.1f, table));
+        table.add(startAgainButton).top().padTop(100).width(Value.percentWidth(0.3f, table))
+                .height(Value.percentHeight(0.1f, table));
         table.row();
-        table.add(quitButton).top().padTop(50).width(Value.percentWidth(0.3f, table)).height(Value.percentHeight(0.1f, table));
+        table.add(quitButton).top().padTop(50).width(Value.percentWidth(0.3f, table))
+                .height(Value.percentHeight(0.1f, table));
     }
 
     @Override
