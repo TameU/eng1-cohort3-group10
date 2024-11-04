@@ -49,7 +49,7 @@ public class MapScreen implements Screen {
         timer = new InGameTimer(5);
 
         stage = new Stage(new ScreenViewport());
-        skin = new Skin(Gdx.files.local("testskin.json"));
+        skin = new Skin(Gdx.files.internal("testskin.json"));
 
         timerLabel = new Label("5:00", skin);
         timerLabel.setAlignment(Align.center);

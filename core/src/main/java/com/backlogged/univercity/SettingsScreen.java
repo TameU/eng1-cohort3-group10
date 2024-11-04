@@ -21,7 +21,7 @@ public class SettingsScreen implements Screen {
     private Texture bgTexture;
 
     public SettingsScreen(Game game, Screen previousScreen) {
-        skin = new Skin(Gdx.files.local("testskin.json"));
+        skin = new Skin(Gdx.files.internal("testskin.json"));
         stage = new Stage(new ScreenViewport());
         table = new Table(skin);
 
