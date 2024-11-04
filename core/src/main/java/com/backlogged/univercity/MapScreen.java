@@ -52,10 +52,10 @@ public class MapScreen implements Screen {
         pauseButton = new Button(skin, "pause");
         pauseButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                if (timer.isStopped())
-                    timer.startTime();
+                if (timer.isUserStopped())
+                    timer.userStartTime();
                 else
-                    timer.stopTime();
+                    timer.userStopTime();
             }
         });
 
@@ -96,6 +96,7 @@ public class MapScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        timer.initialiseTimerValues();
     }
 
     @Override
@@ -105,10 +106,16 @@ public class MapScreen implements Screen {
         renderer.setView(camera);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
-        float timeLeft = timer.update(delta);
+        float timeLeft = timer.updateTime(delta);
+        float elapsedTime = timer.timeElapsed(delta);
+
+        if (elapsedTime > Constants.ONE_MONTH) {
+            timer.updateTimerValues();
+        }
+
         if (timeLeft < 1)
             game.setScreen(new GameOverScreen(game));
-        timerLabel.setText(timer.toString());
+        timerLabel.setText(timer.output());
         stage.act();
         stage.draw();
     }
@@ -150,11 +157,13 @@ public class MapScreen implements Screen {
     @Override
     public void pause() {
         // Invoked when your application is paused.
+        timer.systemStopTime();
     }
 
     @Override
     public void resume() {
         // Invoked when your application is resumed after pause.
+        timer.systemStartTime();
     }
 
     @Override
