@@ -11,6 +11,13 @@ PressStart2P-Regular
   orig: 505, 147
   offset: 0, 0
   index: -1
+pause_icon
+  rotate: false
+  xy: 1, 189
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 timer
   rotate: false
   xy: 1, 255
@@ -18,9 +25,9 @@ timer
   orig: 500, 100
   offset: 0, 0
   index: -1
-pause_icon
+setting-icon(2)
   rotate: false
-  xy: 1, 189
+  xy: 1, 123
   size: 64, 64
   orig: 64, 64
   offset: 0, 0

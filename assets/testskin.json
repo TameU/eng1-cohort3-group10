@@ -35,6 +35,9 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		checkedOffsetX: 2
 		checkedOffsetY: 2
 	}
+	settings: {
+		up: setting-icon(2)
+	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {

@@ -35,6 +35,7 @@ public class MapScreen implements Screen {
     private Table table;
     private Label timerLabel;
     private Button pauseButton;
+    private Button settingsButton;
     private InGameTimer timer;
 
     public MapScreen(Game game) {
@@ -58,6 +59,14 @@ public class MapScreen implements Screen {
             }
         });
 
+        settingsButton = new Button(skin, "settings");
+        settingsButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                timer.userStopTime(); // pause Time while in settings
+                game.setScreen(new SettingsScreen(game, game.getScreen()));
+            }
+        });
+
         timerLabel.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new GameOverScreen(game));
@@ -69,6 +78,7 @@ public class MapScreen implements Screen {
         table.setDebug(true);
         table.add(timerLabel).expand().top();
         table.add(pauseButton).top().right();
+        table.add(settingsButton).top();// .left();
 
         stage.addActor(table);
 
@@ -79,7 +89,8 @@ public class MapScreen implements Screen {
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
         camera.setToOrtho(false, width * unitScale, (width * unitScale) * (height / width));
-
+        timer.resetTime();
+        timer.userStartTime();
     }
 
     @Override
@@ -163,5 +174,6 @@ public class MapScreen implements Screen {
     @Override
     public void dispose() {
         map.dispose();
+        stage.dispose();
     }
 }
