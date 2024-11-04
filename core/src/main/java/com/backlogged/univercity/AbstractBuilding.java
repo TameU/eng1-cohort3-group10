@@ -2,6 +2,7 @@ package com.backlogged.univercity;
 
 import java.util.ArrayList;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 public abstract class AbstractBuilding {
     private BuildingInfo buildingInfo; 
     private Coord mapPos; 
@@ -14,8 +15,8 @@ public abstract class AbstractBuilding {
     public final Sprite getSprite() { 
         return buildingInfo.buildingSprite;
     } 
-    public final ArrayList<Coord> getBoundingPolygonVertices() { 
-        return buildingInfo.boundingPolygonVertices;
+    public final ArrayList<Coord> getTileCoverageOffsets() { 
+        return buildingInfo.tileCoverageOffsets;
     } 
     public final String getInfo() { 
         return buildingInfo.info;
@@ -25,5 +26,10 @@ public abstract class AbstractBuilding {
     } 
     public final Coord getMapPos() { 
         return mapPos;
+    } 
+    public final void draw(SpriteBatch batch) { 
+        buildingInfo.buildingSprite.setPosition(this.mapPos.getRow(), this.mapPos.getColumn());
+        buildingInfo.buildingSprite.draw(batch); 
+        buildingInfo.buildingSprite.setPosition(0,0);
     }
 }
