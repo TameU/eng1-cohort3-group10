@@ -76,3 +76,9 @@ pause_icon
   orig: 64, 64
   offset: 0, 0
   index: -1
+setting-icon(2)
+  rotate: false
+  xy: 1536, 1512
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
