@@ -41,4 +41,6 @@ public final class Constants {
      * Path to the UI skin/
      */
     public static final String UI_SKIN_PATH = "testskin.json";
+
+    public static final String PREFS_NAME = "preferences";
 }
