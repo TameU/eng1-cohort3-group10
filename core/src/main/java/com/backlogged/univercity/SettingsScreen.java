@@ -5,9 +5,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -19,27 +21,139 @@ public class SettingsScreen implements Screen {
     private Label settingsLabel;
     private TextButton backButton;
     private Texture bgTexture;
+    private Label musicEnabledLabel;
+    private CheckBox musicEnabledCheckBox;
+    private Label musicVolumeLabel;
+    private Slider musicVolumeSlider;
+    private Label soundEnabledLabel;
+    private CheckBox soundEnabledCheckBox;
+    private Label soundVolumeLabel;
+    private Slider soundVolumeSlider;
+    private Label fullScreenLabel;
+    private CheckBox fullScreenCheckBox;
+    private Label mouseSensitivityLabel;
+    private Slider mouseSensitivitySlider;
+    private Label keyboardSensitivityLabel;
+    private Slider keyboardSensitivitySlider;
+    private ScrollPane scrollPane;
 
     public SettingsScreen(Game game, Screen previousScreen) {
         skin = new Skin(Gdx.files.internal("testskin.json"));
         stage = new Stage(new ScreenViewport());
         table = new Table(skin);
 
-        settingsLabel = new Label("Settings", skin, "no-background");
+        settingsLabel = new Label("Settings", skin, "game-title");
         backButton = new TextButton("Back", skin);
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(previousScreen);
             }
         });
+
         table.add(settingsLabel).space(20);
+        table.row();
+        createScrollPane();
+        table.add(scrollPane).growX().bottom();
         table.row();
         table.add(backButton).size(Value.percentWidth(.3f, table), Value.percentHeight(.1f, table));
         table.setFillParent(true);
+        table.setDebug(true);
         stage.addActor(table);
 
         bgTexture = new Texture("UniverCityBackgroundBlur.png");
 
+    }
+
+    private void createScrollPane() {
+        Table preferencesTable = new Table(skin);
+        preferencesTable.setFillParent(true);
+        preferencesTable.setDebug(true);
+        musicEnabledLabel = new Label("Music Enabled", skin, "game-title");
+        musicEnabledCheckBox = new CheckBox("", skin);
+        musicEnabledCheckBox.setChecked(GamePreferences.isMusicEnabled());
+        musicEnabledCheckBox.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                GamePreferences.setMusicEnabled(musicEnabledCheckBox.isChecked());
+            }
+        });
+
+        musicVolumeLabel = new Label("Music Volume", skin, "game-title");
+        musicVolumeSlider = new Slider(0, 1, 0.1f, false, skin);
+        musicVolumeSlider.setValue(GamePreferences.getMusicVolume());
+        musicVolumeSlider.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                GamePreferences.setMusicVolume(musicVolumeSlider.getValue());
+            }
+        });
+
+        soundEnabledLabel = new Label("Sound Enabled", skin, "game-title");
+        soundEnabledCheckBox = new CheckBox("", skin);
+        soundEnabledCheckBox.setChecked(GamePreferences.isSoundEnabled());
+        soundEnabledCheckBox.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                GamePreferences.setSoundEnabled(soundEnabledCheckBox.isChecked());
+            }
+        });
+
+        soundVolumeLabel = new Label("Sound Volume", skin, "game-title");
+        soundVolumeSlider = new Slider(0, 1, 0.1f, false, skin);
+        soundVolumeSlider.setValue(GamePreferences.getSoundVolume());
+        soundVolumeSlider.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                GamePreferences.setSoundVolume(soundVolumeSlider.getValue());
+            }
+        });
+
+        fullScreenLabel = new Label("Fullscreen", skin, "game-title");
+        fullScreenCheckBox = new CheckBox("", skin);
+        fullScreenCheckBox.setChecked(GamePreferences.isFullscreen());
+        fullScreenCheckBox.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                GamePreferences.setFullscreen(fullScreenCheckBox.isChecked());
+            }
+        });
+
+        mouseSensitivityLabel = new Label("Mouse Sensitivity", skin, "game-title");
+        mouseSensitivitySlider = new Slider(0, 1, 0.1f, false, skin);
+        mouseSensitivitySlider.setValue(GamePreferences.getMouseSensitivity());
+        mouseSensitivitySlider.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                GamePreferences.setMouseSensitivity(mouseSensitivitySlider.getValue());
+            }
+        });
+
+        keyboardSensitivityLabel = new Label("Keyboard Sensitivity", skin, "game-title");
+        keyboardSensitivitySlider = new Slider(0, 1, 0.1f, false, skin);
+        keyboardSensitivitySlider.setValue(GamePreferences.getKeyboardSensitivity());
+        keyboardSensitivitySlider.addListener(new ChangeListener() {
+            public void changed(ChangeEvent event, Actor actor) {
+                GamePreferences.setKeyboardSensitivity(keyboardSensitivitySlider.getValue());
+            }
+        });
+
+        preferencesTable.add(musicEnabledLabel).space(20);
+        preferencesTable.add(musicEnabledCheckBox).space(20);
+        preferencesTable.row();
+        preferencesTable.add(musicVolumeLabel).space(20);
+        preferencesTable.add(musicVolumeSlider).width(Value.percentWidth(.3f, preferencesTable)).space(20);
+        preferencesTable.row();
+        preferencesTable.add(soundEnabledLabel).space(20);
+        preferencesTable.add(soundEnabledCheckBox).space(20);
+        preferencesTable.row();
+        preferencesTable.add(soundVolumeLabel).space(20);
+        preferencesTable.add(soundVolumeSlider).width(Value.percentWidth(.3f, preferencesTable)).space(20);
+        preferencesTable.row();
+        preferencesTable.add(fullScreenLabel).space(20);
+        preferencesTable.add(fullScreenCheckBox).space(20);
+        preferencesTable.row();
+        preferencesTable.add(mouseSensitivityLabel).space(20);
+        preferencesTable.add(mouseSensitivitySlider).width(Value.percentWidth(.3f, preferencesTable)).space(20);
+        preferencesTable.row();
+        preferencesTable.add(keyboardSensitivityLabel).space(20);
+        preferencesTable.add(keyboardSensitivitySlider).width(Value.percentWidth(.3f, preferencesTable)).space(20);
+        scrollPane = new ScrollPane(preferencesTable, skin);
+        scrollPane.setScrollingDisabled(true, false);
+        scrollPane.setFadeScrollBars(false);
     }
 
     @Override
@@ -112,6 +226,14 @@ public class SettingsScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        settingsLabel.setFontScale(width / 2500f);
+        musicEnabledLabel.setFontScale(width / 4000f);
+        musicVolumeLabel.setFontScale(width / 4000f);
+        soundEnabledLabel.setFontScale(width / 4000f);
+        soundVolumeLabel.setFontScale(width / 4000f);
+        fullScreenLabel.setFontScale(width / 4000f);
+        mouseSensitivityLabel.setFontScale(width / 4000f);
+        keyboardSensitivityLabel.setFontScale(width / 4000f);
     }
 
     @Override
