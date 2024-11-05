@@ -47,7 +47,12 @@ public class TitleScreen implements Screen {
             }
         });
 
-        optionsButton = new TextButton("Options", skin, "blue-text-button");
+        optionsButton = new TextButton("Settings", skin, "blue-text-button");
+        optionsButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                game.setScreen(new SettingsScreen(game, game.getScreen()));
+            }
+        });
 
         quitButton = new TextButton("Quit", skin, "blue-text-button");
         quitButton.addListener(new ClickListener() {
