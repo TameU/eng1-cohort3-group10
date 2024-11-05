@@ -118,7 +118,7 @@ public class SettingsScreen implements Screen {
         });
 
         mouseSensitivityLabel = new Label("Mouse Sensitivity", skin, "game-title");
-        mouseSensitivitySlider = new Slider(0, 1, 0.1f, false, skin);
+        mouseSensitivitySlider = new Slider(0.1f, 2f, 0.1f, false, skin);
         mouseSensitivitySlider.setValue(GamePreferences.getMouseSensitivity());
         mouseSensitivitySlider.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
@@ -127,7 +127,7 @@ public class SettingsScreen implements Screen {
         });
 
         keyboardSensitivityLabel = new Label("Keyboard Sensitivity", skin, "game-title");
-        keyboardSensitivitySlider = new Slider(0, 1, 0.1f, false, skin);
+        keyboardSensitivitySlider = new Slider(0.1f, 2f, 0.1f, false, skin);
         keyboardSensitivitySlider.setValue(GamePreferences.getKeyboardSensitivity());
         keyboardSensitivitySlider.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {

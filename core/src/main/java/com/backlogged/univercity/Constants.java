@@ -43,4 +43,8 @@ public final class Constants {
     public static final String UI_SKIN_PATH = "testskin.json";
 
     public static final String PREFS_NAME = "preferences";
+
+    public static final float DEFAULT_MOUSE_SENSITIVITY = 0.025f;
+
+    public static final float DEFAULT_KEYBOARD_SENSITIVITY = 0.02f;
 }

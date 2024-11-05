@@ -72,7 +72,7 @@ public final class GamePreferences {
     }
 
     public static float getMouseSensitivity() {
-        return prefs.getFloat(MOUSE_SENSITIVITY, 0.5f);
+        return prefs.getFloat(MOUSE_SENSITIVITY, 1f);
     }
     public static void setMouseSensitivity(float sensitivity) {
         prefs.putFloat(MOUSE_SENSITIVITY, sensitivity);
@@ -80,7 +80,7 @@ public final class GamePreferences {
     }
 
     public static float getKeyboardSensitivity() {
-        return prefs.getFloat(KEYBOARD_SENSITIVITY, 0.5f);
+        return prefs.getFloat(KEYBOARD_SENSITIVITY, 1f);
     }
     public static void setKeyboardSensitivity(float sensitivity) {
         prefs.putFloat(KEYBOARD_SENSITIVITY, sensitivity);

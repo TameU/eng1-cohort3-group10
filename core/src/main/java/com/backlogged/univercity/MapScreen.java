@@ -41,7 +41,6 @@ public class MapScreen implements Screen {
     private boolean mouseDown;
     private boolean dragging;
     private float oldMouseX, oldMouseY;
-    private float sensitivity = 0.025f;
 
     public MapScreen(Game game) {
         this.game = game;
@@ -143,7 +142,7 @@ public class MapScreen implements Screen {
             float currentX = Gdx.input.getX();
             float currentY = Gdx.input.getY();
             Vector2 translate = new Vector2(-(currentX - oldMouseX), currentY - oldMouseY);
-            translate.scl(sensitivity * camera.zoom);
+            translate.scl(Constants.DEFAULT_MOUSE_SENSITIVITY * GamePreferences.getMouseSensitivity() * camera.zoom);
             camera.translate(translate);
             oldMouseX = currentX;
             oldMouseY = currentY;
@@ -155,22 +154,22 @@ public class MapScreen implements Screen {
      */
     private void handledKeyboardInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            camera.zoom += 0.02;
+            camera.zoom += Constants.DEFAULT_KEYBOARD_SENSITIVITY * GamePreferences.getKeyboardSensitivity();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            camera.zoom -= 0.02;
+            camera.zoom -= Constants.DEFAULT_KEYBOARD_SENSITIVITY * GamePreferences.getKeyboardSensitivity();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            camera.translate(-1, 0, 0);
+            camera.translate(-1 * GamePreferences.getKeyboardSensitivity(), 0, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            camera.translate(1, 0, 0);
+            camera.translate(1 * GamePreferences.getKeyboardSensitivity(), 0, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            camera.translate(0, -1, 0);
+            camera.translate(0, -1 * GamePreferences.getKeyboardSensitivity(), 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            camera.translate(0, 1, 0);
+            camera.translate(0, 1 * GamePreferences.getKeyboardSensitivity(), 0);
         }
     }
 
@@ -217,14 +216,6 @@ public class MapScreen implements Screen {
         stage.dispose();
         skin.dispose();
         renderer.dispose();
-    }
-
-    public float getSensitivity() {
-        return sensitivity;
-    }
-
-    public void setSensitivity(float newSensitivity) {
-        sensitivity = Math.min(Math.abs(newSensitivity), 1);
     }
 
 }
