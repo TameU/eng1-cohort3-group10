@@ -49,7 +49,7 @@ public class MapScreen implements Screen {
         timer = new InGameTimer(5);
 
         stage = new Stage(new ScreenViewport());
-        skin = new Skin(Gdx.files.internal("testskin.json"));
+        skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
 
         timerLabel = new Label("5:00", skin);
         timerLabel.setAlignment(Align.center);
@@ -87,7 +87,7 @@ public class MapScreen implements Screen {
 
         stage.addActor(table);
 
-        map = new TmxMapLoader().load("desert.tmx");
+        map = new TmxMapLoader().load(Constants.MAP_PATH);
         unitScale = 1 / 32f;
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         camera = new OrthographicCamera();
