@@ -110,6 +110,10 @@ public class SettingsScreen implements Screen {
         fullScreenCheckBox.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 GamePreferences.setFullscreen(fullScreenCheckBox.isChecked());
+                if (fullScreenCheckBox.isChecked())
+                    Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+                else
+                    Gdx.graphics.setWindowedMode(1280, 720);
             }
         });
 
