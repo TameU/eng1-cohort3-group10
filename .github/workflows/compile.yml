@@ -1,4 +1,4 @@
-# Compiles and uploads jar file
+# Compiles and uploads jar file as artifact
 #
 # Triggered by:
 # Pull request to main

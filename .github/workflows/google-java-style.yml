@@ -3,7 +3,8 @@
 # https://google.github.io/styleguide/javaguide.html
 # 
 # Workflow is triggered by:
-# PR created
+# 1) push to main
+# 2) PR created
 #
 # https://github.com/marketplace/actions/checkstyle-for-java
 
@@ -11,10 +12,6 @@ name: Code-Style
 
 on:
     pull_request:
-
-
-permissions:
-  pull-requests: read    
 
 jobs:
     checkstyle:
