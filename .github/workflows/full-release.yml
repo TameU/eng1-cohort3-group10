@@ -12,7 +12,7 @@ on:
 name: Create Full Release
 
 jobs:
-  build:
+  createRelease:
     name: Create Release
     runs-on: ubuntu-latest
     if: startsWith(github.ref, 'ref/tags/')
