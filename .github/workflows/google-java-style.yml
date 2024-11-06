@@ -1,13 +1,12 @@
 # Check code complies with google-java style guide
-# and Format if not
+#
 # https://google.github.io/styleguide/javaguide.html
 # 
 # Workflow is triggered by:
 # 1) push to main
 # 2) PR created
 #
-# https://github.com/marketplace/actions/google-java-format
-
+# https://github.com/marketplace/actions/checkstyle-for-java
 
 name: Code-Style
 
@@ -19,11 +18,12 @@ on:
         branches: '*'
 
 jobs:
-    formatting:
+    checkstyle:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
-            - uses: axel-op/googlejavaformat-action@v3
+            - uses: dbelyaev/action-checkstyle@master
               with:
-                args: "--skip-sorting-imports --replace"
-
+                github_token: ${{ secrets.github_token }}
+                reporter: github-pr-review
+                level: warning
