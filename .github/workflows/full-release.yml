@@ -1,4 +1,5 @@
-# Creates a release and uploads Jar file
+# Creates a release and pushes jar file to 
+# https://github.com/TameU/tameu.github.io
 #
 # Triggered by:
 # Push to stable with tags
@@ -7,15 +8,15 @@
 on:
   push:
     branches: ["stable"]
-    tags: ["v[09]+.[0-9]+.[0-9]+"]
+    tags: ["v*"]
 
 name: Create Full Release
 
 jobs:
-  createRelease:
+  release:
     name: Create Release
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'ref/tags/')
+    if: startsWith(github.ref, 'refs/tags/')
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -35,6 +36,13 @@ jobs:
           ls -la
           zip -r UniverCity-${{ github.ref_name }}.zip libs
 
+      - name: Upload zip
+        uses: actions/upload-artifact@v4
+        id: upload-zip
+        with:
+          name: UniverCity-${{ github.ref_name }}.zip
+          path: lwjgl3/build/UniverCity-${{ github.ref_name }}.zip
+
       - name: Create release
         id: create_release
         uses: comnoco/create-release-action@v2.0.5
@@ -45,7 +53,8 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: false
           prerelease: false
-      - name: Upload release Asset
+
+      - name: Add release Asset
         id: upload_release_asses
         uses: actions/upload-release-asset@v1.0.2
         env:
@@ -55,3 +64,39 @@ jobs:
           asset_path: lwjgl3/build/UniverCity-${{ github.ref_name }}.zip
           asset_name: UniverCity-${{ github.ref_name }}.zip
           asset_content_type: application/zip
+  
+  deploy:
+    name: Deploy build
+    runs-on: ubuntu-latest
+    needs: release
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: 'TameU/TameU.github.io'
+          ref: 'main'
+          token: ${{ secrets.PAGES_REPO_TOKEN }}
+
+      - name: Setpu git config
+        run: |
+          git config --global user.name "Github Actions"
+          git config --global user.email "<EMAIL>"
+      
+          
+      - name: Download zip
+        uses: actions/download-artifact@v4
+        with:
+          name: UniverCity-${{ github.ref_name }}.zip
+      
+      - name: Unzip
+        run : |
+          rm -r .bin
+          unzip UniverCity-${{ github.ref_name }}.zip -d .bin
+          cd .bin/libs
+          mv * ..
+
+      - name: Commit and push zip
+        run: |
+          export COMMIT_MESSAGE="Generated Release archive from ${{ github.repository }}/${{ github.ref }}@${{ github.sha }}"
+          git add .
+          git commit -m "$COMMIT_MESSAGE"
+          git push
