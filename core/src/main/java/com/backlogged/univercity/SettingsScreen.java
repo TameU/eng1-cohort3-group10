@@ -43,7 +43,7 @@ public class SettingsScreen implements Screen {
         table = new Table(skin);
 
         settingsLabel = new Label("Settings", skin, "game-title");
-        backButton = new TextButton("Back", skin);
+        backButton = new TextButton("Back", skin, "blue-text-button");
         backButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(previousScreen);
@@ -159,7 +159,10 @@ public class SettingsScreen implements Screen {
         scrollPane.setScrollingDisabled(true, false);
         scrollPane.setFadeScrollBars(false);
     }
-
+    // create a dictionary for key names if the key is not a Unicode character
+    // ignore modifier and platform specific keys
+    // check if the key is used for something else in the preferences
+    // if it is, then don't allow the user to set it
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
@@ -230,6 +233,7 @@ public class SettingsScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        backButton.getStyle().font.getData().setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
         settingsLabel.setFontScale(width / 2500f);
         musicEnabledLabel.setFontScale(width / 4000f);
         musicVolumeLabel.setFontScale(width / 4000f);
