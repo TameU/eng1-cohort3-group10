@@ -188,6 +188,7 @@ public class MapScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        if (width == 0 || height == 0) return;
         camera.viewportWidth = MathUtils.floor(width / 32f);
         camera.viewportHeight = camera.viewportWidth * height / width;
         camera.update();
