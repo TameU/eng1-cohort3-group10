@@ -17,6 +17,10 @@ on:
     pull_request:
         branches: '*'
 
+
+permissions:
+  pull-requests: read    
+
 jobs:
     checkstyle:
         runs-on: ubuntu-latest
