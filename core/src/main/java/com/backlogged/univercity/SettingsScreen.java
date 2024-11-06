@@ -21,7 +21,7 @@ public class SettingsScreen implements Screen {
     private Texture bgTexture;
 
     public SettingsScreen(Game game, Screen previousScreen) {
-        skin = new Skin(Gdx.files.internal("testskin.json"));
+        skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
         stage = new Stage(new ScreenViewport());
         table = new Table(skin);
 
@@ -39,7 +39,7 @@ public class SettingsScreen implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        bgTexture = new Texture("UniverCityBackgroundBlur.png");
+        bgTexture = new Texture(Constants.BACKGROUND_PICTURE_PATH);
 
     }
 

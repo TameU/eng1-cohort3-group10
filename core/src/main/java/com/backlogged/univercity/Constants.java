@@ -41,4 +41,9 @@ public final class Constants {
      * Path to the UI skin/
      */
     public static final String UI_SKIN_PATH = "testskin.json";
+
+    /**
+     * Path to the game map
+     */
+    public static final String MAP_PATH = "desert.tmx";
 }

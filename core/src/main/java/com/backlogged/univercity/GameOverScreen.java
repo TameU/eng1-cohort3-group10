@@ -19,7 +19,7 @@ public class GameOverScreen implements Screen {
     private TextButton quitButton;
 
     public GameOverScreen(Game game) {
-        skin = new Skin(Gdx.files.internal("testskin.json"));
+        skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
         stage = new Stage(new ScreenViewport());
         table = new Table(skin);
         table.setFillParent(true);
