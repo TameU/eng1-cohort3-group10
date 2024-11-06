@@ -119,27 +119,6 @@ PressStart2P-title_4
   orig: 512, 512
   offset: 0, 0
   index: -1
-pause_icon
-  rotate: false
-  xy: 1, 122
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-setting-icon
-  rotate: false
-  xy: 515, 683
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-timer
-  rotate: false
-  xy: 515, 913
-  size: 500, 100
-  orig: 500, 100
-  offset: 0, 0
-  index: -1
 button_round_flat
   rotate: false
   xy: 817, 783
@@ -165,6 +144,20 @@ check_square_grey_checkmark
   orig: 64, 64
   offset: 0, 0
   index: -1
+pause_icon
+  rotate: false
+  xy: 1, 122
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+setting-icon
+  rotate: false
+  xy: 515, 683
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 slide_hangle
   rotate: false
   xy: 1, 56
@@ -187,5 +180,12 @@ slide_vertical_grey
   size: 32, 192
   split: 14, 14, 30, 30
   orig: 32, 192
+  offset: 0, 0
+  index: -1
+timer
+  rotate: false
+  xy: 515, 913
+  size: 500, 100
+  orig: 500, 100
   offset: 0, 0
   index: -1

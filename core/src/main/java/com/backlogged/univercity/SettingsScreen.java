@@ -155,7 +155,7 @@ public class SettingsScreen implements Screen {
         preferencesTable.row();
         preferencesTable.add(keyboardSensitivityLabel).space(20);
         preferencesTable.add(keyboardSensitivitySlider).width(Value.percentWidth(.3f, preferencesTable)).space(20);
-        scrollPane = new ScrollPane(preferencesTable, skin);
+        scrollPane = new ScrollPane(preferencesTable);
         scrollPane.setScrollingDisabled(true, false);
         scrollPane.setFadeScrollBars(false);
     }
