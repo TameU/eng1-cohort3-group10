@@ -1,0 +1,36 @@
+# Keeps the dev branch upto date with main
+#
+# Triggered by:
+# Push to main
+#
+
+on:
+    push:
+      branches: ["main"]
+  
+name: Update Dev
+
+permissions:
+    contents: write
+
+jobs:
+    update:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                fetch-depth: 0
+
+            - name: Setup Git user
+              run: |
+                git config user.name "Github Actions"
+                git config user.email "<EMAIL>"
+                
+            - name: Update Test Branch
+              run: |
+                git fetch origin
+                git checkout dev
+                git pull
+                git merge --allow-unrelated-histories origin/main
+                git push origin dev
