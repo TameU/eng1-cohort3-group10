@@ -42,7 +42,6 @@ public class MapScreen implements Screen {
     private boolean dragging;
     private float oldMouseX, oldMouseY;
     private float sensitivity = 0.025f;
-
     public MapScreen(Game game) {
         this.game = game;
 

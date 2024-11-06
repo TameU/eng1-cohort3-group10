@@ -46,4 +46,6 @@ public final class Constants {
      * Path to the game map
      */
     public static final String MAP_PATH = "desert.tmx";
+
+    public static final String SOUNDTRACK_PATH = "awesomeness.wav";
 }
