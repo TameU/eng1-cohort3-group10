@@ -101,6 +101,7 @@ public class MapScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
         timer.systemStartTime();
+        Soundtrack.play();
     }
 
     @Override

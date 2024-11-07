@@ -9,22 +9,18 @@ import com.badlogic.gdx.audio.Music;
  * platforms.
  */
 public class Main extends Game {
-    private Music soundtrack;
 
     @Override
     public void create() {
-        soundtrack = Gdx.audio.newMusic(Gdx.files.internal(Constants.SOUNDTRACK_PATH));
-        soundtrack.setLooping(true);
-        soundtrack.setVolume(1f);
-        soundtrack.play();
+        Soundtrack.play();
         setScreen(new TitleScreen(this));
     }
 
     public void pause() {
-        soundtrack.pause();
+        Soundtrack.pause();
     }
 
     public void resume() {
-        soundtrack.play();
+        Soundtrack.play();
     }
 }

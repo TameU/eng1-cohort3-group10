@@ -54,6 +54,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void show() {
+        Soundtrack.pause();
         Gdx.input.setInputProcessor(stage);
     }
 

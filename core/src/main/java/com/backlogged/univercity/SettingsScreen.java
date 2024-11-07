@@ -46,6 +46,7 @@ public class SettingsScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        Soundtrack.play();
     }
 
     @Override
