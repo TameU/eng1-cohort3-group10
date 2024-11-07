@@ -1,5 +1,5 @@
 ---
-name: bug
+name: Bug
 about: Template for bugs / errors in the program
 title: ''
 labels: bug, up for grabs
