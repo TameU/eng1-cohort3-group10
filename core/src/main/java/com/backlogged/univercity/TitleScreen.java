@@ -144,6 +144,7 @@ public class TitleScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        if (width == 0 || height == 0) return;
         titleLabel.setFontScale(width / Constants.TITLE_FONT_SCALING_FACTOR);
         playButton.getStyle().font.getData().setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
         stage.getViewport().update(width, height, true);
