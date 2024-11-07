@@ -18,24 +18,33 @@ public class SettingsScreen implements Screen {
     private Skin skin;
     private Stage stage;
     private Table table;
-    private Label settingsLabel;
-    private TextButton backButton;
     private Texture bgTexture;
+    private ScrollPane scrollPane;
+
+    private Label settingsLabel;
+
+    private TextButton backButton;
+
     private Label musicEnabledLabel;
     private CheckBox musicEnabledCheckBox;
+
     private Label musicVolumeLabel;
     private Slider musicVolumeSlider;
+
     private Label soundEnabledLabel;
     private CheckBox soundEnabledCheckBox;
+
     private Label soundVolumeLabel;
     private Slider soundVolumeSlider;
+
     private Label fullScreenLabel;
     private CheckBox fullScreenCheckBox;
+
     private Label mouseSensitivityLabel;
     private Slider mouseSensitivitySlider;
+
     private Label keyboardSensitivityLabel;
     private Slider keyboardSensitivitySlider;
-    private ScrollPane scrollPane;
 
     public SettingsScreen(Game game, Screen previousScreen) {
         skin = new Skin(Gdx.files.internal("testskin.json"));

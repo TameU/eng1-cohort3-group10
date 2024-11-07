@@ -19,11 +19,16 @@ public final class GamePreferences {
 
     private static final String MUSIC_ENABLED = "music.enabled";
     private static final String MUSIC_VOLUME = "music.volume";
+
     private static final String SOUND_ENABLED = "sound.enabled";
     private static final String SOUND_VOLUME = "sound.volume";
+
     private static final String FULLSCREEN = "fullscreen";
+
     private static final String MOUSE_SENSITIVITY = "mouse.sensitivity";
+
     private static final String KEYBOARD_SENSITIVITY = "keyboard.sensitivity";
+
     private static final String KEYBOARD_BINDING_UP = "keyboard.bindings.up";
     private static final String KEYBOARD_BINDING_DOWN = "keyboard.bindings.down";
     private static final String KEYBOARD_BINDING_LEFT = "keyboard.bindings.left";
