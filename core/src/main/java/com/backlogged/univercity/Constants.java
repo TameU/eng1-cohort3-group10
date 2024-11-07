@@ -66,4 +66,19 @@ public final class Constants {
      * Default keyboard sensitivity value.
      */
     public static final float DEFAULT_KEYBOARD_SENSITIVITY = 0.02f;
+
+    /** Path to the game map
+     */
+    public static final String MAP_PATH = "desert.tmx";
+
+    /**
+     * Path to the game soundtrack.
+     */
+    public static final String SOUNDTRACK_PATH = "awesomeness.wav";
+
+    /**
+     * Path to the game over sound.
+     */
+    public static final String GAME_OVER_SOUND_PATH = "gameover.mp3";
+
 }

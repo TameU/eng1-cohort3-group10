@@ -41,6 +41,7 @@ public class MapScreen implements Screen {
     private boolean mouseDown;
     private boolean dragging;
     private float oldMouseX, oldMouseY;
+    private float sensitivity = 0.025f;
 
     public MapScreen(Game game) {
         this.game = game;
@@ -48,7 +49,7 @@ public class MapScreen implements Screen {
         timer = new InGameTimer(5);
 
         stage = new Stage(new ScreenViewport());
-        skin = new Skin(Gdx.files.internal("testskin.json"));
+        skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
 
         timerLabel = new Label("5:00", skin);
         timerLabel.setAlignment(Align.center);
@@ -86,7 +87,7 @@ public class MapScreen implements Screen {
 
         stage.addActor(table);
 
-        map = new TmxMapLoader().load("desert.tmx");
+        map = new TmxMapLoader().load(Constants.MAP_PATH);
         unitScale = 1 / 32f;
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         camera = new OrthographicCamera();
@@ -101,6 +102,7 @@ public class MapScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
         timer.systemStartTime();
+        Soundtrack.play();
     }
 
     @Override
@@ -187,6 +189,7 @@ public class MapScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        if (width == 0 || height == 0) return;
         camera.viewportWidth = MathUtils.floor(width / 32f);
         camera.viewportHeight = camera.viewportWidth * height / width;
         camera.update();

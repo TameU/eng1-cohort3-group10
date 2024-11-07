@@ -3,6 +3,7 @@ package com.backlogged.univercity;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -19,7 +20,7 @@ public class GameOverScreen implements Screen {
     private TextButton quitButton;
 
     public GameOverScreen(Game game) {
-        skin = new Skin(Gdx.files.internal("testskin.json"));
+        skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
         stage = new Stage(new ScreenViewport());
         table = new Table(skin);
         table.setFillParent(true);
@@ -54,6 +55,9 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void show() {
+        Soundtrack.pause();
+        Sound gameOverSound = Gdx.audio.newSound(Gdx.files.internal(Constants.GAME_OVER_SOUND_PATH));
+        gameOverSound.play(1f);
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -66,6 +70,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        if (width == 0 || height == 0) return;
         gameOverLabel.setFontScale(width / Constants.GAME_OVER_FONT_SCALING_FACTOR);
         startAgainButton.getStyle().font.getData().setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
         stage.getViewport().update(width, height, true);

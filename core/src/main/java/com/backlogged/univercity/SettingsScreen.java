@@ -47,7 +47,7 @@ public class SettingsScreen implements Screen {
     private Slider keyboardSensitivitySlider;
 
     public SettingsScreen(Game game, Screen previousScreen) {
-        skin = new Skin(Gdx.files.internal("testskin.json"));
+        skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
         stage = new Stage(new ScreenViewport());
         table = new Table(skin);
 
@@ -69,7 +69,7 @@ public class SettingsScreen implements Screen {
         table.setDebug(true);
         stage.addActor(table);
 
-        bgTexture = new Texture("UniverCityBackgroundBlur.png");
+        bgTexture = new Texture(Constants.BACKGROUND_PICTURE_PATH);
 
     }
 
@@ -178,6 +178,7 @@ public class SettingsScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        Soundtrack.play();
     }
 
     @Override
@@ -244,6 +245,7 @@ public class SettingsScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        if (width == 0 || height == 0) return;
         stage.getViewport().update(width, height, true);
         backButton.getStyle().font.getData().setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
         settingsLabel.setFontScale(width / Constants.SETTINGS_TITLE_FONT_SCALING_FACTOR);
