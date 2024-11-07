@@ -81,7 +81,7 @@ public class MapScreen implements Screen {
         table.setFillParent(true);
         table.setDebug(true);
         table.add(timerLabel).expand().top();
-        table.add(pauseButton).top().right();
+        table.add(pauseButton).top().right().spaceRight(10);
         table.add(settingsButton).top();// .left();
 
         stage.addActor(table);

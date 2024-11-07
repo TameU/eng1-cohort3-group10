@@ -45,27 +45,18 @@
 		a: 1
 	}
 },
-"com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable": {
-	slide_vertical_grey: {
-		patch: "slide_vertical_grey",
-		minWidth: 10,
-		minHeight: 1,
-		leftWidth: 14,
-		rightWidth: 14,
-		topHeight: 30,
-		bottomHeight: 30
-	}
-},
 "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
 	pause: {
-		up: "pause_icon",
+		up: "pause-icon",
+		down: "pause-icon-green",
 		pressedOffsetX: 2,
 		pressedOffsetY: 2,
 		checkedOffsetX: 2,
 		checkedOffsetY: 2
 	},
 	settings: {
-		up: "setting-icon"
+		up: "settings-icon",
+		down: "settings-icon-green"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {

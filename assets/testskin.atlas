@@ -119,17 +119,9 @@ PressStart2P-title_4
   orig: 512, 512
   offset: 0, 0
   index: -1
-button_round_flat
-  rotate: false
-  xy: 817, 783
-  size: 128, 128
-  split: 58, 58, 60, 60
-  orig: 128, 128
-  offset: 0, 0
-  index: -1
 check_square_grey
   rotate: false
-  xy: 303, 252
+  xy: 817, 847
   size: 64, 64
   split: 12, 12, 11, 11
   orig: 64, 64
@@ -137,24 +129,10 @@ check_square_grey
   index: -1
 check_square_grey_checkmark
   rotate: false
-  xy: 947, 847
+  xy: 1, 122
   size: 64, 64
   split: 12, 12, 12, 11
   pad: 32, 31, 32, 31
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-pause_icon
-  rotate: false
-  xy: 1, 122
-  size: 64, 64
-  orig: 64, 64
-  offset: 0, 0
-  index: -1
-setting-icon
-  rotate: false
-  xy: 515, 683
-  size: 64, 64
   orig: 64, 64
   offset: 0, 0
   index: -1
@@ -174,18 +152,46 @@ slide_horizontal_grey
   orig: 192, 32
   offset: 0, 0
   index: -1
-slide_vertical_grey
-  rotate: false
-  xy: 515, 489
-  size: 32, 192
-  split: 14, 14, 30, 30
-  orig: 32, 192
-  offset: 0, 0
-  index: -1
 timer
   rotate: false
   xy: 515, 913
   size: 500, 100
   orig: 500, 100
+  offset: 0, 0
+  index: -1
+pause-icon
+  rotate: false
+  xy: 883, 847
+  size: 64, 64
+  split: 19, 17, 15, 15
+  pad: 32, 31, 32, 31
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+pause-icon-green
+  rotate: false
+  xy: 817, 781
+  size: 64, 64
+  split: 18, 17, 15, 14
+  pad: 32, 31, 32, 31
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+settings-icon
+  rotate: false
+  xy: 515, 683
+  size: 64, 64
+  split: 13, 15, 15, 15
+  pad: 32, 31, 32, 31
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+settings-icon-green
+  rotate: false
+  xy: 303, 252
+  size: 64, 64
+  split: 15, 15, 15, 14
+  pad: 32, 31, 32, 31
+  orig: 64, 64
   offset: 0, 0
   index: -1
