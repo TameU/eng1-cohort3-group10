@@ -42,7 +42,6 @@ public class MapScreen implements Screen {
     private boolean dragging;
     private float oldMouseX, oldMouseY;
     private float sensitivity = 0.025f;
-
     public MapScreen(Game game) {
         this.game = game;
 
@@ -102,6 +101,7 @@ public class MapScreen implements Screen {
     public void show() {
         Gdx.input.setInputProcessor(stage);
         timer.systemStartTime();
+        Soundtrack.play();
     }
 
     @Override

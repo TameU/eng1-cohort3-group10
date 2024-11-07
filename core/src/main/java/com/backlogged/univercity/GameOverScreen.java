@@ -3,6 +3,7 @@ package com.backlogged.univercity;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -54,6 +55,9 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void show() {
+        Soundtrack.pause();
+        Sound gameOverSound = Gdx.audio.newSound(Gdx.files.internal(Constants.GAME_OVER_SOUND_PATH));
+        gameOverSound.play(1f);
         Gdx.input.setInputProcessor(stage);
     }
 
