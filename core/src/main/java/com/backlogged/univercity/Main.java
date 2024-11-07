@@ -13,6 +13,10 @@ public class Main extends Game {
     @Override
     public void create() {
         Soundtrack.play();
+        if (GamePreferences.isFullscreen())
+            Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+        else
+            Gdx.graphics.setWindowedMode(1280, 720);
         setScreen(new TitleScreen(this));
     }
 
