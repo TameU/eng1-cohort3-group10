@@ -55,7 +55,7 @@ public class SettingsScreen implements Screen {
         createScrollPane();
         table.add(scrollPane).growX().bottom();
         table.row();
-        table.add(backButton).size(Value.percentWidth(.3f, table), Value.percentHeight(.1f, table));
+        table.add(backButton).size(Value.percentWidth(.3f, table), Value.percentHeight(.1f, table)).padTop(20);
         table.setFillParent(true);
         table.setDebug(true);
         stage.addActor(table);
@@ -64,6 +64,9 @@ public class SettingsScreen implements Screen {
 
     }
 
+    /**
+     * Creates the scroll pane and fills it with all the settings options.
+     */
     private void createScrollPane() {
         Table preferencesTable = new Table(skin);
         preferencesTable.setFillParent(true);
@@ -234,14 +237,14 @@ public class SettingsScreen implements Screen {
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
         backButton.getStyle().font.getData().setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
-        settingsLabel.setFontScale(width / 2500f);
-        musicEnabledLabel.setFontScale(width / 4000f);
-        musicVolumeLabel.setFontScale(width / 4000f);
-        soundEnabledLabel.setFontScale(width / 4000f);
-        soundVolumeLabel.setFontScale(width / 4000f);
-        fullScreenLabel.setFontScale(width / 4000f);
-        mouseSensitivityLabel.setFontScale(width / 4000f);
-        keyboardSensitivityLabel.setFontScale(width / 4000f);
+        settingsLabel.setFontScale(width / Constants.SETTINGS_TITLE_FONT_SCALING_FACTOR);
+        musicEnabledLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
+        musicVolumeLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
+        soundEnabledLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
+        soundVolumeLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
+        fullScreenLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
+        mouseSensitivityLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
+        keyboardSensitivityLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
     }
 
     @Override
