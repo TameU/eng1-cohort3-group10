@@ -50,12 +50,12 @@ public class SettingsScreen implements Screen {
             }
         });
 
-        table.add(settingsLabel).space(20);
+        table.add(settingsLabel).spaceBottom(20).padTop(10);
         table.row();
         createScrollPane();
         table.add(scrollPane).growX().bottom();
         table.row();
-        table.add(backButton).size(Value.percentWidth(.3f, table), Value.percentHeight(.1f, table)).padTop(20);
+        table.add(backButton).size(Value.percentWidth(.3f, table), Value.percentHeight(.1f, table)).padTop(20).padBottom(10);
         table.setFillParent(true);
         table.setDebug(true);
         stage.addActor(table);
@@ -69,7 +69,6 @@ public class SettingsScreen implements Screen {
      */
     private void createScrollPane() {
         Table preferencesTable = new Table(skin);
-        preferencesTable.setFillParent(true);
         preferencesTable.setDebug(true);
         musicEnabledLabel = new Label("Music Enabled", skin, "game-title");
         musicEnabledCheckBox = new CheckBox("", skin);
@@ -160,7 +159,8 @@ public class SettingsScreen implements Screen {
         preferencesTable.add(keyboardSensitivitySlider).width(Value.percentWidth(.3f, preferencesTable)).space(20);
         scrollPane = new ScrollPane(preferencesTable);
         scrollPane.setScrollingDisabled(true, false);
-        scrollPane.setFadeScrollBars(false);
+        scrollPane.setDebug(true);
+        stage.setScrollFocus(scrollPane);
     }
     // create a dictionary for key names if the key is not a Unicode character
     // ignore modifier and platform specific keys
