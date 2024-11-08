@@ -23,9 +23,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-/**
- * First screen of the application. Displayed after the application is created.
- */
 public class MapScreen implements Screen {
 
     private Game game;
@@ -48,7 +45,7 @@ public class MapScreen implements Screen {
     private Button bed;
     private Button book;
     private Button food;
-    private Button football; 
+    private Button football;
     private BuildingManager buildingManager;
 
     public MapScreen(Game game) {
@@ -77,8 +74,7 @@ public class MapScreen implements Screen {
                 else
                     timer.userStopTime();
             }
-        }); 
-
+        });
 
         settingsButton = new Button(skin, "settings");
         settingsButton.addListener(new ClickListener() {
@@ -93,8 +89,8 @@ public class MapScreen implements Screen {
         bed = new Button(skin, "bed");
         bed.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                // Deal with clicking later 
-                buildingManager.setBuildingState(); 
+                // Deal with clicking later
+                buildingManager.setBuildingState();
                 buildingManager.tryPlaceBuilding("Accommodation");
             }
         });
@@ -102,8 +98,8 @@ public class MapScreen implements Screen {
         book = new Button(skin, "book");
         book.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                // Deal with clicking later 
-                buildingManager.setBuildingState(); 
+                // Deal with clicking later
+                buildingManager.setBuildingState();
                 buildingManager.tryPlaceBuilding("LectureHall");
             }
         });
@@ -111,8 +107,8 @@ public class MapScreen implements Screen {
         food = new Button(skin, "food");
         food.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                // Deal with clicking later 
-                buildingManager.setBuildingState(); 
+                // Deal with clicking later
+                buildingManager.setBuildingState();
                 buildingManager.tryPlaceBuilding("FoodCourt");
             }
         });
@@ -120,8 +116,8 @@ public class MapScreen implements Screen {
         football = new Button(skin, "football");
         football.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                // Deal with clicking later 
-                buildingManager.setBuildingState(); 
+                // Deal with clicking later
+                buildingManager.setBuildingState();
                 buildingManager.tryPlaceBuilding("SportsCenter");
             }
         });
@@ -146,8 +142,6 @@ public class MapScreen implements Screen {
 
         stage.addActor(table);
 
-       
-        
         camera.setToOrtho(false, width * unitScale, (width * unitScale) * (height / width));
         timer.resetTime();
         timer.userStartTime();
@@ -164,12 +158,12 @@ public class MapScreen implements Screen {
         handleInput();
         camera.update();
         buildingManager.setCamera(camera);
-        buildingManager.handleInput(); 
+        buildingManager.handleInput();
         buildingManager.update();
-        renderer.setView(camera); 
-        
+        renderer.setView(camera);
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        renderer.render(); 
+        renderer.render();
         buildingManager.render();
         float timeLeft = timer.updateTime(delta);
         float elapsedTime = timer.timeElapsed(delta);
