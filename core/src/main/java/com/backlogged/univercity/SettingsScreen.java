@@ -1,8 +1,6 @@
 package com.backlogged.univercity;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -45,6 +43,24 @@ public class SettingsScreen implements Screen {
 
     private Label keyboardSensitivityLabel;
     private Slider keyboardSensitivitySlider;
+
+    private Label keyboardBindingUpLabel;
+    private TextButton keyboardBindingUpButton;
+
+    private Label keyboardBindingDownLabel;
+    private TextButton keyboardBindingDownButton;
+
+    private Label keyboardBindingLeftLabel;
+    private TextButton keyboardBindingLeftButton;
+
+    private Label keyboardBindingRightLabel;
+    private TextButton keyboardBindingRightButton;
+
+    private Label keyboardBindingZoomInLabel;
+    private TextButton keyboardBindingZoomInButton;
+
+    private Label keyboardBindingZoomOutLabel;
+    private TextButton keyboardBindingZoomOutButton;
 
     public SettingsScreen(Game game, Screen previousScreen) {
         skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
@@ -154,6 +170,108 @@ public class SettingsScreen implements Screen {
             }
         });
 
+        keyboardBindingUpLabel = new Label("Up Key", skin, "game-title");
+        keyboardBindingUpButton = new TextButton(Input.Keys.toString(GamePreferences.getKeyboardBindingUp()), skin, "key-button");
+        keyboardBindingUpButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // add a listener that waits for the next key press and sets it as the up key
+                keyboardBindingUpButton.setText("...");
+                Gdx.input.setInputProcessor(new InputAdapter() {
+                    public boolean keyDown(int keycode) {
+                        GamePreferences.setKeyboardBindingUp(keycode);
+                        keyboardBindingUpButton.setText(Input.Keys.toString(keycode));
+                        Gdx.input.setInputProcessor(stage);
+                        return false;
+                    }
+                });
+            }
+        });
+
+        keyboardBindingDownLabel = new Label("Down Key", skin, "game-title");
+        keyboardBindingDownButton = new TextButton(Input.Keys.toString(GamePreferences.getKeyboardBindingDown()), skin, "key-button");
+        keyboardBindingDownButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // add a listener that waits for the next key press and sets it as the down key
+                keyboardBindingDownButton.setText("...");
+                Gdx.input.setInputProcessor(new InputAdapter() {
+                    public boolean keyDown(int keycode) {
+                        GamePreferences.setKeyboardBindingDown(keycode);
+                        keyboardBindingDownButton.setText(Input.Keys.toString(keycode));
+                        Gdx.input.setInputProcessor(stage);
+                        return false;
+                    }
+                });
+            }
+        });
+
+        keyboardBindingLeftLabel = new Label("Left Key", skin, "game-title");
+        keyboardBindingLeftButton = new TextButton(Input.Keys.toString(GamePreferences.getKeyboardBindingLeft()), skin, "key-button");
+        keyboardBindingLeftButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // add a listener that waits for the next key press and sets it as the left key
+                keyboardBindingLeftButton.setText("...");
+                Gdx.input.setInputProcessor(new InputAdapter() {
+                    public boolean keyDown(int keycode) {
+                        GamePreferences.setKeyboardBindingLeft(keycode);
+                        keyboardBindingLeftButton.setText(Input.Keys.toString(keycode));
+                        Gdx.input.setInputProcessor(stage);
+                        return false;
+                    }
+                });
+            }
+        });
+
+        keyboardBindingRightLabel = new Label("Right Key", skin, "game-title");
+        keyboardBindingRightButton = new TextButton(Input.Keys.toString(GamePreferences.getKeyboardBindingRight()), skin, "key-button");
+        keyboardBindingRightButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // add a listener that waits for the next key press and sets it as the right key
+                keyboardBindingRightButton.setText("...");
+                Gdx.input.setInputProcessor(new InputAdapter() {
+                    public boolean keyDown(int keycode) {
+                        GamePreferences.setKeyboardBindingRight(keycode);
+                        keyboardBindingRightButton.setText(Input.Keys.toString(keycode));
+                        Gdx.input.setInputProcessor(stage);
+                        return false;
+                    }
+                });
+            }
+        });
+
+        keyboardBindingZoomInLabel = new Label("Zoom In Key", skin, "game-title");
+        keyboardBindingZoomInButton = new TextButton(Input.Keys.toString(GamePreferences.getKeyboardBindingZoomIn()), skin, "key-button");
+        keyboardBindingZoomInButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // add a listener that waits for the next key press and sets it as the zoom in key
+                keyboardBindingZoomInButton.setText("...");
+                Gdx.input.setInputProcessor(new InputAdapter() {
+                    public boolean keyDown(int keycode) {
+                        GamePreferences.setKeyboardBindingZoomIn(keycode);
+                        keyboardBindingZoomInButton.setText(Input.Keys.toString(keycode));
+                        Gdx.input.setInputProcessor(stage);
+                        return false;
+                    }
+                });
+            }
+        });
+
+        keyboardBindingZoomOutLabel = new Label("Zoom Out Key", skin, "game-title");
+        keyboardBindingZoomOutButton = new TextButton(Input.Keys.toString(GamePreferences.getKeyboardBindingZoomOut()), skin, "key-button");
+        keyboardBindingZoomOutButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // add a listener that waits for the next key press and sets it as the zoom out key
+                keyboardBindingZoomOutButton.setText("...");
+                Gdx.input.setInputProcessor(new InputAdapter() {
+                    public boolean keyDown(int keycode) {
+                        GamePreferences.setKeyboardBindingZoomOut(keycode);
+                        keyboardBindingZoomOutButton.setText(Input.Keys.toString(keycode));
+                        Gdx.input.setInputProcessor(stage);
+                        return false;
+                    }
+                });
+            }
+        });
+
         preferencesTable.add(musicEnabledLabel).space(20);
         preferencesTable.add(musicEnabledCheckBox).space(20);
         preferencesTable.row();
@@ -174,16 +292,30 @@ public class SettingsScreen implements Screen {
         preferencesTable.row();
         preferencesTable.add(keyboardSensitivityLabel).space(20);
         preferencesTable.add(keyboardSensitivitySlider).width(Value.percentWidth(.3f, preferencesTable)).space(20);
+        preferencesTable.row();
+        preferencesTable.add(keyboardBindingUpLabel).space(20);
+        preferencesTable.add(keyboardBindingUpButton).space(20).width(150f).height(60f);
+        preferencesTable.row();
+        preferencesTable.add(keyboardBindingDownLabel).space(20);
+        preferencesTable.add(keyboardBindingDownButton).space(20).width(150f).height(60f);
+        preferencesTable.row();
+        preferencesTable.add(keyboardBindingLeftLabel).space(20);
+        preferencesTable.add(keyboardBindingLeftButton).space(20).width(150f).height(60f);
+        preferencesTable.row();
+        preferencesTable.add(keyboardBindingRightLabel).space(20);
+        preferencesTable.add(keyboardBindingRightButton).space(20).width(150f).height(60f);
+        preferencesTable.row();
+        preferencesTable.add(keyboardBindingZoomInLabel).space(20);
+        preferencesTable.add(keyboardBindingZoomInButton).space(20).width(150f).height(60f);
+        preferencesTable.row();
+        preferencesTable.add(keyboardBindingZoomOutLabel).space(20);
+        preferencesTable.add(keyboardBindingZoomOutButton).space(20).width(150f).height(60f);
         scrollPane = new ScrollPane(preferencesTable);
         scrollPane.setScrollingDisabled(true, false);
         scrollPane.setDebug(true);
     scrollPane.setFlickScroll(false);
         stage.setScrollFocus(scrollPane);
     }
-    // create a dictionary for key names if the key is not a Unicode character
-    // ignore modifier and platform specific keys
-    // check if the key is used for something else in the preferences
-    // if it is, then don't allow the user to set it
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
@@ -265,6 +397,12 @@ public class SettingsScreen implements Screen {
         fullScreenLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
         mouseSensitivityLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
         keyboardSensitivityLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
+        keyboardBindingUpLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
+        keyboardBindingDownLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
+        keyboardBindingLeftLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
+        keyboardBindingRightLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
+        keyboardBindingZoomInLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
+        keyboardBindingZoomOutLabel.setFontScale(width / Constants.SETTINGS_LABEL_FONT_SCALING_FACTOR);
     }
 
     @Override

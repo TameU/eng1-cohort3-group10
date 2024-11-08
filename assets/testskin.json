@@ -69,7 +69,7 @@
 	},
 	food: {
 		up: "food"
-	},
+	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
 	default: {
@@ -126,6 +126,10 @@
 		downFontColor: "Green",
 		up: "Button01",
 		over: "Button15"
+	},
+	"key-button": {
+		font: "PressStart2P-Regular",
+		up: "check_square_grey"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {
