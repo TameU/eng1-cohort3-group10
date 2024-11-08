@@ -43,9 +43,9 @@ public class MapScreen implements Screen {
     private float sensitivity = 0.025f;
     // Buildings
     private Button bed;
+    private Button football;
     private Button book;
     private Button food;
-    private Button football;
     private BuildingManager buildingManager;
 
     public MapScreen(Game game) {
@@ -95,6 +95,15 @@ public class MapScreen implements Screen {
             }
         });
 
+        football = new Button(skin, "football");
+        football.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // Deal with clicking later
+                buildingManager.setBuildingState();
+                buildingManager.tryPlaceBuilding("SportsCenter");
+            }
+        });
+
         book = new Button(skin, "book");
         book.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
@@ -113,15 +122,6 @@ public class MapScreen implements Screen {
             }
         });
 
-        football = new Button(skin, "football");
-        football.addListener(new ClickListener() {
-            public void clicked(InputEvent e, float x, float y) {
-                // Deal with clicking later
-                buildingManager.setBuildingState();
-                buildingManager.tryPlaceBuilding("SportsCenter");
-            }
-        });
-
         timerLabel.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new GameOverScreen(game));
@@ -136,9 +136,9 @@ public class MapScreen implements Screen {
         table.add(settingsButton).top();// .left();
         // Buildings
         table.add(bed).center().left();
+        table.add(football).center().left();
         table.add(book).center().left();
         table.add(food).center().left();
-        table.add(football).center().left();
 
         stage.addActor(table);
 
@@ -146,8 +146,6 @@ public class MapScreen implements Screen {
         unitScale = 1 / 32f;
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         camera = new OrthographicCamera();
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
         camera.setToOrtho(false, width * unitScale, (width * unitScale) * (height / width));
         timer.initialiseTimerValues();
         timer.userStartTime();

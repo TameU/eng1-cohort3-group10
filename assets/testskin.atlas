@@ -197,28 +197,28 @@ settings-icon-green
   index: -1
 bed
   rotate: false
-  xy: 2017, 1
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-book
-  rotate: false
-  xy: 2017, 33
-  size: 32, 32
-  orig: 32, 32
-  offset: 0, 0
-  index: -1
-food
-  rotate: false
-  xy: 2017, 65
+  xy: 993, 1
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
   index: -1
 football
   rotate: false
-  xy: 2017, 97
+  xy: 993, 33
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+book
+  rotate: false
+  xy: 993, 65
+  size: 32, 32
+  orig: 32, 32
+  offset: 0, 0
+  index: -1
+food
+  rotate: false
+  xy: 993, 97
   size: 32, 32
   orig: 32, 32
   offset: 0, 0
