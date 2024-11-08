@@ -57,25 +57,25 @@
 	settings: {
 		up: "settings-icon",
 		down: "settings-icon-green"
-	}
+	},
+	bed: {
+		up: "bed"
+	},
+	football: {
+		up: "football"
+	},
+	book: {
+		up: "book"
+	},
+	food: {
+		up: "food"
+	},
 },
 "com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
 	default: {
 		checkboxOn: "check_square_grey_checkmark",
 		checkboxOff: "check_square_grey",
 		font: "PressStart2P-Regular"
-	}
-	bed: {
-		up: "bed"
-	}
-	book: {
-		up: "book"
-	}
-	food: {
-		up: "food"
-	}
-	football: {
-		up: "football"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
