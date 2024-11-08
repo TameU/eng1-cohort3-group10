@@ -85,6 +85,10 @@ public class SettingsScreen implements Screen {
         musicEnabledCheckBox.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 GamePreferences.setMusicEnabled(musicEnabledCheckBox.isChecked());
+                if (musicEnabledCheckBox.isChecked())
+                    Soundtrack.play();
+                else
+                    Soundtrack.pause();
             }
         });
 
@@ -94,6 +98,7 @@ public class SettingsScreen implements Screen {
         musicVolumeSlider.addListener(new ChangeListener() {
             public void changed(ChangeEvent event, Actor actor) {
                 GamePreferences.setMusicVolume(musicVolumeSlider.getValue());
+                Soundtrack.play();
             }
         });
 
@@ -169,6 +174,7 @@ public class SettingsScreen implements Screen {
         scrollPane = new ScrollPane(preferencesTable);
         scrollPane.setScrollingDisabled(true, false);
         scrollPane.setDebug(true);
+        scrollPane.setFlickScroll(false);
         stage.setScrollFocus(scrollPane);
     }
     // create a dictionary for key names if the key is not a Unicode character
