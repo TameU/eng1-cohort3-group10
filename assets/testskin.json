@@ -57,7 +57,19 @@
 	settings: {
 		up: "settings-icon",
 		down: "settings-icon-green"
-	}
+	},
+	bed: {
+		up: "bed"
+	},
+	football: {
+		up: "football"
+	},
+	book: {
+		up: "book"
+	},
+	food: {
+		up: "food"
+	},
 },
 "com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
 	default: {

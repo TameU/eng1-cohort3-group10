@@ -6,7 +6,9 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
+import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.MathUtils;
@@ -21,9 +23,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-/**
- * First screen of the application. Displayed after the application is created.
- */
 public class MapScreen implements Screen {
 
     private Game game;
@@ -42,12 +41,25 @@ public class MapScreen implements Screen {
     private boolean dragging;
     private float oldMouseX, oldMouseY;
     private float sensitivity = 0.025f;
+    // Buildings
+    private Button bed;
+    private Button football;
+    private Button book;
+    private Button food;
+    private BuildingManager buildingManager;
 
     public MapScreen(Game game) {
         this.game = game;
-
+        map = new TmxMapLoader().load("desert.tmx");
+        unitScale = 1 / 32f;
+        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        camera = new OrthographicCamera();
+        float width = Gdx.graphics.getWidth();
+        float height = Gdx.graphics.getHeight();
         timer = new InGameTimer(5);
-
+        var buildingRenderer = new BuildingRenderer(new TextureAtlas(Gdx.files.local("buildings/buildings.atlas")));
+        buildingManager = new BuildingManager(unitScale, buildingRenderer,
+                new BuildingPlacementManager((TiledMapTileLayer) map.getLayers().get("Terrain")));
         stage = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
 
@@ -72,6 +84,44 @@ public class MapScreen implements Screen {
             }
         });
 
+        //////////////// BUILDINGS
+
+        bed = new Button(skin, "bed");
+        bed.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // Deal with clicking later
+                buildingManager.setBuildingState();
+                buildingManager.tryPlaceBuilding("Accommodation");
+            }
+        });
+
+        football = new Button(skin, "football");
+        football.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // Deal with clicking later
+                buildingManager.setBuildingState();
+                buildingManager.tryPlaceBuilding("SportsCenter");
+            }
+        });
+
+        book = new Button(skin, "book");
+        book.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // Deal with clicking later
+                buildingManager.setBuildingState();
+                buildingManager.tryPlaceBuilding("LectureHall");
+            }
+        });
+
+        food = new Button(skin, "food");
+        food.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // Deal with clicking later
+                buildingManager.setBuildingState();
+                buildingManager.tryPlaceBuilding("FoodCourt");
+            }
+        });
+
         timerLabel.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
                 game.setScreen(new GameOverScreen(game));
@@ -84,6 +134,11 @@ public class MapScreen implements Screen {
         table.add(timerLabel).expand().top();
         table.add(pauseButton).top().right().spaceRight(10);
         table.add(settingsButton).top();// .left();
+        // Buildings
+        table.add(bed).center().left();
+        table.add(football).center().left();
+        table.add(book).center().left();
+        table.add(food).center().left();
 
         stage.addActor(table);
 
@@ -91,8 +146,6 @@ public class MapScreen implements Screen {
         unitScale = 1 / 32f;
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         camera = new OrthographicCamera();
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
         camera.setToOrtho(false, width * unitScale, (width * unitScale) * (height / width));
         timer.initialiseTimerValues();
         timer.userStartTime();
@@ -109,9 +162,14 @@ public class MapScreen implements Screen {
     public void render(float delta) {
         handleInput();
         camera.update();
+        buildingManager.setCamera(camera);
+        buildingManager.handleInput();
+        buildingManager.update();
         renderer.setView(camera);
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         renderer.render();
+        buildingManager.render();
         float timeLeft = timer.updateTime(delta);
         float elapsedTime = timer.timeElapsed(delta);
 
