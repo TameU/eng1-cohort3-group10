@@ -213,24 +213,26 @@ public class MapScreen implements Screen {
      * Handle user's keyboard inputs, allowing movement and zooming of the map
      */
     private void handledKeyboardInput() {
-        if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingZoomOut())) {
-            camera.zoom += Constants.DEFAULT_KEYBOARD_SENSITIVITY * GamePreferences.getKeyboardSensitivity();
-        }
-        if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingZoomIn())) {
-            camera.zoom -= Constants.DEFAULT_KEYBOARD_SENSITIVITY * GamePreferences.getKeyboardSensitivity();
-        }
-        if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingLeft())) {
-            camera.translate(-1 * GamePreferences.getKeyboardSensitivity(), 0, 0);
-        }
-        if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingRight())) {
-            camera.translate(1 * GamePreferences.getKeyboardSensitivity(), 0, 0);
-        }
-        if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingDown())) {
-            camera.translate(0, -1 * GamePreferences.getKeyboardSensitivity(), 0);
-        }
-        if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingUp())) {
-            camera.translate(0, 1 * GamePreferences.getKeyboardSensitivity(), 0);
-        }
+    if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingZoomOut())) {
+      camera.zoom +=
+          Constants.DEFAULT_KEYBOARD_SENSITIVITY * GamePreferences.getKeyboardSensitivity();
+    }
+    if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingZoomIn())) {
+      camera.zoom -=
+          Constants.DEFAULT_KEYBOARD_SENSITIVITY * GamePreferences.getKeyboardSensitivity();
+    }
+    if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingLeft())) {
+      camera.translate(-1 * GamePreferences.getKeyboardSensitivity(), 0, 0);
+    }
+    if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingRight())) {
+      camera.translate(1 * GamePreferences.getKeyboardSensitivity(), 0, 0);
+    }
+    if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingDown())) {
+      camera.translate(0, -1 * GamePreferences.getKeyboardSensitivity(), 0);
+    }
+    if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingUp())) {
+      camera.translate(0, 1 * GamePreferences.getKeyboardSensitivity(), 0);
+    }
     }
 
     /**
