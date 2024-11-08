@@ -20,7 +20,7 @@ public final class Soundtrack {
      * Starts or resumes the soundtrack. Updates volume.
      */
     public static void play() {
-      soundtrack.setVolume(GamePreferences.getMusicVolume());
+    soundtrack.setVolume(GamePreferences.getMusicVolume());
         soundtrack.setLooping(true);
     if (GamePreferences.isMusicEnabled()) {
       soundtrack.play();
