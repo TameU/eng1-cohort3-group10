@@ -1,6 +1,10 @@
 package com.backlogged.univercity;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -44,23 +48,23 @@ public class SettingsScreen implements Screen {
     private Label keyboardSensitivityLabel;
     private Slider keyboardSensitivitySlider;
 
-    private Label keyboardBindingUpLabel;
-    private TextButton keyboardBindingUpButton;
+  private Label keyboardBindingUpLabel;
+  private TextButton keyboardBindingUpButton;
 
-    private Label keyboardBindingDownLabel;
-    private TextButton keyboardBindingDownButton;
+  private Label keyboardBindingDownLabel;
+  private TextButton keyboardBindingDownButton;
 
-    private Label keyboardBindingLeftLabel;
-    private TextButton keyboardBindingLeftButton;
+  private Label keyboardBindingLeftLabel;
+  private TextButton keyboardBindingLeftButton;
 
-    private Label keyboardBindingRightLabel;
-    private TextButton keyboardBindingRightButton;
+  private Label keyboardBindingRightLabel;
+  private TextButton keyboardBindingRightButton;
 
-    private Label keyboardBindingZoomInLabel;
-    private TextButton keyboardBindingZoomInButton;
+  private Label keyboardBindingZoomInLabel;
+  private TextButton keyboardBindingZoomInButton;
 
-    private Label keyboardBindingZoomOutLabel;
-    private TextButton keyboardBindingZoomOutButton;
+  private Label keyboardBindingZoomOutLabel;
+  private TextButton keyboardBindingZoomOutButton;
 
     public SettingsScreen(Game game, Screen previousScreen) {
         skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
