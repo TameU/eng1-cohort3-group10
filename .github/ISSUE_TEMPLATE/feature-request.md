@@ -2,7 +2,7 @@
 name: Feature Request
 about: Template for Feature requests
 title: ''
-labels: enchantment, up for grabs
+labels: enhancement, up for grabs
 assignees: ''
 
 ---
