@@ -70,20 +70,27 @@ public class BuildingManager {
     private IBuildingPlacementManager placementManager;
     private boolean isChoosingLocation = false;
     private AbstractBuilding buildingToBePlaced;
+    private String buildingToBePlacedType;
     private int currentRow, currentColumn; 
     private BuildingState buildingState = BuildingState.NOT_BUILDING;
     private OrthographicCamera camera; 
+    private HashMap<String, Integer> buildingCounts = new HashMap<>();
     public BuildingManager(float unitScale,  
                             IBuildingRenderer renderer, 
                             IBuildingPlacementManager placementManager) {
         if (renderer == null || placementManager == null) {
             throw new IllegalArgumentException("renderer and placement manager MUST both be initialized");
         }  
-        buildingMap = BuildingInfoFromJsonFactory.getBuildingsFromJson(Gdx.files.local("buildings/Buildings.json"), renderer.getAtlas(), unitScale);
+        buildingMap = BuildingInfoFromJsonFactory.getBuildingsFromJson(Gdx.files.internal("buildings/Buildings.json"), renderer.getAtlas(), unitScale);
+        initBuildingCounters();
         this.renderer = renderer; 
         this.placementManager = placementManager;
     } 
-
+    private void initBuildingCounters() { 
+        for (var buildingType : buildingMap.keySet()) { 
+            buildingCounts.put(buildingType, 0);
+        }
+    }
      
     public void setBuildingState() { 
         if (buildingState == BuildingState.NOT_BUILDING) { 
@@ -93,17 +100,24 @@ public class BuildingManager {
     public Set<Entry<String, BuildingInfo>> getBuildings() { 
         return buildingMap.entrySet();
     }  
-    private void resetState() { 
+    private void resetState() {
+        buildingToBePlacedType = null; 
         buildingToBePlaced = null; 
         isChoosingLocation = false;
     } 
-    
+    public Set<Entry<String, Integer>> getBuildingTypeCounts() { 
+        return buildingCounts.entrySet();
+    }
     private void placeBuilding(int row, int column) { 
         placementManager.placeBuilding(row, column, buildingToBePlaced); 
+        var countForBuildingTypePlaced = buildingCounts.get(buildingToBePlacedType); 
+        buildingCounts.put(buildingToBePlacedType, ++countForBuildingTypePlaced);
+        System.out.println(getBuildingTypeCounts().toString());
         resetState();
     } 
     public void tryPlaceBuilding(String buildingType) { 
         AbstractBuilding building = BuildingFactory.createBuilding(buildingMap, buildingType);
+        buildingToBePlacedType = buildingType;
         buildingToBePlaced = building;
         isChoosingLocation = true;
     }  

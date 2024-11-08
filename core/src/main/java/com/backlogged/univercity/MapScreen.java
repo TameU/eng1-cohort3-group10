@@ -60,11 +60,12 @@ public class MapScreen implements Screen {
         float width = Gdx.graphics.getWidth();
         float height = Gdx.graphics.getHeight();
         timer = new InGameTimer(5);
-        var buildingRenderer = new BuildingRenderer(new TextureAtlas(Gdx.files.local("buildings/buildings.atlas")));
+        var buildingRenderer = new BuildingRenderer(new TextureAtlas(Gdx.files.internal("buildings/buildings.atlas")));
+        buildingRenderer.enableDebugGrid(true);
         buildingManager = new BuildingManager(unitScale, buildingRenderer,
                 new BuildingPlacementManager((TiledMapTileLayer) map.getLayers().get("Terrain")));
         stage = new Stage(new ScreenViewport());
-        skin = new Skin(Gdx.files.local("testskin.json"));
+        skin = new Skin(Gdx.files.internal("testskin.json"));
 
         timerLabel = new Label("5:00", skin);
         timerLabel.setAlignment(Align.center);
