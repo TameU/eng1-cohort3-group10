@@ -57,8 +57,9 @@ public class GameOverScreen implements Screen {
     public void show() {
         Soundtrack.pause();
         Sound gameOverSound = Gdx.audio.newSound(Gdx.files.internal(Constants.GAME_OVER_SOUND_PATH));
-        if(GamePreferences.isSoundEnabled())
-            gameOverSound.play(GamePreferences.getSoundVolume());
+      if (GamePreferences.isSoundEnabled()) {
+        gameOverSound.play(GamePreferences.getSoundVolume());
+      }
         Gdx.input.setInputProcessor(stage);
     }
 

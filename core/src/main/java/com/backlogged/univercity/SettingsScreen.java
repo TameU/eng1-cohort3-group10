@@ -82,14 +82,17 @@ public class SettingsScreen implements Screen {
         musicEnabledLabel = new Label("Music Enabled", skin, "game-title");
         musicEnabledCheckBox = new CheckBox("", skin);
         musicEnabledCheckBox.setChecked(GamePreferences.isMusicEnabled());
-        musicEnabledCheckBox.addListener(new ClickListener() {
-            public void clicked(InputEvent e, float x, float y) {
-                GamePreferences.setMusicEnabled(musicEnabledCheckBox.isChecked());
-                if (musicEnabledCheckBox.isChecked())
-                    Soundtrack.play();
-                else
-                    Soundtrack.pause();
+    musicEnabledCheckBox.addListener(
+        new ClickListener() {
+          public void clicked(InputEvent e, float x, float y) {
+            GamePreferences.setMusicEnabled(musicEnabledCheckBox.isChecked());
+            if (musicEnabledCheckBox.isChecked()) {
+              Soundtrack.play();
             }
+            else {
+              Soundtrack.pause();
+            }
+          }
         });
 
         musicVolumeLabel = new Label("Music Volume", skin, "game-title");
@@ -174,7 +177,7 @@ public class SettingsScreen implements Screen {
         scrollPane = new ScrollPane(preferencesTable);
         scrollPane.setScrollingDisabled(true, false);
         scrollPane.setDebug(true);
-        scrollPane.setFlickScroll(false);
+    scrollPane.setFlickScroll(false);
         stage.setScrollFocus(scrollPane);
     }
     // create a dictionary for key names if the key is not a Unicode character
