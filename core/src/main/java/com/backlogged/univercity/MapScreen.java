@@ -24,6 +24,11 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MapScreen implements Screen {
+    /** smallest zoom level */
+    private final float MIN_SCALING = 0.1f;
+
+    /** Aspect ratio of the tiled map */
+    private final float MAP_ASPECT_RATIO = 128 / 72f;
 
     private Game game;
     private TiledMap map;
@@ -50,7 +55,7 @@ public class MapScreen implements Screen {
 
     public MapScreen(Game game) {
         this.game = game;
-        map = new TmxMapLoader().load("desert.tmx");
+        map = new TmxMapLoader().load(Constants.MAP_PATH);
         unitScale = 1 / 32f;
         renderer = new OrthogonalTiledMapRenderer(map, unitScale);
         camera = new OrthographicCamera();
@@ -239,15 +244,22 @@ public class MapScreen implements Screen {
     private void handleInput() {
         handleMouseInput();
         handledKeyboardInput();
+        System.out.println(camera.zoom + "//" + camera.viewportHeight + "//" + camera.viewportWidth);
+        // camera.zoom = MathUtils.clamp(camera.zoom, MIN_SCALING, 1.5f);
 
-        /* TODO: get better clamping */
-        camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, 100 / camera.viewportWidth);
+        // stop the map going out of the screen
+        camera.position.x = MathUtils.clamp(camera.position.x, (camera.viewportWidth / 2) * camera.zoom,
+                (camera.viewportWidth) * camera.zoom);
+
+        camera.position.y = MathUtils.clamp(camera.position.y, (camera.viewportHeight / 2) * camera.zoom,
+                (camera.viewportHeight) * camera.zoom);
 
     }
 
     @Override
     public void resize(int width, int height) {
-        if (width == 0 || height == 0) return;
+        if (width == 0 || height == 0)
+            return;
         camera.viewportWidth = MathUtils.floor(width / 32f);
         camera.viewportHeight = camera.viewportWidth * height / width;
         camera.update();
