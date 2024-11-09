@@ -100,7 +100,7 @@ public class MapScreen implements Screen {
       public void clicked(InputEvent e, float x, float y) {
         // Deal with clicking later
         buildingManager.setBuildingState();
-        buildingManager.tryPlaceBuilding("Accommodation");
+        buildingManager.chooseLocationOfBuilding("Accommodation");
       }
     });
 
@@ -109,7 +109,7 @@ public class MapScreen implements Screen {
       public void clicked(InputEvent e, float x, float y) {
         // Deal with clicking later
         buildingManager.setBuildingState();
-        buildingManager.tryPlaceBuilding("SportsCenter");
+        buildingManager.chooseLocationOfBuilding("SportsCenter");
       }
     });
 
@@ -118,7 +118,7 @@ public class MapScreen implements Screen {
       public void clicked(InputEvent e, float x, float y) {
         // Deal with clicking later
         buildingManager.setBuildingState();
-        buildingManager.tryPlaceBuilding("LectureHall");
+        buildingManager.chooseLocationOfBuilding("LectureHall");
       }
     });
 
@@ -127,7 +127,7 @@ public class MapScreen implements Screen {
       public void clicked(InputEvent e, float x, float y) {
         // Deal with clicking later
         buildingManager.setBuildingState();
-        buildingManager.tryPlaceBuilding("FoodCourt");
+        buildingManager.chooseLocationOfBuilding("FoodCourt");
       }
     });
 
@@ -226,24 +226,24 @@ public class MapScreen implements Screen {
    * Handle user's keyboard inputs, allowing movement and zooming of the map.
    */
   private void handledKeyboardInput() {
-    if (Gdx.input.isKeyPressed(Input.Keys.A)) { // Zoom in
+    if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingZoomOut())) {
       camera.zoom += Constants.DEFAULT_KEYBOARD_SENSITIVITY
           * GamePreferences.getKeyboardSensitivity();
     }
-    if (Gdx.input.isKeyPressed(Input.Keys.Q)) { // Zoom out
+    if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingZoomIn())) {
       camera.zoom -= Constants.DEFAULT_KEYBOARD_SENSITIVITY
           * GamePreferences.getKeyboardSensitivity();
     }
-    if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+    if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingLeft())) {
       camera.translate(-1 * GamePreferences.getKeyboardSensitivity(), 0, 0);
     }
-    if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+    if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingRight())) {
       camera.translate(1 * GamePreferences.getKeyboardSensitivity(), 0, 0);
     }
-    if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+    if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingDown())) {
       camera.translate(0, -1 * GamePreferences.getKeyboardSensitivity(), 0);
     }
-    if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
+    if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingUp())) {
       camera.translate(0, 1 * GamePreferences.getKeyboardSensitivity(), 0);
     }
   }

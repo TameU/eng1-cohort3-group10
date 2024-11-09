@@ -66,14 +66,6 @@ public class GameOverScreen implements Screen {
   }
 
   @Override
-  public void show() {
-    Soundtrack.pause();
-    Sound gameOverSound = Gdx.audio.newSound(Gdx.files.internal(Constants.GAME_OVER_SOUND_PATH));
-    gameOverSound.play(1f);
-    Gdx.input.setInputProcessor(stage);
-  }
-
-  @Override
   public void render(float delta) {
     ScreenUtils.clear(0, 0, 0, 0);
     stage.act();
@@ -93,7 +85,16 @@ public class GameOverScreen implements Screen {
 
   @Override
   public void pause() {
+  }
 
+  @Override
+  public void show() {
+    Soundtrack.pause();
+    Sound gameOverSound = Gdx.audio.newSound(Gdx.files.internal(Constants.GAME_OVER_SOUND_PATH));
+    if (GamePreferences.isSoundEnabled()) {
+      gameOverSound.play(GamePreferences.getSoundVolume());
+    }
+    Gdx.input.setInputProcessor(stage);
   }
 
   @Override

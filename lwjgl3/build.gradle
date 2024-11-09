@@ -88,7 +88,7 @@ construo {
         // macOS needs an identifier
         identifier.set("com.backlogged.univercity." + appName)
         // Optional: icon for macOS
-        macIcon.set(project.file("icons/logo.icns"))
+        macIcon.set(project.file("icons/backlogged.icns"))
       }
       create("macX64", Target.MacOs) {
         architecture.set(Target.Architecture.X86_64)
@@ -96,7 +96,7 @@ construo {
         // macOS needs an identifier
         identifier.set("com.backlogged.univercity." + appName)
         // Optional: icon for macOS
-        macIcon.set(project.file("icons/logo.icns"))
+        macIcon.set(project.file("icons/backlogged.icns"))
       }
       create("winX64", Target.Windows) {
         architecture.set(Target.Architecture.X86_64)
