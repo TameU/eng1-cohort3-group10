@@ -26,9 +26,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-/**
- * First screen of the application. Displayed after the application is created.
- */
 public class MapScreen implements Screen {
 
     private Game game;
@@ -49,9 +46,9 @@ public class MapScreen implements Screen {
     private float sensitivity = 0.025f;
     // Buildings
     private Button bed;
+    private Button football;
     private Button book;
     private Button food;
-    private Button football; 
     private BuildingManager buildingManager; 
     private Label buildingCounterLabel;
     private TextTooltip detailedBuildingCounter;
@@ -69,7 +66,7 @@ public class MapScreen implements Screen {
         buildingManager = new BuildingManager(unitScale, buildingRenderer,
                 new BuildingPlacementManager((TiledMapTileLayer) map.getLayers().get("Terrain")));
         stage = new Stage(new ScreenViewport());
-        skin = new Skin(Gdx.files.internal("testskin.json"));
+        skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
 
         timerLabel = new Label("5:00", skin);  
         buildingCounterLabel = new Label("5:00", skin);
@@ -90,13 +87,12 @@ public class MapScreen implements Screen {
                 else
                     timer.userStopTime();
             }
-        }); 
-
+        });
 
         settingsButton = new Button(skin, "settings");
         settingsButton.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                timer.userStopTime(); // pause Time while in settings
+                timer.systemStopTime(); // pause Time while in settings
                 game.setScreen(new SettingsScreen(game, game.getScreen()));
             }
         });
@@ -106,17 +102,26 @@ public class MapScreen implements Screen {
         bed = new Button(skin, "bed");
         bed.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                // Deal with clicking later 
-                buildingManager.setBuildingState(); 
+                // Deal with clicking later
+                buildingManager.setBuildingState();
                 buildingManager.tryPlaceBuilding("Accommodation");
+            }
+        });
+
+        football = new Button(skin, "football");
+        football.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                // Deal with clicking later
+                buildingManager.setBuildingState();
+                buildingManager.tryPlaceBuilding("SportsCenter");
             }
         });
 
         book = new Button(skin, "book");
         book.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                // Deal with clicking later 
-                buildingManager.setBuildingState(); 
+                // Deal with clicking later
+                buildingManager.setBuildingState();
                 buildingManager.tryPlaceBuilding("LectureHall");
             }
         });
@@ -124,18 +129,9 @@ public class MapScreen implements Screen {
         food = new Button(skin, "food");
         food.addListener(new ClickListener() {
             public void clicked(InputEvent e, float x, float y) {
-                // Deal with clicking later 
-                buildingManager.setBuildingState(); 
+                // Deal with clicking later
+                buildingManager.setBuildingState();
                 buildingManager.tryPlaceBuilding("FoodCourt");
-            }
-        });
-
-        football = new Button(skin, "football");
-        football.addListener(new ClickListener() {
-            public void clicked(InputEvent e, float x, float y) {
-                // Deal with clicking later 
-                buildingManager.setBuildingState(); 
-                buildingManager.tryPlaceBuilding("SportsCenter");
             }
         });
 
@@ -155,23 +151,26 @@ public class MapScreen implements Screen {
         table.add(settingsButton).top();// .left();
         // Buildings
         table.add(bed).center().left();
+        table.add(football).center().left();
         table.add(book).center().left();
         table.add(food).center().left();
-        table.add(football).center().left();
 
         stage.addActor(table);
 
-       
-        
+        map = new TmxMapLoader().load(Constants.MAP_PATH);
+        unitScale = 1 / 32f;
+        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        camera = new OrthographicCamera();
         camera.setToOrtho(false, width * unitScale, (width * unitScale) * (height / width));
-        timer.resetTime();
+        timer.initialiseTimerValues();
         timer.userStartTime();
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        timer.initialiseTimerValues();
+        timer.systemStartTime();
+        Soundtrack.play();
     }
 
     @Override
@@ -179,12 +178,12 @@ public class MapScreen implements Screen {
         handleInput();
         camera.update();
         buildingManager.setCamera(camera);
-        buildingManager.handleInput(); 
+        buildingManager.handleInput();
         buildingManager.update();
-        renderer.setView(camera); 
-        
+        renderer.setView(camera);
+
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        renderer.render(); 
+        renderer.render();
         buildingManager.render();
         float timeLeft = timer.updateTime(delta);
         float elapsedTime = timer.timeElapsed(delta);
@@ -220,7 +219,7 @@ public class MapScreen implements Screen {
             float currentX = Gdx.input.getX();
             float currentY = Gdx.input.getY();
             Vector2 translate = new Vector2(-(currentX - oldMouseX), currentY - oldMouseY);
-            translate.scl(sensitivity * camera.zoom);
+            translate.scl(Constants.DEFAULT_MOUSE_SENSITIVITY * GamePreferences.getMouseSensitivity() * camera.zoom);
             camera.translate(translate);
             oldMouseX = currentX;
             oldMouseY = currentY;
@@ -232,22 +231,22 @@ public class MapScreen implements Screen {
      */
     private void handledKeyboardInput() {
         if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-            camera.zoom += 0.02;
+            camera.zoom += Constants.DEFAULT_KEYBOARD_SENSITIVITY * GamePreferences.getKeyboardSensitivity();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
-            camera.zoom -= 0.02;
+            camera.zoom -= Constants.DEFAULT_KEYBOARD_SENSITIVITY * GamePreferences.getKeyboardSensitivity();
         }
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            camera.translate(-1, 0, 0);
+            camera.translate(-1 * GamePreferences.getKeyboardSensitivity(), 0, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            camera.translate(1, 0, 0);
+            camera.translate(1 * GamePreferences.getKeyboardSensitivity(), 0, 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            camera.translate(0, -1, 0);
+            camera.translate(0, -1 * GamePreferences.getKeyboardSensitivity(), 0);
         }
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            camera.translate(0, 1, 0);
+            camera.translate(0, 1 * GamePreferences.getKeyboardSensitivity(), 0);
         }
     }
 
@@ -265,6 +264,7 @@ public class MapScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        if (width == 0 || height == 0) return;
         camera.viewportWidth = MathUtils.floor(width / 32f);
         camera.viewportHeight = camera.viewportWidth * height / width;
         camera.update();
@@ -294,14 +294,6 @@ public class MapScreen implements Screen {
         stage.dispose();
         skin.dispose();
         renderer.dispose();
-    }
-
-    public float getSensitivity() {
-        return sensitivity;
-    }
-
-    public void setSensitivity(float newSensitivity) {
-        sensitivity = Math.min(Math.abs(newSensitivity), 1);
     }
 
 }

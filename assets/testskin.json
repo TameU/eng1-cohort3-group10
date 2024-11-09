@@ -1,5 +1,11 @@
 {
 "com.badlogic.gdx.graphics.g2d.BitmapFont": {
+	"PressStart2P-GameOver": {
+		file: "PressStart2P-GameOver.fnt",
+		scaledSize: -1,
+		markupEnabled: false,
+		flip: false
+	},
 	"PressStart2P-Regular": {
 		file: "PressStart2P-Regular.fnt",
 		scaledSize: -1,
@@ -41,26 +47,35 @@
 },
 "com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle": {
 	pause: {
-		up: "pause_icon",
+		up: "pause-icon",
+		down: "pause-icon-green",
 		pressedOffsetX: 2,
 		pressedOffsetY: 2,
 		checkedOffsetX: 2,
 		checkedOffsetY: 2
-	}
+	},
 	settings: {
-		up: setting-icon(2)
-	}
+		up: "settings-icon",
+		down: "settings-icon-green"
+	},
 	bed: {
 		up: "bed"
-	}
-	book: {
-		up: "book"
-	}
-	food: {
-		up: "food"
-	}
+	},
 	football: {
 		up: "football"
+	},
+	book: {
+		up: "book"
+	},
+	food: {
+		up: "food"
+	},
+},
+"com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle": {
+	default: {
+		checkboxOn: "check_square_grey_checkmark",
+		checkboxOff: "check_square_grey",
+		font: "PressStart2P-Regular"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle": {
@@ -77,6 +92,17 @@
 		parent: "no-background",
 		font: "PressStart2P-title",
 		fontColor: "White"
+	},
+	"game-over": {
+		parent: "game-title",
+		font: "PressStart2P-GameOver",
+		fontColor: "White"
+	}
+},
+"com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle": {
+	"default-horizontal": {
+		background: "slide_horizontal_grey",
+		knob: "slide_hangle"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle": {
@@ -94,6 +120,12 @@
 		downFontColor: "Green",
 		up: "Button08",
 		over: "Button09"
+	},
+	"red-text-button": {
+		parent: "blue-text-button",
+		downFontColor: "Green",
+		up: "Button01",
+		over: "Button15"
 	}
 },
 "com.badlogic.gdx.scenes.scene2d.ui.TextTooltip$TextTooltipStyle": {

@@ -1,7 +1,7 @@
  {
 	LectureHall: {
 		type: ["education"], 
-		atlasRegion: "hex", 
+		atlasRegion: "rhombus", 
 		tileCoverageOffsets: 
 		[  
 			{ row: 0, column: 0}
@@ -19,7 +19,7 @@
 	}, 
 	SportsCenter: {
 		type: ["leisure"], 
-		atlasRegion: "rhombus", 
+		atlasRegion: "hex", 
 		tileCoverageOffsets: 
 		[  
 			{ row: 0, column: 0}

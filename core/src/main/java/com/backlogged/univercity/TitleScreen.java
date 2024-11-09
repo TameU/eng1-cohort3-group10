@@ -13,7 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class TitleScreen implements Screen {
-    private Game game;
     private Stage stage;
     private Table table;
     private Skin skin;
@@ -26,11 +25,9 @@ public class TitleScreen implements Screen {
     private TextButton quitButton;
 
     public TitleScreen(Game game) {
-        this.game = game;
-
         bgTexture = new Texture(Constants.BACKGROUND_PICTURE_PATH);
 
-        //Set up UI stage, skin and table
+        // Set up UI stage, skin and table
         stage = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
         table = new Table(skin);
@@ -39,7 +36,7 @@ public class TitleScreen implements Screen {
 
         stage.addActor(table);
 
-        //Set up the title label and buttons
+        // Set up the title label and buttons
         titleLabel = new Label("UniverCity", skin, "game-title");
         titleLabel.setFontScale(3f);
 
@@ -51,6 +48,11 @@ public class TitleScreen implements Screen {
         });
 
         optionsButton = new TextButton("Options", skin, "blue-text-button");
+        optionsButton.addListener(new ClickListener() {
+            public void clicked(InputEvent e, float x, float y) {
+                game.setScreen(new SettingsScreen(game, game.getScreen()));
+            }
+        });
 
         quitButton = new TextButton("Quit", skin, "blue-text-button");
         quitButton.addListener(new ClickListener() {
@@ -59,20 +61,24 @@ public class TitleScreen implements Screen {
             }
         });
 
-        //Add the title label and buttons to the UI table
+        // Add the title label and buttons to the UI table
         table.add(titleLabel).top().padTop(100);
         table.row();
-        table.add(playButton).top().padTop(100).width(Value.percentWidth(0.3f, table)).height(Value.percentHeight(0.1f, table));
+        table.add(playButton).top().padTop(100).width(Value.percentWidth(0.3f, table))
+                .height(Value.percentHeight(0.1f, table));
         table.row();
-        table.add(optionsButton).top().padTop(50).width(Value.percentWidth(0.3f, table)).height(Value.percentHeight(0.1f, table));
+        table.add(optionsButton).top().padTop(50).width(Value.percentWidth(0.3f, table))
+                .height(Value.percentHeight(0.1f, table));
         table.row();
-        table.add(quitButton).top().padTop(50).width(Value.percentWidth(0.3f, table)).height(Value.percentHeight(0.1f, table));
+        table.add(quitButton).top().padTop(50).width(Value.percentWidth(0.3f, table))
+                .height(Value.percentHeight(0.1f, table));
 
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        Soundtrack.play();
     }
 
     @Override
@@ -111,7 +117,7 @@ public class TitleScreen implements Screen {
         float offsetY = (offsetVect2.y * padding / 2) + correctionY;
 
         stage.getBatch().draw(bgTexture, offsetX - padding / 2, offsetY - padding / 2,
-            width + padding, height + padding);
+                width + padding, height + padding);
 
     }
 
@@ -139,6 +145,7 @@ public class TitleScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
+        if (width == 0 || height == 0) return;
         titleLabel.setFontScale(width / Constants.TITLE_FONT_SCALING_FACTOR);
         playButton.getStyle().font.getData().setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
         stage.getViewport().update(width, height, true);
