@@ -5,5 +5,6 @@ public interface IBuildingPlacementManager {
     public boolean canBePlacedAtLocation(int row, int column, AbstractBuilding building);
     public void reset(); 
     public int getCount(); 
-    public Collection<AbstractBuilding> getPlacedBuildings();
+    public Collection<AbstractBuilding> getPlacedBuildings(); 
+    public boolean canBePlacedAtLocationIgnoreTerrain(int row, int column, AbstractBuilding building);
 }

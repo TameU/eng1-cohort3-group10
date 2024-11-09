@@ -39,19 +39,31 @@ public class BuildingRenderer implements Disposable, IBuildingRenderer {
         shapeRenderer.end();
     }
 
-    public void renderPlacementSquares(int row, int column, OrthographicCamera camera,
+    public void renderPlacementSquares(boolean canBePlacedAtLocation, int row, int column, OrthographicCamera camera,
             AbstractBuilding building) {
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-        shapeRenderer.setColor(Color.GREEN);
         Gdx.gl.glLineWidth(5);
-        for (var tileOffset : building.getTileCoverageOffsets()) {
-            int offsetX = row + tileOffset.getRow();
-            int offsetY = column + tileOffset.getColumn();
-            shapeRenderer.line(0.f + offsetX, 0.5f + offsetY, 0.25f + offsetX, 0.f + offsetY);
-            shapeRenderer.line(0.25f + offsetX, 0.f + offsetY, 1.f + offsetX, 1.f + offsetY);
-        }
-        shapeRenderer.end();
+        if (canBePlacedAtLocation) {
+            shapeRenderer.setColor(Color.GREEN);
+            
+            for (var tileOffset : building.getTileCoverageOffsets()) {
+                int offsetX = row + tileOffset.getRow();
+                int offsetY = column + tileOffset.getColumn();
+                shapeRenderer.line(0.f + offsetX, 0.5f + offsetY, 0.25f + offsetX, 0.f + offsetY);
+                shapeRenderer.line(0.25f + offsetX, 0.f + offsetY, 1.f + offsetX, 1.f + offsetY);
+            }
+            
+        } else {  
+            shapeRenderer.setColor(Color.RED);
+            for (var tileOffset : building.getTileCoverageOffsets()) {
+                int offsetX = row + tileOffset.getRow();
+                int offsetY = column + tileOffset.getColumn();
+                shapeRenderer.line(0.f + offsetX, 1.f + offsetY, 1.f + offsetX, 0.f + offsetY);
+                shapeRenderer.line(0.f + offsetX, 0.f + offsetY, 1.f + offsetX, 1.f + offsetY);
+            }
+        } 
+        shapeRenderer.end(); 
         Gdx.gl.glLineWidth(1);
     }
 

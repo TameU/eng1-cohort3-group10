@@ -22,6 +22,13 @@ public class BuildingPlacementManager implements IBuildingPlacementManager {
                 return false;
         }
         return true;
+    } 
+    public boolean canBePlacedAtLocationIgnoreTerrain(int row, int column, AbstractBuilding building) {
+        for (var tileOffset : building.getTileCoverageOffsets()) {
+            if (placedBuildings.containsKey(new Coord(tileOffset.getRow() + row, tileOffset.getColumn() + column)))
+                return false;
+        }
+        return true;
     }
     
     public void placeBuilding(int row, int column, AbstractBuilding building) {

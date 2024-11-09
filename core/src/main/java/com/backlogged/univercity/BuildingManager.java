@@ -74,7 +74,17 @@ public class BuildingManager {
     private int currentRow, currentColumn; 
     private BuildingState buildingState = BuildingState.NOT_BUILDING;
     private OrthographicCamera camera; 
-    private HashMap<String, Integer> buildingCounts = new HashMap<>();
+    private HashMap<String, Integer> buildingCounts = new HashMap<>() { 
+      @Override 
+      public String toString() { 
+        String out = "";
+        for (var entry: this.entrySet()) { 
+          out += String.format("%s : %d\n", entry.getKey(), entry.getValue());
+        } 
+        return out;
+      }
+    }; 
+    private boolean canBePlacedAtCurrentLocation;
     public BuildingManager(float unitScale,  
                             IBuildingRenderer renderer, 
                             IBuildingPlacementManager placementManager) {
@@ -105,14 +115,14 @@ public class BuildingManager {
         buildingToBePlaced = null; 
         isChoosingLocation = false;
     } 
-    public Set<Entry<String, Integer>> getBuildingTypeCounts() { 
-        return buildingCounts.entrySet();
+    public String getBuildingTypeCounts() { 
+        return buildingCounts.toString();
     }
     private void placeBuilding(int row, int column) { 
         placementManager.placeBuilding(row, column, buildingToBePlaced); 
         var countForBuildingTypePlaced = buildingCounts.get(buildingToBePlacedType); 
         buildingCounts.put(buildingToBePlacedType, ++countForBuildingTypePlaced);
-        System.out.println(getBuildingTypeCounts().toString());
+        System.out.println(buildingCounts.toString());
         resetState();
     } 
     public void tryPlaceBuilding(String buildingType) { 
@@ -136,7 +146,7 @@ public class BuildingManager {
                 
             } break;
             case BUILDING: { 
-                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) { 
+                if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canBePlacedAtCurrentLocation) { 
                     placeBuilding(currentRow, currentColumn); 
                     resetState();
                     buildingState = BuildingState.NOT_BUILDING;
@@ -161,6 +171,7 @@ public class BuildingManager {
             var worldCoordinates = getWorldCoordinates();
             currentRow = (int)worldCoordinates.x; 
             currentColumn = (int)worldCoordinates.y;
+            canBePlacedAtCurrentLocation = placementManager.canBePlacedAtLocationIgnoreTerrain(currentRow, currentColumn, buildingToBePlaced);
         }
     }
     public void reset() { 
@@ -172,8 +183,9 @@ public class BuildingManager {
     }  
     
     public void render() { 
-        if (isChoosingLocation) renderer.renderPlacementSquares(currentRow, currentColumn, camera, buildingToBePlaced);
+        
         renderer.renderBuildings(placementManager.getPlacedBuildings(), camera);
+        if (isChoosingLocation) renderer.renderPlacementSquares(canBePlacedAtCurrentLocation, currentRow, currentColumn, camera, buildingToBePlaced);
     }
     
 }
