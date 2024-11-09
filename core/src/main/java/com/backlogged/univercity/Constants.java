@@ -70,7 +70,7 @@ public final class Constants {
     /**
      * Path to the game map
      */
-    public static final String MAP_PATH = "Univer-city.tmx";
+    public static final String MAP_PATH = "Univer-City.tmx";
 
     /**
      * Path to the game soundtrack.
