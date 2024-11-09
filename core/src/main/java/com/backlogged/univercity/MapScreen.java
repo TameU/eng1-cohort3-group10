@@ -24,15 +24,12 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MapScreen implements Screen {
-    /** smallest zoom level */
-    private final float MIN_SCALING = 0.1f;
 
-    /** Aspect ratio of the tiled map */
-    private final float MAP_ASPECT_RATIO = 128 / 72f;
+    /** Size of one tile */
+    private final float UNIT_SCALE = 1 / 16f;
 
     private Game game;
     private TiledMap map;
-    private float unitScale;
     private OrthogonalTiledMapRenderer renderer;
     private OrthographicCamera camera;
     private Skin skin;
@@ -56,14 +53,13 @@ public class MapScreen implements Screen {
     public MapScreen(Game game) {
         this.game = game;
         map = new TmxMapLoader().load(Constants.MAP_PATH);
-        unitScale = 1 / 32f;
-        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+        renderer = new OrthogonalTiledMapRenderer(map, UNIT_SCALE);
         camera = new OrthographicCamera();
-        float width = Gdx.graphics.getWidth();
-        float height = Gdx.graphics.getHeight();
+        camera.setToOrtho(false, Gdx.graphics.getWidth() * UNIT_SCALE,
+                (Gdx.graphics.getWidth() * UNIT_SCALE) * (Gdx.graphics.getHeight() / Gdx.graphics.getWidth()));
         timer = new InGameTimer(5);
         var buildingRenderer = new BuildingRenderer(new TextureAtlas(Gdx.files.local("buildings/buildings.atlas")));
-        buildingManager = new BuildingManager(unitScale, buildingRenderer,
+        buildingManager = new BuildingManager(UNIT_SCALE, buildingRenderer,
                 new BuildingPlacementManager((TiledMapTileLayer) map.getLayers().get("Terrain")));
         stage = new Stage(new ScreenViewport());
         skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
@@ -147,11 +143,6 @@ public class MapScreen implements Screen {
 
         stage.addActor(table);
 
-        map = new TmxMapLoader().load(Constants.MAP_PATH);
-        unitScale = 1 / 32f;
-        renderer = new OrthogonalTiledMapRenderer(map, unitScale);
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, width * unitScale, (width * unitScale) * (height / width));
         timer.initialiseTimerValues();
         timer.userStartTime();
     }
@@ -244,15 +235,18 @@ public class MapScreen implements Screen {
     private void handleInput() {
         handleMouseInput();
         handledKeyboardInput();
-        System.out.println(camera.zoom + "//" + camera.viewportHeight + "//" + camera.viewportWidth);
-        // camera.zoom = MathUtils.clamp(camera.zoom, MIN_SCALING, 1.5f);
 
-        // stop the map going out of the screen
-        camera.position.x = MathUtils.clamp(camera.position.x, (camera.viewportWidth / 2) * camera.zoom,
-                (camera.viewportWidth) * camera.zoom);
+        // keep the map in the viewport
+        // https://libgdx.com/wiki/graphics/2d/orthographic-camera
+        camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, 100 / camera.viewportWidth);
 
-        camera.position.y = MathUtils.clamp(camera.position.y, (camera.viewportHeight / 2) * camera.zoom,
-                (camera.viewportHeight) * camera.zoom);
+        float effectiveViewPortWidth = camera.viewportWidth * camera.zoom;
+        float effectiveViewPortHeight = camera.viewportHeight * camera.zoom;
+
+        camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewPortWidth / 2f,
+                128 - effectiveViewPortWidth / 2f);
+        camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewPortHeight / 2f,
+                72 - effectiveViewPortHeight / 2f);
 
     }
 
