@@ -67,10 +67,9 @@ public final class Constants {
      */
     public static final float DEFAULT_KEYBOARD_SENSITIVITY = 0.02f;
 
-    /**
-     * Path to the game map
+    /** Path to the game map
      */
-    public static final String MAP_PATH = "Univer-city.tmx";
+    public static final String MAP_PATH = "desert.tmx";
 
     /**
      * Path to the game soundtrack.
