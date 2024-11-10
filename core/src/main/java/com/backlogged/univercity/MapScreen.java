@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -39,6 +40,7 @@ public class MapScreen implements Screen {
   private Skin skin;
   private Stage stage;
   private Table table;
+  private Table buildingTable;
   private TextButton timerLabel;
   private Button pauseButton;
   private Button settingsButton;
@@ -157,18 +159,36 @@ public class MapScreen implements Screen {
 
     detailedBuildingCounter.setInstant(true);
     table = new Table(skin);
+    buildingTable = new Table(skin);
     table.setFillParent(true);
     table.setDebug(true);
     table.setTouchable(Touchable.enabled);
-    table.add(timerLabel).expand().top().left();
-    table.add(buildingCounterLabel).expand().top().left();
-    table.add(pauseButton).top().right().spaceRight(10);
-    table.add(settingsButton).top(); // .left();
+    table.add(timerLabel).top().left().width(Value.percentWidth(0.3f, table))
+        .height(Value.percentWidth(0.072f, table));
+    table.add(buildingCounterLabel).expandX().top().left().width(Value.percentWidth(0.1f, table))
+    .height(Value.percentWidth(0.072f, table));
+    
+    table.add(pauseButton).expandX().top().right().spaceRight(10)
+        .width(Value.percentWidth(0.05f, table))
+        .height(Value.percentWidth(0.05f, table));
+    table.add(settingsButton).top().left()
+        .width(Value.percentWidth(0.05f, table))
+        .height(Value.percentWidth(0.05f, table));
+    table.row();
+    table.add(pauseOverlay)
+        .width(Value.percentWidth(0.05f, table))
+        .height(Value.percentWidth(0.05f, table));
+    table.row();
     // Buildings
-    table.add(bed).center().left();
-    table.add(football).center().left();
-    table.add(book).center().left();
-    table.add(food).center().left();
+    table.add(bed).expandY().bottom().left().width(Value.percentWidth(0.1f, table))
+        .height(Value.percentWidth(0.1f, table));
+    table.add(football).expandY().bottom().left().width(Value.percentWidth(0.1f, table))
+        .height(Value.percentWidth(0.1f, table));
+    table.add(book).expandY().bottom().left().width(Value.percentWidth(0.1f, table))
+        .height(Value.percentWidth(0.1f, table));
+    table.add(food).expandY().bottom().left().width(Value.percentWidth(0.1f, table))
+        .height(Value.percentWidth(0.1f, table));
+
 
     stage.addActor(table);
 
@@ -291,10 +311,15 @@ public class MapScreen implements Screen {
     if (width == 0 || height == 0) {
       return;
     }
+    //TODO: replace 1000 with constant
+    timerLabel.getStyle().font.getData().setScale(width / 2000f);
+    buildingCounterLabel.getStyle().font.getData().setScale(width / 2000f);
+
     camera.viewportWidth = MathUtils.floor(width / 32f);
     camera.viewportHeight = camera.viewportWidth * height / width;
     camera.update();
     stage.getViewport().update(width, height, true);
+    
   }
 
   @Override
