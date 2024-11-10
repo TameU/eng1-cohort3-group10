@@ -16,8 +16,10 @@ A work in progress 2D UniverCity builder game built by Backlogged
 ./gradlew clean build
 ```
 
-## Credits
-tbd
+## Attributions
+- [libGDX](https://github.com/libgdx/libgdx) - [Apache Licence 2.0](APACHE-LICENCE.md)
+- [Game Over](https://opengameart.org/content/game-over-effect-sound) sound effect by [EdenVe](https://opengameart.org/users/edenve) - [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/)
+- [Gradle](https://github.com/gradle/gradle) - [Apache Licence 2.0](APACHE-LICENCE.md)
 
-## License
+## Licence
 [MIT](LICENCE.md)
