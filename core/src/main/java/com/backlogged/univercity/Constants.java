@@ -39,7 +39,7 @@ public final class Constants {
   /**
    * Font scaling factor for the labels in the settings screen.
    */
-  public static final float SETTINGS_LABEL_FONT_SCALING_FACTOR = 4000f;
+  public static final float SETTINGS_LABEL_FONT_SCALING_FACTOR = 2000f;
 
   /**
    * Path to the background picture.
@@ -49,7 +49,7 @@ public final class Constants {
   /**
    * Path to the UI skin.
    */
-  public static final String UI_SKIN_PATH = "testskin.json";
+  public static final String UI_SKIN_PATH = "uiskin.json";
 
   /**
    * Path to the preferences file.
@@ -73,7 +73,7 @@ public final class Constants {
   /**
    * Path to the game soundtrack.
    */
-  public static final String SOUNDTRACK_PATH = "awesomeness.wav";
+  public static final String SOUNDTRACK_PATH = "backgroundsong.wav";
 
   /**
    * Path to the game over sound.

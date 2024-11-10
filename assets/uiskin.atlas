@@ -32,6 +32,20 @@ buildingCountBox
   orig: 188, 128
   offset: 0, 0
   index: -1
+checkboxChecked
+  rotate: false
+  xy: 191, 21
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
+checkboxUnchecked
+  rotate: false
+  xy: 913, 51
+  size: 64, 64
+  orig: 64, 64
+  offset: 0, 0
+  index: -1
 defaultButton
   rotate: false
   xy: 609, 231
@@ -170,6 +184,20 @@ settingsIcon
   xy: 521, 81
   size: 64, 64
   orig: 64, 64
+  offset: 0, 0
+  index: -1
+slideBar
+  rotate: false
+  xy: 887, 915
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
+slideHangle
+  rotate: false
+  xy: 785, 897
+  size: 32, 32
+  orig: 32, 32
   offset: 0, 0
   index: -1
 sportIcon

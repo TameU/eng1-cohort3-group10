@@ -129,6 +129,13 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 		up: settingsIcon
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.CheckBox$CheckBoxStyle: {
+	default: {
+		checkboxOn: checkboxChecked
+		checkboxOff: checkboxUnchecked
+		font: RegularFontBlack
+	}
+}
 com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
 	default: {
 		imageUp: bedBackground
@@ -152,6 +159,12 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	}
 	whiteFont: {
 		font: RegularFontWhite
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
+	default-horizontal: {
+		background: slideBar
+		knob: slideHangle
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
