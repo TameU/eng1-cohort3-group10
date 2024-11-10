@@ -28,9 +28,11 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
  */
 public class MapScreen implements Screen {
 
+  /** Size of one tile (currently 16px x 16px). */
+  private final float UNIT_SCALE = 1 / 16f;
+
   private Game game;
   private TiledMap map;
-  private float unitScale;
   private OrthogonalTiledMapRenderer renderer;
   private OrthographicCamera camera;
   private Skin skin;
@@ -58,15 +60,17 @@ public class MapScreen implements Screen {
    */
   public MapScreen(Game game) {
     this.game = game;
-    map = new TmxMapLoader().load("desert.tmx");
-    unitScale = 1 / 32f;
-    renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+    map = new TmxMapLoader().load(Constants.MAP_PATH);
+    renderer = new OrthogonalTiledMapRenderer(map, UNIT_SCALE);
     camera = new OrthographicCamera();
+    float width = Gdx.graphics.getWidth();
+    float height = Gdx.graphics.getHeight();
+    camera.setToOrtho(false, width * UNIT_SCALE, (width * UNIT_SCALE) * (height / width));
 
     timer = new InGameTimer(5);
     var buildingRenderer = new BuildingRenderer(new TextureAtlas(
         Gdx.files.internal("buildings/buildings.atlas")));
-    buildingManager = new BuildingManager(unitScale, buildingRenderer,
+    buildingManager = new BuildingManager(UNIT_SCALE, buildingRenderer,
         new BuildingPlacementManager((TiledMapTileLayer) map.getLayers().get("Terrain")));
     stage = new Stage(new ScreenViewport());
     skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
@@ -151,13 +155,6 @@ public class MapScreen implements Screen {
 
     stage.addActor(table);
 
-    map = new TmxMapLoader().load(Constants.MAP_PATH);
-    unitScale = 1 / 32f;
-    renderer = new OrthogonalTiledMapRenderer(map, unitScale);
-    camera = new OrthographicCamera();
-    float width = Gdx.graphics.getWidth();
-    float height = Gdx.graphics.getHeight();
-    camera.setToOrtho(false, width * unitScale, (width * unitScale) * (height / width));
     timer.initialiseTimerValues();
     timer.userStartTime();
   }
@@ -266,6 +263,8 @@ public class MapScreen implements Screen {
         128 - effectiveViewPortWidth / 2f);
     camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewPortHeight / 2f,
         72 - effectiveViewPortHeight / 2f);
+
+    System.out.println(camera.position.x);
   }
 
   @Override
