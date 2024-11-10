@@ -5,7 +5,8 @@ public class SportsCenter extends AbstractBuilding {
   /**
    * Constructs a SportsCenter instance.
    *
-   * @param buildingInfo The {@link BuildingInfo} object associated with the class.
+   * @param buildingInfo The {@link BuildingInfo} object associated with the
+   *                     class.
    */
   public SportsCenter(BuildingInfo buildingInfo) {
     super(buildingInfo);

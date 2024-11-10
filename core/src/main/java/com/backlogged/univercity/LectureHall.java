@@ -5,7 +5,8 @@ public class LectureHall extends AbstractBuilding {
   /**
    * Constructs a LectureHall instance.
    *
-   * @param buildingInfo The {@link BuildingInfo} object associated with the class.
+   * @param buildingInfo The {@link BuildingInfo} object associated with the
+   *                     class.
    */
   public LectureHall(BuildingInfo buildingInfo) {
     super(buildingInfo);

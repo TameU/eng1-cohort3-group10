@@ -16,7 +16,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
- * Manages building placement etc. within the game and Handles input, rendering, and state
+ * Manages building placement etc. within the game and Handles input, rendering,
+ * and state
  * transitions for buildings.
  */
 public class BuildingManager {
@@ -28,7 +29,10 @@ public class BuildingManager {
     MOVING
   }
 
-  /** Reads building information from a JSON file and initializes BuildingInfo objects. */
+  /**
+   * Reads building information from a JSON file and initializes BuildingInfo
+   * objects.
+   */
   private static class BuildingInfoFromJsonFactory {
     /**
      * Parses tile coverage offsets from JSON.
@@ -49,8 +53,9 @@ public class BuildingManager {
      * Parses building data from JSON and generates a map of BuildingInfo objects.
      *
      * @param buildingsJsonFile JSON file containing building data.
-     * @param buildingAtlas Texture atlas for building sprites.
-     * @param unitScale Scale factor for tiled map renderer projection matrix
+     * @param buildingAtlas     Texture atlas for building sprites.
+     * @param unitScale         Scale factor for tiled map renderer projection
+     *                          matrix
      * @return HashMap associating building types with their BuildingInfo data.
      */
     public static HashMap<String, BuildingInfo> getBuildingsFromJson(
@@ -78,21 +83,20 @@ public class BuildingManager {
     /**
      * Instantiates an AbstractBuilding based on the specified class name.
      *
-     * @param buildingMap Map of building data.
+     * @param buildingMap       Map of building data.
      * @param buildingClassName Name of the building class.
      * @return New AbstractBuilding instance.
-     * @throws IllegalArgumentException If the building class cannot be instantiated.
+     * @throws IllegalArgumentException If the building class cannot be
+     *                                  instantiated.
      */
     public static AbstractBuilding createBuilding(
         HashMap<String, BuildingInfo> buildingMap, String buildingClassName) {
       AbstractBuilding building = null;
       try {
         Class<?> buildingClass = Class.forName("com.backlogged.univercity." + buildingClassName);
-        building =
-            (AbstractBuilding)
-                buildingClass
-                    .getConstructor(BuildingInfo.class)
-                    .newInstance(buildingMap.get(buildingClassName));
+        building = (AbstractBuilding) buildingClass
+            .getConstructor(BuildingInfo.class)
+            .newInstance(buildingMap.get(buildingClassName));
       } catch (Exception e) {
         throw new IllegalArgumentException(
             String.format("%s\nBuilding %s does not exist", e.toString(), buildingClassName));
@@ -111,24 +115,24 @@ public class BuildingManager {
   private int currentColumn;
   private BuildingState buildingState = BuildingState.NOT_BUILDING;
   private OrthographicCamera camera;
-  private HashMap<String, Integer> buildingCounts =
-      new HashMap<>() {
-        @Override
-        public String toString() {
-          String out = "";
-          for (var entry : this.entrySet()) {
-            out += String.format("%s : %d\n", entry.getKey(), entry.getValue());
-          }
-          return out;
-        }
-      };
+  private HashMap<String, Integer> buildingCounts = new HashMap<>() {
+    @Override
+    public String toString() {
+      String out = "";
+      for (var entry : this.entrySet()) {
+        out += String.format("%s : %d\n", entry.getKey(), entry.getValue());
+      }
+      return out;
+    }
+  };
   private boolean canBePlacedAtCurrentLocation;
 
   /**
    * Constructs a building manager instance.
    *
-   * @param unitScale Scale factor to match with tiled map renderer projection matrix
-   * @param renderer Renderer for displaying buildings.
+   * @param unitScale        Scale factor to match with tiled map renderer
+   *                         projection matrix
+   * @param renderer         Renderer for displaying buildings.
    * @param placementManager Manager for handling building placements.
    */
   public BuildingManager(
@@ -136,9 +140,8 @@ public class BuildingManager {
     if (renderer == null || placementManager == null) {
       throw new IllegalArgumentException("renderer and placement manager MUST both be initialized");
     }
-    buildingMap =
-        BuildingInfoFromJsonFactory.getBuildingsFromJson(
-            Gdx.files.internal("buildings/Buildings.json"), renderer.getAtlas(), unitScale);
+    buildingMap = BuildingInfoFromJsonFactory.getBuildingsFromJson(
+        Gdx.files.internal("buildings/Buildings.json"), renderer.getAtlas(), unitScale);
     initBuildingCounters();
     this.renderer = renderer;
     this.placementManager = placementManager;
@@ -151,7 +154,9 @@ public class BuildingManager {
     }
   }
 
-  /** Transitions the BuildingManager to building mode if not currently building. */
+  /**
+   * Transitions the BuildingManager to building mode if not currently building.
+   */
   public void setBuildingState() {
     if (buildingState == BuildingState.NOT_BUILDING) {
       buildingState = BuildingState.BUILDING;
@@ -186,7 +191,7 @@ public class BuildingManager {
   /**
    * Places the building at the specified coordinates.
    *
-   * @param row Row coordinate for placement.
+   * @param row    Row coordinate for placement.
    * @param column Column coordinate for placement.
    */
   private void placeBuilding(int row, int column) {
@@ -218,7 +223,8 @@ public class BuildingManager {
   }
 
   /**
-   * Converts screen coordinates to world coordinates, adjusted for the camera's perspective.
+   * Converts screen coordinates to world coordinates, adjusted for the camera's
+   * perspective.
    *
    * @return Vector2 representing world coordinates of the cursor position.
    */
@@ -231,28 +237,24 @@ public class BuildingManager {
   /** Processes input based on the current building state. */
   public void handleInput() {
     switch (buildingState) {
-      case NOT_BUILDING:
-        {
-        }
+      case NOT_BUILDING: {
+      }
         break;
-      case BUILDING:
-        {
-          if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canBePlacedAtCurrentLocation) {
-            placeBuilding(currentRow, currentColumn);
-            resetState();
-            buildingState = BuildingState.NOT_BUILDING;
-          }
+      case BUILDING: {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canBePlacedAtCurrentLocation) {
+          placeBuilding(currentRow, currentColumn);
+          resetState();
+          buildingState = BuildingState.NOT_BUILDING;
         }
+      }
         break;
-      case DELETING:
-        {
-          // TODO: UNIMPLEMENTED
-        }
+      case DELETING: {
+        // TODO: UNIMPLEMENTED
+      }
         break;
-      case MOVING:
-        {
-          // TODO: UNIMPLEMENTEDt
-        }
+      case MOVING: {
+        // TODO: UNIMPLEMENTEDt
+      }
         break;
       default:
         break;
@@ -264,7 +266,8 @@ public class BuildingManager {
   }
 
   /**
-   * Updates the BuildingManager, updating the row and column based on cursor location if placing a
+   * Updates the BuildingManager, updating the row and column based on cursor
+   * location if placing a
    * building.
    */
   public void update() {
@@ -272,9 +275,8 @@ public class BuildingManager {
       var worldCoordinates = getWorldCoordinates();
       currentRow = (int) worldCoordinates.x;
       currentColumn = (int) worldCoordinates.y;
-      canBePlacedAtCurrentLocation =
-          placementManager.canBePlacedAtLocationIgnoreTerrain(
-              currentRow, currentColumn, buildingToBePlaced);
+      canBePlacedAtCurrentLocation = placementManager.canBePlacedAtLocationIgnoreTerrain(
+          currentRow, currentColumn, buildingToBePlaced);
     }
   }
 

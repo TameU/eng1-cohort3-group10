@@ -28,9 +28,11 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 /** Handles input and rendering of the UI, map and buildings. */
 public class MapScreen implements Screen {
 
+  /** Size of one tile (currently 16px x 16px). */
+  private final float UNIT_SCALE = 1 / 16f;
+
   private Game game;
   private TiledMap map;
-  private float unitScale;
   private OrthogonalTiledMapRenderer renderer;
   private OrthographicCamera camera;
   private Skin skin;
@@ -42,8 +44,8 @@ public class MapScreen implements Screen {
   private InGameTimer timer;
   private boolean mouseDown;
   private boolean dragging;
-  private float oldMouseX, oldMouseY;
-  private float sensitivity = 0.025f;
+  private float oldMouseX;
+  private float oldMouseY;
   // Buildings
   private Button bed;
   private Button football;
@@ -54,109 +56,101 @@ public class MapScreen implements Screen {
   private TextTooltip detailedBuildingCounter;
 
   /**
-   * Constructs a MapScreen.
+   * Setup the main game window (map).
    *
-   * @param game The {@code Game} object is passed here mainly for screen change handling.
+   * @param game the current instance of game
    */
   public MapScreen(Game game) {
     this.game = game;
-    map = new TmxMapLoader().load("desert.tmx");
-    unitScale = 1 / 32f;
-    renderer = new OrthogonalTiledMapRenderer(map, unitScale);
+    map = new TmxMapLoader().load(Constants.MAP_PATH);
+    renderer = new OrthogonalTiledMapRenderer(map, UNIT_SCALE);
     camera = new OrthographicCamera();
     float width = Gdx.graphics.getWidth();
     float height = Gdx.graphics.getHeight();
+    camera.setToOrtho(false, width * UNIT_SCALE, (width * UNIT_SCALE) * (height / width));
+
     timer = new InGameTimer(5);
-    var buildingRenderer =
-        new BuildingRenderer(new TextureAtlas(Gdx.files.internal("buildings/buildings.atlas")));
-    buildingRenderer.enableDebugGrid(true);
-    buildingManager =
-        new BuildingManager(
-            unitScale,
-            buildingRenderer,
-            new BuildingPlacementManager((TiledMapTileLayer) map.getLayers().get("Terrain")));
+    var buildingRenderer = new BuildingRenderer(new TextureAtlas(
+        Gdx.files.internal("buildings/buildings.atlas")));
+    buildingManager = new BuildingManager(UNIT_SCALE, buildingRenderer,
+        new BuildingPlacementManager((TiledMapTileLayer) map.getLayers().get("Terrain")));
     stage = new Stage(new ScreenViewport());
     skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
 
     timerLabel = new Label("5:00", skin);
-    buildingCounterLabel = new Label("5:00", skin);
+    timerLabel.setAlignment(Align.center);
 
     detailedBuildingCounter = new TextTooltip(buildingManager.getBuildingTypeCounts(), skin);
     detailedBuildingCounter.getContainer().getActor().setFontScale(0.5f);
     detailedBuildingCounter.getContainer().getActor().setAlignment(Align.center);
+
+    buildingCounterLabel = new Label("0", skin);
     buildingCounterLabel.addListener(detailedBuildingCounter);
     buildingCounterLabel.setAlignment(Align.center);
-    timerLabel.setAlignment(Align.center);
 
     pauseButton = new Button(skin, "pause");
-    pauseButton.addListener(
-        new ClickListener() {
-          public void clicked(InputEvent e, float x, float y) {
-            if (timer.isUserStopped()) {
-              timer.userStartTime();
-            } else {
-              timer.userStopTime();
-            }
-          }
-        });
+    pauseButton.addListener(new ClickListener() {
+      public void clicked(InputEvent e, float x, float y) {
+        if (timer.isUserStopped()) {
+          timer.userStartTime();
+        } else {
+          timer.userStopTime();
+        }
+      }
+    });
 
     settingsButton = new Button(skin, "settings");
-    settingsButton.addListener(
-        new ClickListener() {
-          public void clicked(InputEvent e, float x, float y) {
-            timer.systemStopTime(); // pause Time while in settings
-            game.setScreen(new SettingsScreen(game, game.getScreen()));
-          }
-        });
+    settingsButton.addListener(new ClickListener() {
+      public void clicked(InputEvent e, float x, float y) {
+        timer.systemStopTime(); // pause Time while in settings
+        game.setScreen(new SettingsScreen(game, game.getScreen()));
+      }
+    });
 
     //////////////// BUILDINGS
 
     bed = new Button(skin, "bed");
-    bed.addListener(
-        new ClickListener() {
-          public void clicked(InputEvent e, float x, float y) {
-            // Deal with clicking later
-            buildingManager.setBuildingState();
-            buildingManager.chooseLocationOfBuilding("Accommodation");
-          }
-        });
+    bed.addListener(new ClickListener() {
+      public void clicked(InputEvent e, float x, float y) {
+        // Deal with clicking later
+        buildingManager.setBuildingState();
+        buildingManager.chooseLocationOfBuilding("Accommodation");
+      }
+    });
 
     football = new Button(skin, "football");
-    football.addListener(
-        new ClickListener() {
-          public void clicked(InputEvent e, float x, float y) {
-            // Deal with clicking later
-            buildingManager.setBuildingState();
-            buildingManager.chooseLocationOfBuilding("SportsCenter");
-          }
-        });
+    football.addListener(new ClickListener() {
+      public void clicked(InputEvent e, float x, float y) {
+        // Deal with clicking later
+        buildingManager.setBuildingState();
+        buildingManager.chooseLocationOfBuilding("SportsCenter");
+      }
+    });
 
     book = new Button(skin, "book");
-    book.addListener(
-        new ClickListener() {
-          public void clicked(InputEvent e, float x, float y) {
-            // Deal with clicking later
-            buildingManager.setBuildingState();
-            buildingManager.chooseLocationOfBuilding("LectureHall");
-          }
-        });
+    book.addListener(new ClickListener() {
+      public void clicked(InputEvent e, float x, float y) {
+        // Deal with clicking later
+        buildingManager.setBuildingState();
+        buildingManager.chooseLocationOfBuilding("LectureHall");
+      }
+    });
 
     food = new Button(skin, "food");
-    food.addListener(
-        new ClickListener() {
-          public void clicked(InputEvent e, float x, float y) {
-            // Deal with clicking later
-            buildingManager.setBuildingState();
-            buildingManager.chooseLocationOfBuilding("FoodCourt");
-          }
-        });
+    food.addListener(new ClickListener() {
+      public void clicked(InputEvent e, float x, float y) {
+        // Deal with clicking later
+        buildingManager.setBuildingState();
+        buildingManager.chooseLocationOfBuilding("FoodCourt");
+      }
+    });
 
-    timerLabel.addListener(
-        new ClickListener() {
-          public void clicked(InputEvent e, float x, float y) {
-            game.setScreen(new GameOverScreen(game));
-          }
-        });
+    timerLabel.addListener(new ClickListener() {
+      public void clicked(InputEvent e, float x, float y) {
+        game.setScreen(new GameOverScreen(game));
+      }
+    });
+
     detailedBuildingCounter.setInstant(true);
     table = new Table(skin);
     table.setFillParent(true);
@@ -164,7 +158,7 @@ public class MapScreen implements Screen {
     table.setTouchable(Touchable.enabled);
     table.add(timerLabel).expand().top();
     table.add(buildingCounterLabel).expand().top().width(90).left();
-    table.add(pauseButton).top().right();
+    table.add(pauseButton).top().right().spaceRight(10);
     table.add(settingsButton).top(); // .left();
     // Buildings
     table.add(bed).center().left();
@@ -174,11 +168,6 @@ public class MapScreen implements Screen {
 
     stage.addActor(table);
 
-    map = new TmxMapLoader().load(Constants.MAP_PATH);
-    unitScale = 1 / 32f;
-    renderer = new OrthogonalTiledMapRenderer(map, unitScale);
-    camera = new OrthographicCamera();
-    camera.setToOrtho(false, width * unitScale, (width * unitScale) * (height / width));
     timer.initialiseTimerValues();
     timer.userStartTime();
   }
@@ -212,9 +201,8 @@ public class MapScreen implements Screen {
     if (timeLeft < 1) {
       game.setScreen(new GameOverScreen(game));
     }
-    detailedBuildingCounter
-        .getContainer()
-        .getActor()
+
+    detailedBuildingCounter.getContainer().getActor()
         .setText(buildingManager.getBuildingTypeCounts());
     buildingCounterLabel.setText(Integer.toString(buildingManager.getBuildingCount()));
     timerLabel.setText(timer.output());
@@ -222,7 +210,9 @@ public class MapScreen implements Screen {
     stage.draw();
   }
 
-  /** Handles the user's mouse input, allowing dragging of the map. */
+  /**
+   * Handles the user's mouse input, allowing dragging of the map.
+   */
   private void handleMouseInput() {
     mouseDown = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
 
@@ -238,25 +228,25 @@ public class MapScreen implements Screen {
       float currentX = Gdx.input.getX();
       float currentY = Gdx.input.getY();
       Vector2 translate = new Vector2(-(currentX - oldMouseX), currentY - oldMouseY);
-      translate.scl(
-          Constants.DEFAULT_MOUSE_SENSITIVITY
-              * GamePreferences.getMouseSensitivity()
-              * camera.zoom);
+      translate.scl(Constants.DEFAULT_MOUSE_SENSITIVITY
+          * GamePreferences.getMouseSensitivity() * camera.zoom);
       camera.translate(translate);
       oldMouseX = currentX;
       oldMouseY = currentY;
     }
   }
 
-  /** Handle user's keyboard inputs, allowing movement and zooming of the map */
+  /**
+   * Handle user's keyboard inputs, allowing movement and zooming of the map.
+   */
   private void handledKeyboardInput() {
     if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingZoomOut())) {
-      camera.zoom +=
-          Constants.DEFAULT_KEYBOARD_SENSITIVITY * GamePreferences.getKeyboardSensitivity();
+      camera.zoom += Constants.DEFAULT_KEYBOARD_SENSITIVITY
+          * GamePreferences.getKeyboardSensitivity();
     }
     if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingZoomIn())) {
-      camera.zoom -=
-          Constants.DEFAULT_KEYBOARD_SENSITIVITY * GamePreferences.getKeyboardSensitivity();
+      camera.zoom -= Constants.DEFAULT_KEYBOARD_SENSITIVITY
+          * GamePreferences.getKeyboardSensitivity();
     }
     if (Gdx.input.isKeyPressed(GamePreferences.getKeyboardBindingLeft())) {
       camera.translate(-1 * GamePreferences.getKeyboardSensitivity(), 0, 0);
@@ -272,18 +262,31 @@ public class MapScreen implements Screen {
     }
   }
 
-  /** Collective method for processing user input */
+  /**
+   * Collective method for processing user input.
+   */
   private void handleInput() {
     handleMouseInput();
     handledKeyboardInput();
 
-    /* TODO: get better clamping */
+    // keep the map in the viewport
+    // https://libgdx.com/wiki/graphics/2d/orthographic-camera
     camera.zoom = MathUtils.clamp(camera.zoom, 0.1f, 100 / camera.viewportWidth);
+
+    float effectiveViewPortWidth = camera.viewportWidth * camera.zoom;
+    float effectiveViewPortHeight = camera.viewportHeight * camera.zoom;
+
+    camera.position.x = MathUtils.clamp(camera.position.x, effectiveViewPortWidth / 2f,
+        128 - effectiveViewPortWidth / 2f);
+    camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewPortHeight / 2f,
+        72 - effectiveViewPortHeight / 2f);
   }
 
   @Override
   public void resize(int width, int height) {
-    if (width == 0 || height == 0) return;
+    if (width == 0 || height == 0) {
+      return;
+    }
     camera.viewportWidth = MathUtils.floor(width / 32f);
     camera.viewportHeight = camera.viewportWidth * height / width;
     camera.update();
@@ -314,4 +317,5 @@ public class MapScreen implements Screen {
     skin.dispose();
     renderer.dispose();
   }
+
 }

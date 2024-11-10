@@ -5,7 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 
 /**
- * BuildingPlacementManager manages what buildings are currently placed on the map, whether or not
+ * BuildingPlacementManager manages what buildings are currently placed on the
+ * map, whether or not
  * you can place a building at a certain location and placing a building.
  */
 public class BuildingPlacementManager implements IBuildingPlacementManager {
@@ -23,20 +24,22 @@ public class BuildingPlacementManager implements IBuildingPlacementManager {
   }
 
   /**
-   * Determines if its possible to place a building at the location of the cursor by checking if any
-   * of the tiles that the building will take up contain either a terrain type that cant be built on
+   * Determines if its possible to place a building at the location of the cursor
+   * by checking if any
+   * of the tiles that the building will take up contain either a terrain type
+   * that cant be built on
    * or another building.
    *
-   * @param row The row to start checking from.
-   * @param column The column to start checking from.
+   * @param row      The row to start checking from.
+   * @param column   The column to start checking from.
    * @param building The {@link AbstractBuilding} to check.
    * @return Returns true its possible and false if not.
    */
   public boolean canBePlacedAtLocation(int row, int column, AbstractBuilding building) {
 
     for (var tileOffset : building.getTileCoverageOffsets()) {
-      TiledMapTileLayer.Cell terrainCell =
-          terrainLayer.getCell(column + tileOffset.getColumn(), row + tileOffset.getRow());
+      TiledMapTileLayer.Cell terrainCell = terrainLayer.getCell(column + tileOffset.getColumn(),
+          row + tileOffset.getRow());
       if (!terrainCell.getTile().getProperties().get("canBeBuiltOn", Boolean.class)
           || placedBuildings.containsKey(tileOffset)) {
         return false;
@@ -46,11 +49,12 @@ public class BuildingPlacementManager implements IBuildingPlacementManager {
   }
 
   /**
-   * Determines if its possible to place a building at the location of the cursor by checking if any
+   * Determines if its possible to place a building at the location of the cursor
+   * by checking if any
    * of the tiles that the building will take up contain another building.
    *
-   * @param row The row to start checking from.
-   * @param column The column to start checking from.
+   * @param row      The row to start checking from.
+   * @param column   The column to start checking from.
    * @param building The {@link AbstractBuilding} to check.
    * @return Returns true its possible and false if not.
    */
@@ -68,7 +72,7 @@ public class BuildingPlacementManager implements IBuildingPlacementManager {
   /**
    * Places a building at a given location.
    *
-   * @param row The row to place the building.
+   * @param row    The row to place the building.
    * @param column The column to place the building.
    */
   public void placeBuilding(int row, int column, AbstractBuilding building) {

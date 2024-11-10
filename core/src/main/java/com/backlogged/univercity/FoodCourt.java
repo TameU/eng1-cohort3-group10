@@ -5,7 +5,8 @@ public class FoodCourt extends AbstractBuilding {
   /**
    * Constructs a FoodCourt instance.
    *
-   * @param buildingInfo The {@link BuildingInfo} object associated with the class.
+   * @param buildingInfo The {@link BuildingInfo} object associated with the
+   *                     class.
    */
   public FoodCourt(BuildingInfo buildingInfo) {
     super(buildingInfo);

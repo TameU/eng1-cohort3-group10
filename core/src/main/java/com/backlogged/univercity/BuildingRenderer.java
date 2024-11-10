@@ -10,7 +10,8 @@ import com.badlogic.gdx.utils.Disposable;
 import java.util.Collection;
 
 /**
- * Building Renderer handles rendering valid and invalid loactions for a building that is about to
+ * Building Renderer handles rendering valid and invalid loactions for a
+ * building that is about to
  * be placed and buildings that are already placed.
  */
 public class BuildingRenderer implements Disposable, IBuildingRenderer {
@@ -22,8 +23,9 @@ public class BuildingRenderer implements Disposable, IBuildingRenderer {
   /**
    * Contructs a BuildingRenderer.
    *
-   * @param buildingAtlas This is the atlas that contains all the building sprites that are able to
-   *     be rendered if placed on the map.
+   * @param buildingAtlas This is the atlas that contains all the building sprites
+   *                      that are able to
+   *                      be rendered if placed on the map.
    */
   public BuildingRenderer(TextureAtlas buildingAtlas) {
     this.buildingAtlas = buildingAtlas;
@@ -39,7 +41,8 @@ public class BuildingRenderer implements Disposable, IBuildingRenderer {
   }
 
   /**
-   * Draws a debug grid for visually checking the alignment of buildings on the map.
+   * Draws a debug grid for visually checking the alignment of buildings on the
+   * map.
    *
    * @param camera The projection Matrix for the shapeRenderer
    */
@@ -61,16 +64,23 @@ public class BuildingRenderer implements Disposable, IBuildingRenderer {
   }
 
   /**
-   * Renders visual feedback for the placement area of a building, indicating whether it can be
-   * placed at the specified location. If valid, ticks are rendered in green; otherwise, crosses are
+   * Renders visual feedback for the placement area of a building, indicating
+   * whether it can be
+   * placed at the specified location. If valid, ticks are rendered in green;
+   * otherwise, crosses are
    * rendered in red.
    *
-   * @param canBePlacedAtLocation Indicates whether the building can be placed at the specified row
-   *     and column.
-   * @param row The row coordinate for placement feedback to start from.
-   * @param column The column coordinate for placement feedback ro start from.
-   * @param camera The camera used for projection, providing the matrix for the shape renderer.
-   * @param building The {@link AbstractBuilding} to be placed for placement.
+   * @param canBePlacedAtLocation Indicates whether the building can be placed at
+   *                              the specified row
+   *                              and column.
+   * @param row                   The row coordinate for placement feedback to
+   *                              start from.
+   * @param column                The column coordinate for placement feedback ro
+   *                              start from.
+   * @param camera                The camera used for projection, providing the
+   *                              matrix for the shape renderer.
+   * @param building              The {@link AbstractBuilding} to be placed for
+   *                              placement.
    */
   public void renderPlacementFeedback(
       boolean canBePlacedAtLocation,
@@ -108,7 +118,7 @@ public class BuildingRenderer implements Disposable, IBuildingRenderer {
    * Renders all currently placed buildings.
    *
    * @param placedBuildings Currently placed buildings to be rendered.
-   * @param camera The projection matrix for the sprite batch.
+   * @param camera          The projection matrix for the sprite batch.
    */
   public void renderBuildings(
       Collection<AbstractBuilding> placedBuildings, OrthographicCamera camera) {

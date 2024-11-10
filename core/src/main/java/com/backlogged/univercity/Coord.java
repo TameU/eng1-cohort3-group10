@@ -1,7 +1,8 @@
 package com.backlogged.univercity;
 
 /**
- * Represents a coordinate with a row and column. Provides functionality for equality checking,
+ * Represents a coordinate with a row and column. Provides functionality for
+ * equality checking,
  * hashing, and string representation.
  */
 public class Coord {
@@ -12,7 +13,7 @@ public class Coord {
   /**
    * Constructs a {@code Coord} instance with the specified row and column.
    *
-   * @param row The row index of the coordinate.
+   * @param row    The row index of the coordinate.
    * @param column The column index of the coordinate.
    */
   public Coord(int row, int column) {
@@ -21,7 +22,8 @@ public class Coord {
   }
 
   /**
-   * Computes a hash code for this {@code Coord} based on its row and column values.
+   * Computes a hash code for this {@code Coord} based on its row and column
+   * values.
    *
    * @return An integer hash code based on the row and column values.
    */
@@ -33,12 +35,14 @@ public class Coord {
   }
 
   /**
-   * Compares this {@code Coord} with another object for equality. Two {@code Coord} objects are
+   * Compares this {@code Coord} with another object for equality. Two
+   * {@code Coord} objects are
    * considered equal if they have the same row and column values.
    *
    * @param other The object to compare with this {@code Coord} for equality.
-   * @return {@code true} if the specified object is also a {@code Coord} with the same row and
-   *     column values; {@code false} otherwise.
+   * @return {@code true} if the specified object is also a {@code Coord} with the
+   *         same row and
+   *         column values; {@code false} otherwise.
    */
   @Override
   public boolean equals(Object other) {
@@ -53,7 +57,8 @@ public class Coord {
   }
 
   /**
-   * Returns a string representation of this {@code Coord} in the format "(row, column)".
+   * Returns a string representation of this {@code Coord} in the format "(row,
+   * column)".
    *
    * @return A string representation of this coordinate.
    */

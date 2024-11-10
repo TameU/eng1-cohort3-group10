@@ -5,9 +5,12 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import java.util.ArrayList;
 
 /**
- * Represents an abstract base class for buildings that can be placed on a map. This class provides
- * core properties and behaviors for a building, such as its type, sprite, tile coverage, and map
- * position. Concrete building classes should extend this class to implement specific building
+ * Represents an abstract base class for buildings that can be placed on a map.
+ * This class provides
+ * core properties and behaviors for a building, such as its type, sprite, tile
+ * coverage, and map
+ * position. Concrete building classes should extend this class to implement
+ * specific building
  * functionalities.
  */
 public abstract class AbstractBuilding {
@@ -16,10 +19,12 @@ public abstract class AbstractBuilding {
   private Coord mapPos;
 
   /**
-   * Constructs an {@code AbstractBuilding} instance with the specified building information.
+   * Constructs an {@code AbstractBuilding} instance with the specified building
+   * information.
    *
-   * @param buildingInfo Information about the building, including its type, sprite, tile coverage,
-   *     and additional info.
+   * @param buildingInfo Information about the building, including its type,
+   *                     sprite, tile coverage,
+   *                     and additional info.
    */
   public AbstractBuilding(BuildingInfo buildingInfo) {
     this.buildingInfo = buildingInfo;
@@ -35,7 +40,8 @@ public abstract class AbstractBuilding {
   }
 
   /**
-   * Retrieves the sprite associated with this building, used for rendering the building on the map.
+   * Retrieves the sprite associated with this building, used for rendering the
+   * building on the map.
    *
    * @return The {@code Sprite} representing the building's visual appearance.
    */
@@ -44,11 +50,13 @@ public abstract class AbstractBuilding {
   }
 
   /**
-   * Retrieves the tile coverage offsets for this building. These offsets specify the tiles that
+   * Retrieves the tile coverage offsets for this building. These offsets specify
+   * the tiles that
    * this building occupies relative to its bottom-left most tile.
    *
-   * @return An {@code ArrayList} of {@code Coord} representing the tile coverage offsets for this
-   *     building.
+   * @return An {@code ArrayList} of {@code Coord} representing the tile coverage
+   *         offsets for this
+   *         building.
    */
   public final ArrayList<Coord> getTileCoverageOffsets() {
     return buildingInfo.tileCoverageOffsets;
@@ -66,7 +74,8 @@ public abstract class AbstractBuilding {
   /**
    * Sets the position of this building on the map.
    *
-   * @param mapPos The {@code Coord} representing the building's position on the map grid.
+   * @param mapPos The {@code Coord} representing the building's position on the
+   *               map grid.
    */
   public final void setMapPosition(Coord mapPos) {
     this.mapPos = mapPos;
@@ -75,15 +84,18 @@ public abstract class AbstractBuilding {
   /**
    * Retrieves the position of this building on the map.
    *
-   * @return The {@code Coord} representing the building's position on the map grid.
+   * @return The {@code Coord} representing the building's position on the map
+   *         grid.
    */
   public final Coord getMapPos() {
     return mapPos;
   }
 
   /**
-   * Draws the building's sprite at its current map position using the specified {@code
-   * SpriteBatch}. This method sets the position of the sprite to the map coordinates, renders it,
+   * Draws the building's sprite at its current map position using the specified
+   * {@code
+   * SpriteBatch}. This method sets the position of the sprite to the map
+   * coordinates, renders it,
    * and then resets the sprite position to (0,0).
    *
    * @param batch The {@code SpriteBatch} used to draw the building's sprite.
