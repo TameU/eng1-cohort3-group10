@@ -7,7 +7,7 @@ import java.util.Collection;
 /** Handles rendering placement feedback and currently placed buildings. */
 public interface IBuildingRenderer {
   /**
-   * Renders all currently placed buildings
+   * Renders all currently placed buildings.
    *
    * @param placedBuildings Currently placed buildings to be rendered.
    * @param camera The projection matrix for the sprite batch.

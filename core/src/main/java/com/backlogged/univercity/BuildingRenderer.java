@@ -39,7 +39,7 @@ public class BuildingRenderer implements Disposable, IBuildingRenderer {
   }
 
   /**
-   * Draws a debug grid for visually checking the alignment of buildings on the map
+   * Draws a debug grid for visually checking the alignment of buildings on the map.
    *
    * @param camera The projection Matrix for the shapeRenderer
    */
@@ -105,7 +105,7 @@ public class BuildingRenderer implements Disposable, IBuildingRenderer {
   }
 
   /**
-   * Renders all currently placed buildings
+   * Renders all currently placed buildings.
    *
    * @param placedBuildings Currently placed buildings to be rendered.
    * @param camera The projection matrix for the sprite batch.
@@ -118,16 +118,25 @@ public class BuildingRenderer implements Disposable, IBuildingRenderer {
       building.draw(batch);
     }
     batch.end();
-    if (debugGridEnabled) drawDebugGrid(camera);
+    if (debugGridEnabled) {
+      drawDebugGrid(camera);
+    }
   }
 
+  /**
+   * Retrieves the {@code TextureAtlas} for the building sprites.
+   *
+   * @return The {@code TextureAtlas} for the buildling sprites.
+   */
   public TextureAtlas getAtlas() {
     return buildingAtlas;
   }
 
   /** Releases GPU resources used by the BuildingRenderer. */
   public void dispose() {
-    if (buildingAtlas != null) buildingAtlas.dispose();
+    if (buildingAtlas != null) {
+      buildingAtlas.dispose();
+    }
     batch.dispose();
     shapeRenderer.dispose();
   }

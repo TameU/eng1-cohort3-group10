@@ -33,7 +33,7 @@ public interface IBuildingPlacementManager {
   public void reset();
 
   /**
-   * Retrives the current number of buildings
+   * Retrives the current number of buildings.
    *
    * @return The number of buildings currently placed on the map.
    */

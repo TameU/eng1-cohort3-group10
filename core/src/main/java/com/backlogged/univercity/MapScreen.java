@@ -25,6 +25,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+/** Handles input and rendering of the UI, map and buildings. */
 public class MapScreen implements Screen {
 
   private Game game;
@@ -52,6 +53,11 @@ public class MapScreen implements Screen {
   private Label buildingCounterLabel;
   private TextTooltip detailedBuildingCounter;
 
+  /**
+   * Constructs a MapScreen.
+   *
+   * @param game The {@code Game} object is passed here mainly for screen change handling.
+   */
   public MapScreen(Game game) {
     this.game = game;
     map = new TmxMapLoader().load("desert.tmx");
@@ -86,8 +92,11 @@ public class MapScreen implements Screen {
     pauseButton.addListener(
         new ClickListener() {
           public void clicked(InputEvent e, float x, float y) {
-            if (timer.isUserStopped()) timer.userStartTime();
-            else timer.userStopTime();
+            if (timer.isUserStopped()) {
+              timer.userStartTime();
+            } else {
+              timer.userStopTime();
+            }
           }
         });
 
@@ -200,7 +209,9 @@ public class MapScreen implements Screen {
       timer.updateTimerValues();
     }
 
-    if (timeLeft < 1) game.setScreen(new GameOverScreen(game));
+    if (timeLeft < 1) {
+      game.setScreen(new GameOverScreen(game));
+    }
     detailedBuildingCounter
         .getContainer()
         .getActor()
@@ -211,7 +222,7 @@ public class MapScreen implements Screen {
     stage.draw();
   }
 
-  /** Handles the user's mouse input, allowing dragging of the map */
+  /** Handles the user's mouse input, allowing dragging of the map. */
   private void handleMouseInput() {
     mouseDown = Gdx.input.isButtonPressed(Input.Buttons.LEFT);
 

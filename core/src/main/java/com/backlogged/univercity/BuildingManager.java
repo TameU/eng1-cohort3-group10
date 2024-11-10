@@ -107,7 +107,8 @@ public class BuildingManager {
   private boolean isChoosingLocation = false;
   private AbstractBuilding buildingToBePlaced;
   private String buildingToBePlacedType;
-  private int currentRow, currentColumn;
+  private int currentRow;
+  private int currentColumn;
   private BuildingState buildingState = BuildingState.NOT_BUILDING;
   private OrthographicCamera camera;
   private HashMap<String, Integer> buildingCounts =
@@ -143,7 +144,7 @@ public class BuildingManager {
     this.placementManager = placementManager;
   }
 
-  /** Initialises counters for all building types to zero */
+  /** Initialises counters for all building types to zero. */
   private void initBuildingCounters() {
     for (var buildingType : buildingMap.keySet()) {
       buildingCounts.put(buildingType, 0);
@@ -174,9 +175,9 @@ public class BuildingManager {
   }
 
   /**
-   * Returns the count of each type of building currently placed
+   * Returns the count of each type of building currently placed.
    *
-   * @return A string of all building types in the form: BuildingType : Count
+   * @return A string of all building types in the form: BuildingType : Count.
    */
   public String getBuildingTypeCounts() {
     return buildingCounts.toString();
@@ -196,7 +197,7 @@ public class BuildingManager {
   }
 
   /**
-   * Initiates location choosing state for placing a building
+   * Initiates location choosing state for placing a building.
    *
    * @param buildingType Name of the building type to place.
    */
@@ -252,6 +253,8 @@ public class BuildingManager {
         {
           // TODO: UNIMPLEMENTEDt
         }
+      default:
+        break;
     }
     if (buildingState != BuildingState.NOT_BUILDING && Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
       resetState();
@@ -289,13 +292,15 @@ public class BuildingManager {
   }
 
   /**
-   * Renders buildings, and the placement squares if {@code buildingState == BuildingState.BUILDING}
+   * Renders buildings, and the placement squares if {@code buildingState ==
+   * BuildingState.BUILDING}.
    */
   public void render() {
 
     renderer.renderBuildings(placementManager.getPlacedBuildings(), camera);
-    if (isChoosingLocation)
+    if (isChoosingLocation) {
       renderer.renderPlacementFeedback(
           canBePlacedAtCurrentLocation, currentRow, currentColumn, camera, buildingToBePlaced);
+    }
   }
 }

@@ -14,7 +14,7 @@ public class BuildingPlacementManager implements IBuildingPlacementManager {
   int count = 0;
 
   /**
-   * Constructs a BuildingPlacementManager instance
+   * Constructs a BuildingPlacementManager instance.
    *
    * @param terrainLayer The layer containing terrain information within the map.
    */
@@ -38,7 +38,9 @@ public class BuildingPlacementManager implements IBuildingPlacementManager {
       TiledMapTileLayer.Cell terrainCell =
           terrainLayer.getCell(column + tileOffset.getColumn(), row + tileOffset.getRow());
       if (!terrainCell.getTile().getProperties().get("canBeBuiltOn", Boolean.class)
-          || placedBuildings.containsKey(tileOffset)) return false;
+          || placedBuildings.containsKey(tileOffset)) {
+        return false;
+      }
     }
     return true;
   }
@@ -56,7 +58,9 @@ public class BuildingPlacementManager implements IBuildingPlacementManager {
       int row, int column, AbstractBuilding building) {
     for (var tileOffset : building.getTileCoverageOffsets()) {
       if (placedBuildings.containsKey(
-          new Coord(tileOffset.getRow() + row, tileOffset.getColumn() + column))) return false;
+          new Coord(tileOffset.getRow() + row, tileOffset.getColumn() + column))) {
+        return false;
+      }
     }
     return true;
   }
@@ -78,7 +82,7 @@ public class BuildingPlacementManager implements IBuildingPlacementManager {
   }
 
   /**
-   * Retrives all the currently placed buildings
+   * Retrives all the currently placed buildings.
    *
    * @return A collection of the currently placed buildings.
    */
@@ -95,7 +99,7 @@ public class BuildingPlacementManager implements IBuildingPlacementManager {
     return count;
   }
 
-  /** Resets the count to zero and clears any placed buildings */
+  /** Resets the count to zero and clears any placed buildings. */
   public void reset() {
     placedBuildings.clear();
     count = 0;
