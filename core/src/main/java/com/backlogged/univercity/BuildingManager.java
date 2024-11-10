@@ -16,20 +16,17 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 /**
- * Manages building placement etc. within the game and
- * Handles input, rendering, and state transitions for buildings.
- * 
+ * Manages building placement etc. within the game and Handles input, rendering,
+ * and state
+ * transitions for buildings.
  */
 public class BuildingManager {
-
-  /**
-   * Represents the states of building interactions.
-   */
+  /** Represents the states of building interactions. */
   private enum BuildingState {
-    NOT_BUILDING, // No active building placement
-    BUILDING, // Actively placing a building
-    DELETING, // Deleting a building (not implemented)
-    MOVING // Moving a building (not implemented)
+    NOT_BUILDING,
+    BUILDING,
+    DELETING,
+    MOVING
   }
 
   /**
@@ -37,7 +34,6 @@ public class BuildingManager {
    * objects.
    */
   private static class BuildingInfoFromJsonFactory {
-
     /**
      * Parses tile coverage offsets from JSON.
      *
@@ -62,36 +58,35 @@ public class BuildingManager {
      *                          matrix
      * @return HashMap associating building types with their BuildingInfo data.
      */
-    public static HashMap<String, BuildingInfo> getBuildingsFromJson(FileHandle buildingsJsonFile,
-        TextureAtlas buildingAtlas, float unitScale) {
+    public static HashMap<String, BuildingInfo> getBuildingsFromJson(
+        FileHandle buildingsJsonFile, TextureAtlas buildingAtlas, float unitScale) {
       HashMap<String, BuildingInfo> buildingMap = new HashMap<>();
       JsonValue buildings = new JsonReader().parse(buildingsJsonFile);
       for (var building : buildings) {
         Sprite sprite = buildingAtlas.createSprite(building.get("atlasRegion").asString());
         sprite.setScale(unitScale);
         sprite.setOrigin(0, 0);
-        buildingMap.put(building.name,
-            new BuildingInfo(building.get("type").asStringArray(),
-                getTileCoverageOffsetsFromJson(
-                    building.get("tileCoverageOffsets")),
-                building.get("info").asString(), sprite));
+        buildingMap.put(
+            building.name,
+            new BuildingInfo(
+                building.get("type").asStringArray(),
+                getTileCoverageOffsetsFromJson(building.get("tileCoverageOffsets")),
+                building.get("info").asString(),
+                sprite));
       }
       return buildingMap;
     }
   }
 
-  /**
-   * Factory for creating building instances.
-   */
+  /** Factory for creating building instances. */
   private static class BuildingFactory {
-
     /**
      * Instantiates an AbstractBuilding based on the specified class name.
      *
      * @param buildingMap       Map of building data.
      * @param buildingClassName Name of the building class.
      * @return New AbstractBuilding instance.
-     * @throws IllegalArgumentException if the building class cannot be
+     * @throws IllegalArgumentException If the building class cannot be
      *                                  instantiated.
      */
     public static AbstractBuilding createBuilding(
@@ -99,11 +94,12 @@ public class BuildingManager {
       AbstractBuilding building = null;
       try {
         Class<?> buildingClass = Class.forName("com.backlogged.univercity." + buildingClassName);
-        building = (AbstractBuilding) buildingClass.getConstructor(BuildingInfo.class)
+        building = (AbstractBuilding) buildingClass
+            .getConstructor(BuildingInfo.class)
             .newInstance(buildingMap.get(buildingClassName));
       } catch (Exception e) {
-        throw new IllegalArgumentException(String.format(
-            "%s\nBuilding %s does not exist", e.toString(), buildingClassName));
+        throw new IllegalArgumentException(
+            String.format("%s\nBuilding %s does not exist", e.toString(), buildingClassName));
       }
       return building;
     }
@@ -114,10 +110,22 @@ public class BuildingManager {
   private IBuildingPlacementManager placementManager;
   private boolean isChoosingLocation = false;
   private AbstractBuilding buildingToBePlaced;
+  private String buildingToBePlacedType;
   private int currentRow;
   private int currentColumn;
   private BuildingState buildingState = BuildingState.NOT_BUILDING;
   private OrthographicCamera camera;
+  private HashMap<String, Integer> buildingCounts = new HashMap<>() {
+    @Override
+    public String toString() {
+      String out = "";
+      for (var entry : this.entrySet()) {
+        out += String.format("%s : %d\n", entry.getKey(), entry.getValue());
+      }
+      return out;
+    }
+  };
+  private boolean canBePlacedAtCurrentLocation;
 
   /**
    * Constructs a building manager instance.
@@ -132,11 +140,18 @@ public class BuildingManager {
     if (renderer == null || placementManager == null) {
       throw new IllegalArgumentException("renderer and placement manager MUST both be initialized");
     }
-    buildingMap = BuildingInfoFromJsonFactory
-        .getBuildingsFromJson(Gdx.files.local("buildings/Buildings.json"),
-            renderer.getAtlas(), unitScale);
+    buildingMap = BuildingInfoFromJsonFactory.getBuildingsFromJson(
+        Gdx.files.internal("buildings/Buildings.json"), renderer.getAtlas(), unitScale);
+    initBuildingCounters();
     this.renderer = renderer;
     this.placementManager = placementManager;
+  }
+
+  /** Initialises counters for all building types to zero. */
+  private void initBuildingCounters() {
+    for (var buildingType : buildingMap.keySet()) {
+      buildingCounts.put(buildingType, 0);
+    }
   }
 
   /**
@@ -157,12 +172,20 @@ public class BuildingManager {
     return buildingMap.entrySet();
   }
 
-  /**
-   * Resets building placement state.
-   */
+  /** Resets building placement state. */
   private void resetState() {
+    buildingToBePlacedType = null;
     buildingToBePlaced = null;
     isChoosingLocation = false;
+  }
+
+  /**
+   * Returns the count of each type of building currently placed.
+   *
+   * @return A string of all building types in the form: BuildingType : Count.
+   */
+  public String getBuildingTypeCounts() {
+    return buildingCounts.toString();
   }
 
   /**
@@ -173,6 +196,8 @@ public class BuildingManager {
    */
   private void placeBuilding(int row, int column) {
     placementManager.placeBuilding(row, column, buildingToBePlaced);
+    var countForBuildingTypePlaced = buildingCounts.get(buildingToBePlacedType);
+    buildingCounts.put(buildingToBePlacedType, ++countForBuildingTypePlaced);
     resetState();
   }
 
@@ -183,6 +208,7 @@ public class BuildingManager {
    */
   public void chooseLocationOfBuilding(String buildingType) {
     AbstractBuilding building = BuildingFactory.createBuilding(buildingMap, buildingType);
+    buildingToBePlacedType = buildingType;
     buildingToBePlaced = building;
     isChoosingLocation = true;
   }
@@ -208,32 +234,34 @@ public class BuildingManager {
     return new Vector2(worldCoordinates.x, worldCoordinates.y);
   }
 
-  /**
-   * Processes input based on the current building state.
-   */
+  /** Processes input based on the current building state. */
   public void handleInput() {
     switch (buildingState) {
       case NOT_BUILDING: {
-        // No action taken when not building.
       }
         break;
       case BUILDING: {
-        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && canBePlacedAtCurrentLocation) {
           placeBuilding(currentRow, currentColumn);
           resetState();
           buildingState = BuildingState.NOT_BUILDING;
         }
       }
         break;
-      case DELETING:
-        // TODO: Implement building deletion functionality.
+      case DELETING: 
+        {
+        // TODO: UNIMPLEMENTED
+        }
         break;
-      case MOVING:
-        // TODO: Implement building movement functionality.
+      case MOVING: 
+        {
+        // TODO: UNIMPLEMENTEDt
+        }
+        break;
+      default:
         break;
     }
-    if (buildingState != BuildingState.NOT_BUILDING
-        && Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+    if (buildingState != BuildingState.NOT_BUILDING && Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
       resetState();
       buildingState = BuildingState.NOT_BUILDING;
     }
@@ -241,19 +269,20 @@ public class BuildingManager {
 
   /**
    * Updates the BuildingManager, updating the row and column based on cursor
-   * location if placing a building.
+   * location if placing a
+   * building.
    */
   public void update() {
     if (isChoosingLocation) {
       var worldCoordinates = getWorldCoordinates();
       currentRow = (int) worldCoordinates.x;
       currentColumn = (int) worldCoordinates.y;
+      canBePlacedAtCurrentLocation = placementManager.canBePlacedAtLocationIgnoreTerrain(
+          currentRow, currentColumn, buildingToBePlaced);
     }
   }
 
-  /**
-   * Resets the building placement manager, clearing all placed buildings.
-   */
+  /** Resets the building placement manager, clearing all placed buildings. */
   public void reset() {
     placementManager.reset();
   }
@@ -268,12 +297,15 @@ public class BuildingManager {
   }
 
   /**
-   * Renders buildings, and the placement squares if state is BUILDING.
+   * Renders buildings, and the placement squares if {@code buildingState ==
+   * BuildingState.BUILDING}.
    */
   public void render() {
-    if (isChoosingLocation) {
-      renderer.renderPlacementSquares(currentRow, currentColumn, camera, buildingToBePlaced);
-    }
+
     renderer.renderBuildings(placementManager.getPlacedBuildings(), camera);
+    if (isChoosingLocation) {
+      renderer.renderPlacementFeedback(
+          canBePlacedAtCurrentLocation, currentRow, currentColumn, camera, buildingToBePlaced);
+    }
   }
 }

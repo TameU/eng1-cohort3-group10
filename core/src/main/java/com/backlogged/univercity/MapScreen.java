@@ -15,17 +15,17 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-/**
- * Handles rendering and logic for the main game screen.
- */
+/** Handles input and rendering of the UI, map and buildings. */
 public class MapScreen implements Screen {
 
   /** Size of one tile (currently 16px x 16px). */
@@ -52,6 +52,8 @@ public class MapScreen implements Screen {
   private Button book;
   private Button food;
   private BuildingManager buildingManager;
+  private Label buildingCounterLabel;
+  private TextTooltip detailedBuildingCounter;
 
   /**
    * Setup the main game window (map).
@@ -77,6 +79,14 @@ public class MapScreen implements Screen {
 
     timerLabel = new Label("5:00", skin);
     timerLabel.setAlignment(Align.center);
+
+    detailedBuildingCounter = new TextTooltip(buildingManager.getBuildingTypeCounts(), skin);
+    detailedBuildingCounter.getContainer().getActor().setFontScale(0.5f);
+    detailedBuildingCounter.getContainer().getActor().setAlignment(Align.center);
+
+    buildingCounterLabel = new Label("0", skin);
+    buildingCounterLabel.addListener(detailedBuildingCounter);
+    buildingCounterLabel.setAlignment(Align.center);
 
     pauseButton = new Button(skin, "pause");
     pauseButton.addListener(new ClickListener() {
@@ -141,10 +151,13 @@ public class MapScreen implements Screen {
       }
     });
 
+    detailedBuildingCounter.setInstant(true);
     table = new Table(skin);
     table.setFillParent(true);
     table.setDebug(true);
+    table.setTouchable(Touchable.enabled);
     table.add(timerLabel).expand().top();
+    table.add(buildingCounterLabel).expand().top().width(90).left();
     table.add(pauseButton).top().right().spaceRight(10);
     table.add(settingsButton).top(); // .left();
     // Buildings
@@ -188,6 +201,10 @@ public class MapScreen implements Screen {
     if (timeLeft < 1) {
       game.setScreen(new GameOverScreen(game));
     }
+
+    detailedBuildingCounter.getContainer().getActor()
+        .setText(buildingManager.getBuildingTypeCounts());
+    buildingCounterLabel.setText(Integer.toString(buildingManager.getBuildingCount()));
     timerLabel.setText(timer.output());
     stage.act();
     stage.draw();
@@ -263,8 +280,6 @@ public class MapScreen implements Screen {
         128 - effectiveViewPortWidth / 2f);
     camera.position.y = MathUtils.clamp(camera.position.y, effectiveViewPortHeight / 2f,
         72 - effectiveViewPortHeight / 2f);
-
-    System.out.println(camera.position.x);
   }
 
   @Override
