@@ -253,6 +253,7 @@ public class BuildingManager {
         {
           // TODO: UNIMPLEMENTEDt
         }
+        break;
       default:
         break;
     }
