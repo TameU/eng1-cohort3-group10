@@ -159,8 +159,10 @@ public class TitleScreen implements Screen {
     if (width == 0 || height == 0) {
       return;
     }
-    playButton.getStyle().font.getData().setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
-    quitButton.getStyle().font.getData().setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
+    playButton.getStyle().font.getData()
+        .setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
+    quitButton.getStyle().font.getData()
+        .setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
     stage.getViewport().update(width, height, true);
   }
 
