@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -26,11 +27,11 @@ public class TitleScreen implements Screen {
 
   private Texture bgTexture;
 
-  private Label titleLabel;
+  private Button univerCityLogo;
   private TextButton playButton;
   private TextButton optionsButton;
   private TextButton quitButton;
-
+  
   /**
    * Sets up the title screen.
    *
@@ -41,7 +42,8 @@ public class TitleScreen implements Screen {
 
     // Set up UI stage, skin and table
     stage = new Stage(new ScreenViewport());
-    skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
+    // TODO: edit constants to use new uiskin
+    skin = new Skin(Gdx.files.internal("uiskin.json"));
     table = new Table(skin);
     table.setFillParent(true);
     table.setDebug(true);
@@ -49,24 +51,22 @@ public class TitleScreen implements Screen {
     stage.addActor(table);
 
     // Set up the title label and buttons
-    titleLabel = new Label("UniverCity", skin, "game-title");
-    titleLabel.setFontScale(3f);
-
-    playButton = new TextButton("Play", skin, "blue-text-button");
+    univerCityLogo = new Button(skin, "univerCityLogo");
+    playButton = new TextButton("PLAY", skin, "default");
     playButton.addListener(new ClickListener() {
       public void clicked(InputEvent e, float x, float y) {
         game.setScreen(new MapScreen(game));
       }
     });
 
-    optionsButton = new TextButton("Options", skin, "blue-text-button");
+    optionsButton = new TextButton("OPTIONS", skin, "default");
     optionsButton.addListener(new ClickListener() {
       public void clicked(InputEvent e, float x, float y) {
         game.setScreen(new SettingsScreen(game, game.getScreen()));
       }
     });
 
-    quitButton = new TextButton("Quit", skin, "blue-text-button");
+    quitButton = new TextButton("QUIT", skin, "redTextButton");
     quitButton.addListener(new ClickListener() {
       public void clicked(InputEvent e, float x, float y) {
         Gdx.app.exit();
@@ -74,7 +74,8 @@ public class TitleScreen implements Screen {
     });
 
     // Add the title label and buttons to the UI table
-    table.add(titleLabel).top().padTop(100);
+    table.add(univerCityLogo).top().padTop(100).width(Value.percentWidth(0.6f, table))
+                .height(Value.percentWidth(0.081f, table));
     table.row();
     table.add(playButton).top().padTop(100).width(Value.percentWidth(0.3f, table))
         .height(Value.percentHeight(0.1f, table));
@@ -159,9 +160,9 @@ public class TitleScreen implements Screen {
     if (width == 0 || height == 0) {
       return;
     }
-    titleLabel.setFontScale(width / Constants.TITLE_FONT_SCALING_FACTOR);
-    playButton.getStyle().font.getData()
-        .setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
+    //TODO: replace 1000 with constant
+    playButton.getStyle().font.getData().setScale(width / 1000);
+    quitButton.getStyle().font.getData().setScale(width / 1000);
     stage.getViewport().update(width, height, true);
   }
 
