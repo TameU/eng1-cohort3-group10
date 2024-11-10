@@ -158,7 +158,7 @@ public class MapScreen implements Screen {
     detailedBuildingCounter.setInstant(true);
     table = new Table(skin);
     table.setFillParent(true);
-    table.setDebug(true);
+    table.setDebug(false);
     table.setTouchable(Touchable.enabled);
     table.add(timerLabel).top().left().width(Value.percentWidth(0.3f, table))
         .height(Value.percentWidth(0.072f, table));

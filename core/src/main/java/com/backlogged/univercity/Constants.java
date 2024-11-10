@@ -39,12 +39,12 @@ public final class Constants {
   /**
    * Font scaling factor for the labels in the settings screen.
    */
-  public static final float SETTINGS_LABEL_FONT_SCALING_FACTOR = 2000f;
+  public static final float SETTINGS_LABEL_FONT_SCALING_FACTOR = 1500f;
 
   /**
    * Path to the background picture.
    */
-  public static final String BACKGROUND_PICTURE_PATH = "UniverCityBackgroundBlur.png";
+  public static final String BACKGROUND_PICTURE_PATH = "mapBackgroundBlur.png";
 
   /**
    * Path to the UI skin.

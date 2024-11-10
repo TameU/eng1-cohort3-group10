@@ -105,12 +105,12 @@ public class SettingsScreen implements Screen {
       }
     });
     buttonsTable = new Table(skin);
-    buttonsTable.add(backButton).size(
-        Value.percentWidth(.3f, table), Value.percentHeight(.1f, table))
+    buttonsTable.add(backButton).width(Value.percentWidth(0.6f, table))
+        .height(Value.percentWidth(0.081f, table))
         .padTop(20)
         .padBottom(10);
-    buttonsTable.add(quitButton).size(
-        Value.percentWidth(.3f, table), Value.percentHeight(.1f, table))
+    buttonsTable.add(quitButton).width(Value.percentWidth(0.6f, table))
+        .height(Value.percentWidth(0.081f, table))
         .padTop(20)
         .padBottom(10);
     table.add(settingsLabel).spaceBottom(20).padTop(10);
@@ -228,7 +228,7 @@ public class SettingsScreen implements Screen {
           }
         });
 
-    keyboardBindingDownLabel = new Label("DOWN KEY", skin, "greenFont");
+    keyboardBindingDownLabel = new Label("DOWN KEY", skin, "lightOrangeFont");
     keyboardBindingDownButton = new TextButton(
         Input.Keys.toString(GamePreferences.getKeyboardBindingDown()), skin);
     keyboardBindingDownButton.addListener(
@@ -248,7 +248,7 @@ public class SettingsScreen implements Screen {
           }
         });
 
-    keyboardBindingLeftLabel = new Label("LEFT KEY", skin, "greenFont");
+    keyboardBindingLeftLabel = new Label("LEFT KEY", skin, "lightOrangeFont");
     keyboardBindingLeftButton = new TextButton(
         Input.Keys.toString(GamePreferences.getKeyboardBindingLeft()), skin);
     keyboardBindingLeftButton.addListener(
@@ -268,7 +268,7 @@ public class SettingsScreen implements Screen {
           }
         });
 
-    keyboardBindingRightLabel = new Label("RIGHT KEY", skin, "greenFont");
+    keyboardBindingRightLabel = new Label("RIGHT KEY", skin, "lightOrangeFont");
     keyboardBindingRightButton = new TextButton(
         Input.Keys.toString(GamePreferences.getKeyboardBindingRight()), skin);
     keyboardBindingRightButton.addListener(
@@ -360,26 +360,37 @@ public class SettingsScreen implements Screen {
     preferencesTable.add(keyboardSensitivityLabel).space(20);
     preferencesTable.add(keyboardSensitivitySlider)
         .width(Value.percentWidth(.3f, preferencesTable))
-        .fill()
         .space(20);
     preferencesTable.row();
     preferencesTable.add(keyboardBindingUpLabel).space(20);
-    preferencesTable.add(keyboardBindingUpButton).space(20).width(150f).height(60f);
+    preferencesTable.add(keyboardBindingUpButton).space(20)
+        .width(Value.percentWidth(0.1f, table))
+        .height(Value.percentWidth(0.032f, table));
     preferencesTable.row();
     preferencesTable.add(keyboardBindingDownLabel).space(20);
-    preferencesTable.add(keyboardBindingDownButton).space(20).width(150f).height(60f);
+    preferencesTable.add(keyboardBindingDownButton).space(20)
+        .width(Value.percentWidth(0.1f, table))
+        .height(Value.percentWidth(0.032f, table));
     preferencesTable.row();
     preferencesTable.add(keyboardBindingLeftLabel).space(20);
-    preferencesTable.add(keyboardBindingLeftButton).space(20).width(150f).height(60f);
+    preferencesTable.add(keyboardBindingLeftButton).space(20)
+        .width(Value.percentWidth(0.1f, table))
+        .height(Value.percentWidth(0.032f, table));
     preferencesTable.row();
     preferencesTable.add(keyboardBindingRightLabel).space(20);
-    preferencesTable.add(keyboardBindingRightButton).space(20).width(150f).height(60f);
+    preferencesTable.add(keyboardBindingRightButton).space(20)
+        .width(Value.percentWidth(0.1f, table))
+        .height(Value.percentWidth(0.032f, table));
     preferencesTable.row();
     preferencesTable.add(keyboardBindingZoomInLabel).space(20);
-    preferencesTable.add(keyboardBindingZoomInButton).space(20).width(150f).height(60f);
+    preferencesTable.add(keyboardBindingZoomInButton).space(20)
+        .width(Value.percentWidth(0.1f, table))
+        .height(Value.percentWidth(0.032f, table));
     preferencesTable.row();
     preferencesTable.add(keyboardBindingZoomOutLabel).space(20);
-    preferencesTable.add(keyboardBindingZoomOutButton).space(20).width(150f).height(60f);
+    preferencesTable.add(keyboardBindingZoomOutButton).space(20)
+        .width(Value.percentWidth(0.1f, table))
+        .height(Value.percentWidth(0.032f, table));
     scrollPane = new ScrollPane(preferencesTable);
     scrollPane.setScrollingDisabled(true, false);
     scrollPane.setDebug(true);
