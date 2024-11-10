@@ -3,5 +3,21 @@
 # UniverCity Game
 A work in progress 2D UniverCity builder game built by Backlogged
 
-# Credits
+## Learn more and download
+[UniverCity website](https://tameu.github.io)
 
+## Run
+```
+./gradlew run
+```
+
+## Build
+```
+./gradlew clean build
+```
+
+## Credits
+tbd
+
+## License
+[MIT](LICENCE.md)
