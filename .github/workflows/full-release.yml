@@ -93,8 +93,10 @@ jobs:
           unzip UniverCity-${{ github.ref_name }}.zip -d .bin
           cd .bin/libs
           mv * ..
+      - name: Add version file
+        run: echo UniverCity-${{ github.ref_name }}.jar > name.txt
 
-      - name: Commit and push zip
+      - name: Commit and push files
         run: |
           export COMMIT_MESSAGE="Generated Release archive from ${{ github.repository }}/${{ github.ref }}@${{ github.sha }}"
           git add .
