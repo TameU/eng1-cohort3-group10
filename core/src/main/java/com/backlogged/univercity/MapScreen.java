@@ -17,7 +17,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -40,7 +39,6 @@ public class MapScreen implements Screen {
   private Skin skin;
   private Stage stage;
   private Table table;
-  private Table buildingTable;
   private TextButton timerLabel;
   private Button pauseButton;
   private Button settingsButton;
@@ -159,7 +157,6 @@ public class MapScreen implements Screen {
 
     detailedBuildingCounter.setInstant(true);
     table = new Table(skin);
-    buildingTable = new Table(skin);
     table.setFillParent(true);
     table.setDebug(true);
     table.setTouchable(Touchable.enabled);
