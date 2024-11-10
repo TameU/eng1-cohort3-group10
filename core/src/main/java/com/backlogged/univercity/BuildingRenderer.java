@@ -8,20 +8,34 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Disposable;
 import java.util.Collection;
-
+/** 
+ * Building Renderer handles rendering valid and invalid loactions for a building that is about to be placed and 
+ * buildings that are already placed.
+ */
 public class BuildingRenderer implements Disposable, IBuildingRenderer {
     private SpriteBatch batch = new SpriteBatch();
     private ShapeRenderer shapeRenderer = new ShapeRenderer();
     private TextureAtlas buildingAtlas;
     private boolean debugGridEnabled = false;
     
-    
+    /** 
+     * Contructs a BuildingRenderer. 
+     * @param buildingAtlas This is the atlas that contains all the building sprites that are able to be rendered if placed on the map.
+     */
     public BuildingRenderer(TextureAtlas buildingAtlas) { 
         this.buildingAtlas = buildingAtlas;
+    }  
+    /** 
+     * Enables or disables the debug grid.
+     * @param shouldEnable Boolean for enabling or disabling the grid.
+     */
+    public void enableDebugGrid(boolean shouldEnable) { 
+        debugGridEnabled = shouldEnable;
     } 
-    public void enableDebugGrid(boolean b) { 
-        debugGridEnabled = b;
-    }
+    /** 
+     * Draws a debug grid for visually checking the alignment of buildings on the map
+     * @param camera The projection Matrix for the shapeRenderer
+     */
     public void drawDebugGrid(OrthographicCamera camera) {
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -38,8 +52,21 @@ public class BuildingRenderer implements Disposable, IBuildingRenderer {
 
         shapeRenderer.end();
     }
-
-    public void renderPlacementSquares(boolean canBePlacedAtLocation, int row, int column, OrthographicCamera camera,
+     /**
+     * Renders visual feedback for the placement area of a building, indicating whether
+     * it can be placed at the specified location. If valid, ticks are rendered in green;
+     * otherwise, crosses are rendered in red.
+     *
+     * @param canBePlacedAtLocation Indicates whether the building can be placed at the
+     *                              specified row and column.
+     * @param row                   The row coordinate for placement feedback to start from.
+     * @param column                The column coordinate for placement feedback ro start from.
+     * @param camera                The camera used for projection, providing the matrix for
+     *                              the shape renderer.
+     * @param building              The {@link AbstractBuilding} to be placed
+     *                              for placement.
+     */
+    public void renderPlacementFeedback(boolean canBePlacedAtLocation, int row, int column, OrthographicCamera camera,
             AbstractBuilding building) {
         shapeRenderer.setProjectionMatrix(camera.combined);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
@@ -66,7 +93,11 @@ public class BuildingRenderer implements Disposable, IBuildingRenderer {
         shapeRenderer.end(); 
         Gdx.gl.glLineWidth(1);
     }
-
+    /** 
+     * Renders all currently placed buildings 
+     * @param placedBuildings Currently placed buildings to be rendered.
+     * @param camera          The projection matrix for the sprite batch.
+     */
     public void renderBuildings(Collection<AbstractBuilding> placedBuildings, OrthographicCamera camera) {
         batch.setProjectionMatrix(camera.combined);
         batch.begin();
@@ -78,7 +109,11 @@ public class BuildingRenderer implements Disposable, IBuildingRenderer {
     }  
     public TextureAtlas getAtlas() { 
         return buildingAtlas;
-    }
+    } 
+    
+    /**
+     * Releases GPU resources used by the BuildingRenderer.
+     */
     public void dispose() { 
         if (buildingAtlas != null) buildingAtlas.dispose();
         batch.dispose(); 

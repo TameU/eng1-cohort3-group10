@@ -104,7 +104,7 @@ public class MapScreen implements Screen {
             public void clicked(InputEvent e, float x, float y) {
                 // Deal with clicking later
                 buildingManager.setBuildingState();
-                buildingManager.tryPlaceBuilding("Accommodation");
+                buildingManager.chooseLocationOfBuilding("Accommodation");
             }
         });
 
@@ -113,7 +113,7 @@ public class MapScreen implements Screen {
             public void clicked(InputEvent e, float x, float y) {
                 // Deal with clicking later
                 buildingManager.setBuildingState();
-                buildingManager.tryPlaceBuilding("SportsCenter");
+                buildingManager.chooseLocationOfBuilding("SportsCenter");
             }
         });
 
@@ -122,7 +122,7 @@ public class MapScreen implements Screen {
             public void clicked(InputEvent e, float x, float y) {
                 // Deal with clicking later
                 buildingManager.setBuildingState();
-                buildingManager.tryPlaceBuilding("LectureHall");
+                buildingManager.chooseLocationOfBuilding("LectureHall");
             }
         });
 
@@ -131,7 +131,7 @@ public class MapScreen implements Screen {
             public void clicked(InputEvent e, float x, float y) {
                 // Deal with clicking later
                 buildingManager.setBuildingState();
-                buildingManager.tryPlaceBuilding("FoodCourt");
+                buildingManager.chooseLocationOfBuilding("FoodCourt");
             }
         });
 
@@ -194,7 +194,7 @@ public class MapScreen implements Screen {
 
         if (timeLeft < 1)
             game.setScreen(new GameOverScreen(game));  
-            detailedBuildingCounter.getContainer().getActor().setText(buildingManager.getBuildingTypeCounts());
+        detailedBuildingCounter.getContainer().getActor().setText(buildingManager.getBuildingTypeCounts());
         buildingCounterLabel.setText(Integer.toString(buildingManager.getBuildingCount()));
         timerLabel.setText(timer.output());
         stage.act();
