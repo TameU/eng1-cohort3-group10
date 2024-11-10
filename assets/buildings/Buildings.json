@@ -4,7 +4,10 @@
 		atlasRegion: "rhombus", 
 		tileCoverageOffsets: 
 		[  
-			{ row: 0, column: 0}
+			{ row: 0, column: 0}, 
+			{ row: 0, column: 1}, 
+			{ row: 1, column: 0}, 
+			{ row: 1, column: 1}
 		], 
 		info: "Students attend lectures here"
 	}, 
@@ -13,7 +16,10 @@
 		atlasRegion: "square", 
 		tileCoverageOffsets: 
 		[  
-			{ row: 0, column: 0}
+			{ row: 0, column: 0}, 
+			{ row: 0, column: 1}, 
+			{ row: 1, column: 0}, 
+			{ row: 1, column: 1}
 		], 
 		info: "Students live here" 
 	}, 
@@ -22,7 +28,10 @@
 		atlasRegion: "hex", 
 		tileCoverageOffsets: 
 		[  
-			{ row: 0, column: 0}
+			{ row: 0, column: 0}, 
+			{ row: 0, column: 1}, 
+			{ row: 1, column: 0}, 
+			{ row: 1, column: 1}
 		], 
 		info: "Students can play sports here"
 	}, 
@@ -31,7 +40,10 @@
 		atlasRegion: "circle", 
 		tileCoverageOffsets: 
 		[  
-			{ row: 0, column: 0}
+			{ row: 0, column: 0}, 
+			{ row: 0, column: 1}, 
+			{ row: 1, column: 0}, 
+			{ row: 1, column: 1}
 		], 
 		info: "Students can get food here"
 	}
