@@ -43,7 +43,7 @@ public class TitleScreen implements Screen {
     // Set up UI stage, skin and table
     stage = new Stage(new ScreenViewport());
     // TODO: edit constants to use new uiskin
-    skin = new Skin(Gdx.files.internal("uiskin.json"));
+    skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
     table = new Table(skin);
     table.setFillParent(true);
     table.setDebug(true);
@@ -160,9 +160,8 @@ public class TitleScreen implements Screen {
     if (width == 0 || height == 0) {
       return;
     }
-    //TODO: replace 1000 with constant
-    playButton.getStyle().font.getData().setScale(width / 1200f);
-    quitButton.getStyle().font.getData().setScale(width / 1200f);
+    playButton.getStyle().font.getData().setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
+    quitButton.getStyle().font.getData().setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
     stage.getViewport().update(width, height, true);
   }
 

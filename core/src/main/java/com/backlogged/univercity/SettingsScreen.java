@@ -86,7 +86,7 @@ public class SettingsScreen implements Screen {
    *                       settings
    */
   public SettingsScreen(Game game, Screen previousScreen) {
-    skin = new Skin(Gdx.files.internal("uiskin.json"));
+    skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
     stage = new Stage(new ScreenViewport());
     table = new Table(skin);
 

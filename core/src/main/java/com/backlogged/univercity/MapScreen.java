@@ -79,7 +79,7 @@ public class MapScreen implements Screen {
     buildingManager = new BuildingManager(UNIT_SCALE, buildingRenderer,
         new BuildingPlacementManager((TiledMapTileLayer) map.getLayers().get("Terrain")));
     stage = new Stage(new ScreenViewport());
-    skin = new Skin(Gdx.files.internal("uiskin.json"));
+    skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
 
     timerLabel = new TextButton("5:00", skin, "semesterTimerTextButton");
     buildingCounterLabel = new TextButton("5:00", skin, "buildingCountTextButton");

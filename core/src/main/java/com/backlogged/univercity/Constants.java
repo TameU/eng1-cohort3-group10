@@ -29,12 +29,12 @@ public final class Constants {
   /**
    * Font scaling factor for TextButtons.
    */
-  public static final float TEXT_BUTTON_FONT_SCALING_FACTOR = 3000f;
+  public static final float TEXT_BUTTON_FONT_SCALING_FACTOR = 1200f;
 
   /**
    * Font scaling factor for the Settings title label.
    */
-  public static final float SETTINGS_TITLE_FONT_SCALING_FACTOR = 2500f;
+  public static final float SETTINGS_TITLE_FONT_SCALING_FACTOR = 1000f;
 
   /**
    * Font scaling factor for the labels in the settings screen.
