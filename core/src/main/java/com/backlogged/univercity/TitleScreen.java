@@ -161,8 +161,8 @@ public class TitleScreen implements Screen {
       return;
     }
     //TODO: replace 1000 with constant
-    playButton.getStyle().font.getData().setScale(width / 1000);
-    quitButton.getStyle().font.getData().setScale(width / 1000);
+    playButton.getStyle().font.getData().setScale(width / 1200f);
+    quitButton.getStyle().font.getData().setScale(width / 1200f);
     stage.getViewport().update(width, height, true);
   }
 
