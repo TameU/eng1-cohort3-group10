@@ -249,14 +249,14 @@ public class BuildingManager {
       }
         break;
       case DELETING: 
-      {
+        {
         // TODO: UNIMPLEMENTED
-      }
+        }
         break;
       case MOVING: 
-      {
+        {
         // TODO: UNIMPLEMENTEDt
-      }
+        }
         break;
       default:
         break;
