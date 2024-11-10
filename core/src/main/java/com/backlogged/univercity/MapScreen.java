@@ -17,10 +17,11 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.Touchable;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextTooltip;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -38,9 +39,10 @@ public class MapScreen implements Screen {
   private Skin skin;
   private Stage stage;
   private Table table;
-  private Label timerLabel;
+  private TextButton timerLabel;
   private Button pauseButton;
   private Button settingsButton;
+  private Button pauseOverlay;
   private InGameTimer timer;
   private boolean mouseDown;
   private boolean dragging;
@@ -52,7 +54,7 @@ public class MapScreen implements Screen {
   private Button book;
   private Button food;
   private BuildingManager buildingManager;
-  private Label buildingCounterLabel;
+  private TextButton buildingCounterLabel;
   private TextTooltip detailedBuildingCounter;
 
   /**
@@ -77,29 +79,31 @@ public class MapScreen implements Screen {
     stage = new Stage(new ScreenViewport());
     skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
 
-    timerLabel = new Label("5:00", skin);
-    timerLabel.setAlignment(Align.center);
+    timerLabel = new TextButton("5:00", skin, "semesterTimerTextButton");
+    buildingCounterLabel = new TextButton("5:00", skin, "buildingCountTextButton");
 
     detailedBuildingCounter = new TextTooltip(buildingManager.getBuildingTypeCounts(), skin);
-    detailedBuildingCounter.getContainer().getActor().setFontScale(0.5f);
+    detailedBuildingCounter.getContainer().getActor().setFontScale(0.75f);
     detailedBuildingCounter.getContainer().getActor().setAlignment(Align.center);
-
-    buildingCounterLabel = new Label("0", skin);
     buildingCounterLabel.addListener(detailedBuildingCounter);
-    buildingCounterLabel.setAlignment(Align.center);
 
-    pauseButton = new Button(skin, "pause");
+    pauseOverlay = new Button(skin, "pauseOverlay");
+    pauseOverlay.setVisible(false);
+    pauseButton = new Button(skin, "pauseToggle");
     pauseButton.addListener(new ClickListener() {
       public void clicked(InputEvent e, float x, float y) {
         if (timer.isUserStopped()) {
           timer.userStartTime();
+          pauseOverlay.setVisible(false);
         } else {
           timer.userStopTime();
+          pauseOverlay.setVisible(true);
+
         }
       }
     });
 
-    settingsButton = new Button(skin, "settings");
+    settingsButton = new Button(skin, "settingsIcon");
     settingsButton.addListener(new ClickListener() {
       public void clicked(InputEvent e, float x, float y) {
         timer.systemStopTime(); // pause Time while in settings
@@ -109,7 +113,7 @@ public class MapScreen implements Screen {
 
     //////////////// BUILDINGS
 
-    bed = new Button(skin, "bed");
+    bed = new Button(skin, "bedIcon");
     bed.addListener(new ClickListener() {
       public void clicked(InputEvent e, float x, float y) {
         // Deal with clicking later
@@ -118,7 +122,7 @@ public class MapScreen implements Screen {
       }
     });
 
-    football = new Button(skin, "football");
+    football = new Button(skin, "sportIcon");
     football.addListener(new ClickListener() {
       public void clicked(InputEvent e, float x, float y) {
         // Deal with clicking later
@@ -127,7 +131,7 @@ public class MapScreen implements Screen {
       }
     });
 
-    book = new Button(skin, "book");
+    book = new Button(skin, "bookIcon");
     book.addListener(new ClickListener() {
       public void clicked(InputEvent e, float x, float y) {
         // Deal with clicking later
@@ -136,7 +140,7 @@ public class MapScreen implements Screen {
       }
     });
 
-    food = new Button(skin, "food");
+    food = new Button(skin, "foodIcon");
     food.addListener(new ClickListener() {
       public void clicked(InputEvent e, float x, float y) {
         // Deal with clicking later
@@ -154,17 +158,34 @@ public class MapScreen implements Screen {
     detailedBuildingCounter.setInstant(true);
     table = new Table(skin);
     table.setFillParent(true);
-    table.setDebug(true);
+    table.setDebug(false);
     table.setTouchable(Touchable.enabled);
-    table.add(timerLabel).expand().top();
-    table.add(buildingCounterLabel).expand().top().width(90).left();
-    table.add(pauseButton).top().right().spaceRight(10);
-    table.add(settingsButton).top(); // .left();
+    table.add(timerLabel).top().left().width(Value.percentWidth(0.3f, table))
+        .height(Value.percentWidth(0.072f, table));
+    table.add(buildingCounterLabel).expandX().top().left().width(Value.percentWidth(0.1f, table))
+    .height(Value.percentWidth(0.072f, table));
+    
+    table.add(pauseButton).expandX().top().right().spaceRight(10)
+        .width(Value.percentWidth(0.05f, table))
+        .height(Value.percentWidth(0.05f, table));
+    table.add(settingsButton).top().left()
+        .width(Value.percentWidth(0.05f, table))
+        .height(Value.percentWidth(0.05f, table));
+    table.row();
+    table.add(pauseOverlay)
+        .width(Value.percentWidth(0.05f, table))
+        .height(Value.percentWidth(0.05f, table));
+    table.row();
     // Buildings
-    table.add(bed).center().left();
-    table.add(football).center().left();
-    table.add(book).center().left();
-    table.add(food).center().left();
+    table.add(bed).expandY().bottom().left().width(Value.percentWidth(0.1f, table))
+        .height(Value.percentWidth(0.1f, table));
+    table.add(football).expandY().bottom().left().width(Value.percentWidth(0.1f, table))
+        .height(Value.percentWidth(0.1f, table));
+    table.add(book).expandY().bottom().left().width(Value.percentWidth(0.1f, table))
+        .height(Value.percentWidth(0.1f, table));
+    table.add(food).expandY().bottom().left().width(Value.percentWidth(0.1f, table))
+        .height(Value.percentWidth(0.1f, table));
+
 
     stage.addActor(table);
 
@@ -287,10 +308,15 @@ public class MapScreen implements Screen {
     if (width == 0 || height == 0) {
       return;
     }
+    //TODO: replace 1000 with constant
+    timerLabel.getStyle().font.getData().setScale(width / 2000f);
+    buildingCounterLabel.getStyle().font.getData().setScale(width / 2000f);
+
     camera.viewportWidth = MathUtils.floor(width / 32f);
     camera.viewportHeight = camera.viewportWidth * height / width;
     camera.update();
     stage.getViewport().update(width, height, true);
+    
   }
 
   @Override
