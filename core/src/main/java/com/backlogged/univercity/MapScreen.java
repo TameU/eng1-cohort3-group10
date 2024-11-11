@@ -163,8 +163,8 @@ public class MapScreen implements Screen {
     table.add(timerLabel).top().left().width(Value.percentWidth(0.3f, table))
         .height(Value.percentWidth(0.072f, table));
     table.add(buildingCounterLabel).expandX().top().left().width(Value.percentWidth(0.1f, table))
-    .height(Value.percentWidth(0.072f, table));
-    
+        .height(Value.percentWidth(0.072f, table));
+
     table.add(pauseButton).expandX().top().right().spaceRight(10)
         .width(Value.percentWidth(0.05f, table))
         .height(Value.percentWidth(0.05f, table));
@@ -185,7 +185,6 @@ public class MapScreen implements Screen {
         .height(Value.percentWidth(0.1f, table));
     table.add(food).expandY().bottom().left().width(Value.percentWidth(0.1f, table))
         .height(Value.percentWidth(0.1f, table));
-
 
     stage.addActor(table);
 
@@ -308,7 +307,7 @@ public class MapScreen implements Screen {
     if (width == 0 || height == 0) {
       return;
     }
-    //TODO: replace 1000 with constant
+    // TODO: replace 1000 with constant
     timerLabel.getStyle().font.getData().setScale(width / 2000f);
     buildingCounterLabel.getStyle().font.getData().setScale(width / 2000f);
 
@@ -316,7 +315,7 @@ public class MapScreen implements Screen {
     camera.viewportHeight = camera.viewportWidth * height / width;
     camera.update();
     stage.getViewport().update(width, height, true);
-    
+
   }
 
   @Override
