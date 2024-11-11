@@ -37,7 +37,7 @@ public class Lwjgl3Launcher {
         //// cause screen tearing.
         configuration.setWindowedMode(1280, 720);
         //// You can change these files; they are in lwjgl3/src/main/resources/ .
-        configuration.setWindowIcon("libgdx128.png", "libgdx64.png", "libgdx32.png", "libgdx16.png");
+        configuration.setWindowIcon("logo128.png", "logo64.png", "logo32.png", "logo16.png");
         return configuration;
     }
 }

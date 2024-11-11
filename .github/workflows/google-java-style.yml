@@ -1,0 +1,31 @@
+# Check code complies with google-java style guide
+#
+# https://google.github.io/styleguide/javaguide.html
+# 
+# Workflow is triggered by:
+# 1) push to main
+# 2) PR created
+#
+# https://github.com/marketplace/actions/checkstyle-for-java
+
+name: Code-Style
+
+on:
+  pull_request:
+  workflow_dispatch:    
+
+permissions:
+  checks: write
+  contents: write
+  pull-requests: write
+
+jobs:
+  checkstyle:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dbelyaev/action-checkstyle@master
+        with:
+          github_token: ${{ secrets.github_token }}
+          reporter: github-pr-review
+          level: warning
