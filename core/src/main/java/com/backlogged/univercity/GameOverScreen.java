@@ -81,7 +81,7 @@ public class GameOverScreen implements Screen {
     startAgainButton.getStyle().font.getData()
         .setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
     quitButton.getStyle().font.getData()
-    .setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
+        .setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
     stage.getViewport().update(width, height, true);
   }
 
