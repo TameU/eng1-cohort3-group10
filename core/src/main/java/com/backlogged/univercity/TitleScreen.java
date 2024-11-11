@@ -30,7 +30,7 @@ public class TitleScreen implements Screen {
   private TextButton playButton;
   private TextButton optionsButton;
   private TextButton quitButton;
-  
+
   /**
    * Sets up the title screen.
    *
@@ -45,7 +45,7 @@ public class TitleScreen implements Screen {
     skin = new Skin(Gdx.files.internal(Constants.UI_SKIN_PATH));
     table = new Table(skin);
     table.setFillParent(true);
-    table.setDebug(true);
+    table.setDebug(false);
 
     stage.addActor(table);
 
@@ -74,7 +74,7 @@ public class TitleScreen implements Screen {
 
     // Add the title label and buttons to the UI table
     table.add(univerCityLogo).top().padTop(100).width(Value.percentWidth(0.6f, table))
-                .height(Value.percentWidth(0.081f, table));
+        .height(Value.percentWidth(0.081f, table));
     table.row();
     table.add(playButton).top().padTop(100).width(Value.percentWidth(0.3f, table))
         .height(Value.percentHeight(0.1f, table));

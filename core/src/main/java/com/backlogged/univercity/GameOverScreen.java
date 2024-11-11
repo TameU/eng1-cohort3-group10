@@ -36,7 +36,7 @@ public class GameOverScreen implements Screen {
     stage = new Stage(new ScreenViewport());
     table = new Table(skin);
     table.setFillParent(true);
-    table.setDebug(true);
+    table.setDebug(false);
 
     stage.addActor(table);
 
