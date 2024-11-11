@@ -24,7 +24,7 @@ public final class Constants {
   /**
    * Font scaling factor for the Game Over label.
    */
-  public static final float GAME_OVER_FONT_SCALING_FACTOR = 1000f;
+  public static final float GAME_OVER_FONT_SCALING_FACTOR = 700f;
 
   /**
    * Font scaling factor for TextButtons.

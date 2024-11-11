@@ -40,16 +40,16 @@ public class GameOverScreen implements Screen {
 
     stage.addActor(table);
 
-    gameOverLabel = new Label("Game Over!", skin, "game-over");
+    gameOverLabel = new Label("GAME OVER!", skin, "lightOrangeFont");
 
-    startAgainButton = new TextButton("Try again!", skin, "red-text-button");
+    startAgainButton = new TextButton("TRY AGAIN", skin);
     startAgainButton.addListener(new ClickListener() {
       public void clicked(InputEvent e, float x, float y) {
         game.setScreen(new MapScreen(game));
       }
     });
 
-    quitButton = new TextButton("Quit", skin, "red-text-button");
+    quitButton = new TextButton("QUIT", skin, "redTextButton");
     quitButton.addListener(new ClickListener() {
       public void clicked(InputEvent e, float x, float y) {
         Gdx.app.exit();
@@ -79,6 +79,8 @@ public class GameOverScreen implements Screen {
     }
     gameOverLabel.setFontScale(width / Constants.GAME_OVER_FONT_SCALING_FACTOR);
     startAgainButton.getStyle().font.getData()
+        .setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
+    quitButton.getStyle().font.getData()
         .setScale(width / Constants.TEXT_BUTTON_FONT_SCALING_FACTOR);
     stage.getViewport().update(width, height, true);
   }

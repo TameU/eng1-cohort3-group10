@@ -105,11 +105,11 @@ public class SettingsScreen implements Screen {
       }
     });
     buttonsTable = new Table(skin);
-    buttonsTable.add(backButton).width(Value.percentWidth(0.6f, table))
+    buttonsTable.add(backButton).expandX().width(Value.percentWidth(0.3f, table))
         .height(Value.percentWidth(0.081f, table))
         .padTop(20)
         .padBottom(10);
-    buttonsTable.add(quitButton).width(Value.percentWidth(0.6f, table))
+    buttonsTable.add(quitButton).expandX().width(Value.percentWidth(0.3f, table))
         .height(Value.percentWidth(0.081f, table))
         .padTop(20)
         .padBottom(10);
